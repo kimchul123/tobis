@@ -830,6 +830,65 @@
   }
 
   /* ================================================================
+     PERSPECTIVE 배경 — "밤하늘의 잔광"
+     히어로가 별밤이라면, 여기서는 하늘이 물러나며 빛만 남는다.
+     s1c1 → s1c2 → s1c4 로 갈수록 빛이 옅어지고, s1c7 에서
+     별자리(#galaxySvg)로 다시 돌아온다.
+
+     글자 겹침 방지 원칙:
+       · 별먼지는 mask 로 중앙(콘텐츠 열)을 완전히 비우고 가장자리에만 남긴다
+       · 잔광은 모두 콘텐츠 열 바깥 모서리에 앵커
+       · 별먼지 최대 알파 0.34, 깜빡임 없음(정적)
+       · 섹션 자식은 z-index:1 로 항상 배경 위
+     ================================================================ */
+  #s1c1, #s1c2, #s1c4, #s1c7{ position:relative; overflow:hidden; }
+  #s1c1 > *:not(.dust), #s1c2 > *:not(.dust),
+  #s1c4 > *:not(.dust), #s1c7 > *:not(.dust){ position:relative; z-index:1; }
+
+  /* 별먼지 캔버스 — 중앙은 mask 로 비어 있다 */
+  .dust{
+    position:absolute; inset:0; width:100%; height:100%;
+    z-index:0; pointer-events:none; opacity:1;
+    -webkit-mask-image:linear-gradient(180deg, #000 0%, rgba(0,0,0,.88) 42%, rgba(0,0,0,.4) 76%, transparent 100%);
+            mask-image:linear-gradient(180deg, #000 0%, rgba(0,0,0,.88) 42%, rgba(0,0,0,.4) 76%, transparent 100%);
+  }
+
+  /* 섹션별 잔광 — 앵커를 옮겨 같은 화면이 반복되지 않게 한다 */
+  #s1c1{
+    background:
+      radial-gradient(760px 430px at 90% 4%,  rgba(23,195,178,.20), transparent 62%),
+      radial-gradient(700px 400px at 4% 92%,  rgba(26,135,254,.18), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c2{
+    background:
+      radial-gradient(980px 300px at 50% -6%, rgba(26,135,254,.20), transparent 66%),
+      radial-gradient(640px 360px at 97% 94%, rgba(23,195,178,.14), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c4{
+    background:
+      radial-gradient(740px 420px at 3% 8%,   rgba(26,135,254,.18), transparent 62%),
+      radial-gradient(780px 440px at 99% 86%, rgba(23,195,178,.13), transparent 62%),
+      var(--bg-deep);
+  }
+  #s1c7{
+    background:
+      radial-gradient(1150px 520px at 50% 110%, rgba(26,135,254,.18), transparent 62%),
+      radial-gradient(700px 380px at 94% 2%,   rgba(23,195,178,.16), transparent 60%),
+      var(--bg-deep);
+  }
+
+  /* 큰 제목만 아주 옅은 그림자 — 가장자리 별먼지 위에서도 또렷하게 */
+  #s1c1 .cv-block h3, #s1c2 .cv-block h3,
+  #s1c4 .cv-block h3, #s1c7 .cv-block h3{ text-shadow:0 2px 16px rgba(5,8,15,.5); }
+
+  @media (max-width:880px){
+    /* 좁은 화면은 콘텐츠가 폭을 다 쓰므로 별먼지를 더 걷어낸다 */
+    .dust{ opacity:.5; }
+  }
+
+  /* ================================================================
      WHITE VERSION (2안) — 라이트 팔레트 · 풀버전
      다크 원본의 반전이 아니라, 밝은 화면의 명도 위계로 다시 잡음.
        · 바탕은 순백이 아닌 한랭 오프화이트(브랜드 블루 쪽 미세 편향)
@@ -1040,6 +1099,37 @@
   #s1 .hero-bg svg.net{ opacity:1; }
   #s1 .hero-content h1.hero-h,
   #s1 .hero-content .hero-sub{ text-shadow:none; }
+
+  /* ---------- Perspective 잔광도 다크 전용 ----------
+     v4.6.0에서 다크 원본의 s1c1/s1c2/s1c4/s1c7 에 밤하늘 잔광이 들어갔다.
+     별먼지는 끄고, 잔광은 밝은 바탕에 맞춰 아주 옅은 브랜드 틴트로 낮춘다. */
+  canvas.dust{ display:none !important; }
+  #s1c1 .cv-block h3, #s1c2 .cv-block h3,
+  #s1c4 .cv-block h3, #s1c7 .cv-block h3{ text-shadow:none; }
+  #s1c1{
+    background:
+      radial-gradient(760px 430px at 90% 4%,  rgba(11,122,109,.055), transparent 62%),
+      radial-gradient(700px 400px at 4% 92%,  rgba(26,135,254,.055), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c2{
+    background:
+      radial-gradient(980px 300px at 50% -6%, rgba(26,135,254,.06), transparent 66%),
+      radial-gradient(640px 360px at 97% 94%, rgba(11,122,109,.045), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c4{
+    background:
+      radial-gradient(740px 420px at 3% 8%,   rgba(26,135,254,.055), transparent 62%),
+      radial-gradient(780px 440px at 99% 86%, rgba(11,122,109,.04), transparent 62%),
+      var(--bg-deep);
+  }
+  #s1c7{
+    background:
+      radial-gradient(1150px 520px at 50% 110%, rgba(26,135,254,.06), transparent 62%),
+      radial-gradient(700px 380px at 94% 2%,   rgba(11,122,109,.05), transparent 60%),
+      var(--bg-deep);
+  }
 </style>
 </head>
 <body>
@@ -1135,6 +1225,7 @@
 
   <!-- ============ PERSPECTIVE 01 — AI는 반년마다 다시 태어납니다 ============ -->
   <section id="s1c1">
+    <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 01</div>
@@ -1194,6 +1285,7 @@
 
   <!-- ============ PERSPECTIVE 02 — 규칙이 네 번 바뀌었습니다 ============ -->
   <section id="s1c2">
+    <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 02</div>
@@ -1302,6 +1394,7 @@
 
   <!-- ============ PERSPECTIVE 03 — 코드는 부산물입니다 ============ -->
   <section id="s1c4">
+    <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 03</div>
@@ -1371,6 +1464,7 @@
 
   <!-- ============ PERSPECTIVE 04 — 모델은 3개월, 가장 밝은 별도 저뭅니다 ============ -->
   <section id="s1c7">
+    <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 04 · 6개월 뒤</div>
@@ -2564,6 +2658,52 @@
     var tid;
     window.addEventListener('resize', function(){
       clearTimeout(tid); tid = setTimeout(start, 180);
+    });
+  })();
+  </script>
+  <script>
+  /* PERSPECTIVE 별먼지 — 섹션마다 다른 시드, 정적(깜빡임 없음).
+     밀도는 히어로의 1/4 수준이고, CSS mask 로 중앙은 비어 있다. */
+  (function(){
+    var nodes = document.querySelectorAll('canvas.dust');
+    if(!nodes.length) return;
+    var tid;
+
+    function paint(cv, seedBase){
+      if(!cv.getContext) return;
+      var ctx = cv.getContext('2d');
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = cv.getBoundingClientRect();
+      var w = r.width, h = r.height;
+      if(!w || !h) return;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      var s = seedBase;
+      function rnd(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }
+      var n = Math.round(w * h / 5000);          /* 히어로(2400) 대비 절반 밀도 */
+      for(var i = 0; i < n; i++){
+        var rad = rnd() * 0.8 + 0.2;
+        var a   = rnd() * 0.32 + 0.10;           /* 최대 0.42 */
+        ctx.globalAlpha = a;
+        ctx.fillStyle = '#DCE8FF';
+        ctx.beginPath();
+        ctx.arc(rnd() * w, rnd() * h, rad, 0, 6.283);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function paintAll(){
+      for(var i = 0; i < nodes.length; i++){
+        paint(nodes[i], 7919 * (i + 1) + 20260908);
+      }
+    }
+
+    paintAll();
+    window.addEventListener('resize', function(){
+      clearTimeout(tid); tid = setTimeout(paintAll, 200);
     });
   })();
   </script>
