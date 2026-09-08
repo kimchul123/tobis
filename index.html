@@ -116,12 +116,47 @@
   .mobile-menu-close svg{ width:22px; height:22px; }
 
   /* ================= SECTION 1 — HERO ================= */
+  /* ================================================================
+     은하수 히어로 (AS-IS 홈페이지 무드 이식) — v4.5.0
+     사진을 붙이지 않고 코드로 생성한다. 이유:
+       · 단일 파일 원칙 (외부 리소스 금지)
+       · 사진 별밤은 base64 로 200~400KB — v4.3.0 에서 뺀 갤럭시 이미지와 같은 문제
+       · 코드 생성이면 몇 KB, 해상도 무한, 브랜드 색으로 성운을 물들일 수 있다
+     구성: 밤하늘 그라디언트 → 성운 → 은하수 띠 → 별(canvas) → 별자리선
+     ================================================================ */
   #s1{
     position:relative; overflow:hidden; color:var(--white);
     background:
-      radial-gradient(1100px 640px at 12% -8%, rgba(26,135,254,.38), transparent 60%),
-      radial-gradient(900px 560px at 96% 92%, rgba(23,195,178,.22), transparent 55%),
-      linear-gradient(165deg,#0a0e1a 0%,#111a30 55%,#0a0e1a 100%);
+      radial-gradient(1200px 700px at 78% 2%,  rgba(23,195,178,.20), transparent 58%),
+      radial-gradient(1000px 640px at 12% 8%,  rgba(26,135,254,.22), transparent 60%),
+      radial-gradient(1500px 900px at 50% 118%, rgba(26,135,254,.10), transparent 62%),
+      linear-gradient(180deg,#05080F 0%,#0A1220 44%,#0C1520 78%,#0a0e17 100%);
+  }
+
+  /* 은하수 띠 — 대각선으로 흐리게 깔린다 */
+  #s1 .milky{
+    position:absolute; left:-12%; right:-12%; top:-8%; height:82%;
+    background:radial-gradient(58% 44% at 50% 50%,
+      rgba(202,224,255,.16) 0%, rgba(150,190,255,.08) 44%, transparent 72%);
+    transform:rotate(-13deg); filter:blur(16px); pointer-events:none;
+  }
+
+  /* 별 — canvas 로 생성, 시드 고정이라 매번 같은 하늘 */
+  #s1 .star-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  /* 기존 네트워크 SVG는 별자리선으로 격하 */
+  #s1 .hero-bg svg.net{ opacity:.32; }
+
+
+  /* 히어로 글자가 별 위에서 뜨도록 아주 옅은 그림자 */
+  #s1 .hero-content h1.hero-h,
+  #s1 .hero-content .hero-sub{ text-shadow:0 2px 18px rgba(5,8,15,.55); }
+
+  @media (max-width:880px){
+    /* 원본은 모바일에서 .hero-bg 를 통째로 숨긴다 — 별은 살리고 네트워크선만 숨김 */
+    #s1 .hero-bg{ display:block; }
+    #s1 .hero-bg svg.net{ display:none; }
+    #s1 .milky{ height:70%; }
   }
   .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; }
   .hero-bg svg{ width:100%; height:100%; display:block; }
@@ -835,7 +870,9 @@
   <!-- ============ 1. HERO ============ -->
   <section id="s1">
     <div class="hero-bg">
-      <svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <div class="milky"></div>
+      <canvas class="star-canvas" id="starCanvas" aria-hidden="true"></canvas>
+      <svg class="net" viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <g>
           <line x1="1003" y1="452" x2="1003" y2="659" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
           <line x1="1003" y1="659" x2="1019" y2="490" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
@@ -2252,5 +2289,71 @@
   })();
 </script>
 
+  <script>
+  /* 별 생성기 — 시드 고정이라 새로고침해도 같은 하늘이 나온다. */
+  (function(){
+    var c = document.getElementById('starCanvas');
+    if(!c || !c.getContext) return;
+    var ctx = c.getContext('2d');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var stars = [], w = 0, h = 0, raf = 0;
+
+    function build(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = c.getBoundingClientRect();
+      w = r.width; h = r.height;
+      if(!w || !h) return false;
+      c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var s = 20260908;
+      function rnd(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }
+      var n = Math.round(w * h / 2400);
+      stars = [];
+      for(var i = 0; i < n; i++){
+        var y = rnd();
+        stars.push({
+          x: rnd() * w,
+          y: y * h,
+          r: rnd() * 0.95 + 0.22,
+          a: (rnd() * 0.75 + 0.15) * (1 - y * 0.55),   /* 아래로 갈수록 옅게 — 지평선 헤이즈 */
+          p: rnd() * 6.283,
+          sp: rnd() * 0.9 + 0.25
+        });
+      }
+      return true;
+    }
+
+    function draw(t){
+      ctx.clearRect(0, 0, w, h);
+      for(var i = 0; i < stars.length; i++){
+        var st = stars[i];
+        var tw = reduce ? 1 : (0.72 + 0.28 * Math.sin(t / 1400 * st.sp + st.p));
+        var a = st.a * tw;
+        if(a <= 0) continue;
+        ctx.fillStyle = '#EAF2FF';
+        ctx.globalAlpha = a;
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283); ctx.fill();
+        if(st.r > 0.95){                                /* 밝은 별에만 헤일로 */
+          ctx.globalAlpha = a * 0.20;
+          ctx.beginPath(); ctx.arc(st.x, st.y, st.r * 3.6, 0, 6.283); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      if(!reduce) raf = requestAnimationFrame(draw);
+    }
+
+    function start(){
+      if(!build()) return;
+      cancelAnimationFrame(raf);
+      if(reduce) draw(0); else raf = requestAnimationFrame(draw);
+    }
+
+    start();
+    var tid;
+    window.addEventListener('resize', function(){
+      clearTimeout(tid); tid = setTimeout(start, 180);
+    });
+  })();
+  </script>
 </body>
 </html>
