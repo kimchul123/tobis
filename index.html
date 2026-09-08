@@ -283,6 +283,9 @@
   .pa-note{ margin-top:24px; padding-top:18px; border-top:1px solid var(--line-deep); font-size:13px; color:var(--text-faint); line-height:1.8; }
 
   @media (max-width:640px){
+    .ba-head{ gap:10px; align-items:center; }
+    .ba-head h3{ font-size:20px; }
+    #s4FlipBtn{ padding:6px 10px; font-size:10.5px; }
     .pa-entry-grid{ grid-template-columns:1fr 1fr; }
   }
 
@@ -386,6 +389,9 @@
   .answer-card p{ font-size:13.5px; color:rgba(var(--text-base),.65); line-height:1.7; }
 
   .ba-mini-wrap{ margin-top:36px; display:grid; grid-template-columns:1fr 60px 1fr; align-items:stretch; gap:8px; }
+  .ba-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:16px; }
+  .ba-head h3{ margin:0; min-width:0; }
+  #s4FlipBtn{ flex:0 0 auto; white-space:nowrap; padding:8px 16px; font-size:12px; cursor:pointer; background:none; font-family:inherit; }
   .ba-mini{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:22px 24px; display:flex; flex-direction:column; }
   .ba-mini .bm-eyebrow{ font-size:12px; color:var(--text-faint); margin-bottom:8px; }
   .ba-mini .bm-bold{ font-size:19px; font-weight:700; margin-bottom:16px; }
@@ -481,8 +487,8 @@
 
   .cl-bar{ display:flex; gap:6px; height:56px; margin-top:28px; margin-bottom:20px; }
   .cl-bar > div{ border-radius:10px; display:flex; align-items:center; overflow:hidden; }
-  .cl-bar .b80{ width:80%; background:#13513F; border:1px solid var(--cl-mint); color:#D6FBEC; padding-left:18px; font-weight:800; font-size:14px; }
-  .cl-bar .b20{ width:20%; background:#3B2C0E; border:1px solid var(--cl-amber); color:#FBE2B4; justify-content:center; font-weight:800; font-size:12px; }
+  .cl-bar .b80{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px; width:80%; background:#13513F; border:1px solid var(--cl-mint); color:#D6FBEC; padding-left:18px; font-weight:800; font-size:14px; }
+  .cl-bar .b20{ white-space:nowrap; padding:0 6px; width:20%; background:#3B2C0E; border:1px solid var(--cl-amber); color:#FBE2B4; justify-content:center; font-weight:800; font-size:12px; }
 
   .cl-split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .cl-panel{ border-radius:16px; padding:22px 24px; }
@@ -537,6 +543,9 @@
   .cl-foot{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint); margin-top:24px; }
 
   @media (max-width:900px){
+    .cl-bar{ height:52px; }
+    .cl-bar .b80{ font-size:13px; padding-left:14px; }
+    .cl-bar .b20{ font-size:11px; }
     .cl-hero{ grid-template-columns:1fr; gap:30px; }
     #s3d1 .okf-pipeline{ display:block; }
     #s3d1 .okf-arrow{ transform:none; padding:10px 0; }
@@ -1047,9 +1056,9 @@
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 03</div>
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
-          <h3 style="margin:0;">코드는 부산물입니다</h3>
-          <button id="s4FlipBtn" class="badge-pill new" style="padding:8px 16px; font-size:12px; cursor:pointer; background:none; font-family:inherit;">BEFORE · ~2025</button>
+        <div class="ba-head">
+          <h3>코드는 부산물입니다</h3>
+          <button id="s4FlipBtn" class="badge-pill new">BEFORE · ~2025</button>
         </div>
 
         <div class="ba-mini-wrap">

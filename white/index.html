@@ -283,6 +283,9 @@
   .pa-note{ margin-top:24px; padding-top:18px; border-top:1px solid var(--line-deep); font-size:13px; color:var(--text-faint); line-height:1.8; }
 
   @media (max-width:640px){
+    .ba-head{ gap:10px; align-items:center; }
+    .ba-head h3{ font-size:20px; }
+    #s4FlipBtn{ padding:6px 10px; font-size:10.5px; }
     .pa-entry-grid{ grid-template-columns:1fr 1fr; }
   }
 
@@ -386,6 +389,9 @@
   .answer-card p{ font-size:13.5px; color:rgba(var(--text-base),.65); line-height:1.7; }
 
   .ba-mini-wrap{ margin-top:36px; display:grid; grid-template-columns:1fr 60px 1fr; align-items:stretch; gap:8px; }
+  .ba-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:16px; }
+  .ba-head h3{ margin:0; min-width:0; }
+  #s4FlipBtn{ flex:0 0 auto; white-space:nowrap; padding:8px 16px; font-size:12px; cursor:pointer; background:none; font-family:inherit; }
   .ba-mini{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:22px 24px; display:flex; flex-direction:column; }
   .ba-mini .bm-eyebrow{ font-size:12px; color:var(--text-faint); margin-bottom:8px; }
   .ba-mini .bm-bold{ font-size:19px; font-weight:700; margin-bottom:16px; }
@@ -481,8 +487,8 @@
 
   .cl-bar{ display:flex; gap:6px; height:56px; margin-top:28px; margin-bottom:20px; }
   .cl-bar > div{ border-radius:10px; display:flex; align-items:center; overflow:hidden; }
-  .cl-bar .b80{ width:80%; background:#13513F; border:1px solid var(--cl-mint); color:#D6FBEC; padding-left:18px; font-weight:800; font-size:14px; }
-  .cl-bar .b20{ width:20%; background:#3B2C0E; border:1px solid var(--cl-amber); color:#FBE2B4; justify-content:center; font-weight:800; font-size:12px; }
+  .cl-bar .b80{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px; width:80%; background:#13513F; border:1px solid var(--cl-mint); color:#D6FBEC; padding-left:18px; font-weight:800; font-size:14px; }
+  .cl-bar .b20{ white-space:nowrap; padding:0 6px; width:20%; background:#3B2C0E; border:1px solid var(--cl-amber); color:#FBE2B4; justify-content:center; font-weight:800; font-size:12px; }
 
   .cl-split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
   .cl-panel{ border-radius:16px; padding:22px 24px; }
@@ -537,6 +543,9 @@
   .cl-foot{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint); margin-top:24px; }
 
   @media (max-width:900px){
+    .cl-bar{ height:52px; }
+    .cl-bar .b80{ font-size:13px; padding-left:14px; }
+    .cl-bar .b20{ font-size:11px; }
     .cl-hero{ grid-template-columns:1fr; gap:30px; }
     #s3d1 .okf-pipeline{ display:block; }
     #s3d1 .okf-arrow{ transform:none; padding:10px 0; }
@@ -885,7 +894,6 @@
   .pa-filters button.active{ background:var(--ink); border-color:var(--ink); color:#FFFFFF; }
 
   /* 문의 폼 */
-  .contact-panel{ background:#FFFFFF; border-color:rgba(14,20,32,.10); box-shadow:0 8px 30px rgba(14,20,32,.05); }
   input, textarea, select{ background:#FFFFFF; border-color:rgba(14,20,32,.16); color:var(--ink); }
   ::placeholder{ color:rgba(14,20,32,.38); }
 
@@ -928,6 +936,67 @@
   .cl-contact{ background:#EAF1FC; }
   .cl-cinfo a.tel{ color:var(--ink); }
   .mobile-menu-close{ background:rgba(14,20,32,.06); color:var(--ink); }
+
+  /* ================================================================
+     CI 정합 (Pantone 2727C #1A87FE / Pantone 419C #2B2B2B)
+       · #1A87FE 는 '브랜드 색'이지 '본문 글자색'이 아니다 — 흰 배경 3.6:1.
+         채움 · 보더 · 큰 활자 · 그래픽에는 CI 원색 그대로 쓰고,
+         작은 글자에만 명도를 낮춘 --blue-ink 를 쓴다.
+       · Secondary #2B2B2B 를 중립 다크(잉크)로 채택.
+     ================================================================ */
+  :root{
+    --blue:#1A87FE;        /* CI Primary — 원색 그대로 */
+    --blue-ink:#0F5FD6;    /* 작은 글자 전용 (흰 배경 5.8:1) */
+    --ink:#2B2B2B;         /* CI Secondary */
+    --text-base:43,43,43;
+  }
+  #s1, #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{
+    --text-base:43,43,43;
+    --white:#2B2B2B;
+    --line:rgba(43,43,43,.10);
+  }
+
+  /* 작은 글자는 딥 톤으로 — 가독성 확보 */
+  .sec-eyebrow, .close-eyebrow, .sol-tag, .cv-sub, .cl-brand,
+  .pa-entry-client, .cl-step .n, .cv-prob .n, .cv-flow-stage .k,
+  .galaxy-detail .gd-tag, .okf-final-tag span, #s2 .proof-open span,
+  .cl-mini-a, .cl-addflow .n, .cl-contact .k, .pillars b{ color:var(--blue-ink); }
+
+  /* ---------- 임팩트 ① 브랜드 블루에 큰 자리를 준다 ---------- */
+  .hero-stats b{ color:var(--blue); font-weight:700; }
+  .pa-stat b{ color:var(--blue); }
+  .btn-primary{ background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 8px 22px rgba(26,135,254,.28); }
+  .btn-primary:hover{ background:#0F5FD6; border-color:#0F5FD6; }
+  .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  h1.hero-h em{ color:var(--blue); }
+
+  /* ---------- 임팩트 ② 결론 장을 다크 밴드로 — 흰 페이지의 앵커 ----------
+     CI 가이드가 '배경색에 따른 활용안'으로 다크 배경 로고를 규정하므로
+     Secondary(#2B2B2B) 위 화이트 로고/텍스트는 브랜드 규정 안이다. */
+  #s3c8{
+    --bg-deep:#2B2B2B;
+    --text-base:255,255,255;
+    --white:#FFFFFF;
+    --line:rgba(255,255,255,.12);
+    background:#2B2B2B;
+    color:#FFFFFF;
+  }
+  #s3c8 .cv-sub{ color:#6FB4FF; }
+  #s3c8 .cv-lead{ color:rgba(255,255,255,.68); }
+  #s3c8 .btn-primary{ box-shadow:0 10px 28px rgba(26,135,254,.4); }
+
+  /* 레이아웃 래퍼에는 배경을 주지 않는다 — .contact-panel 은 max-width 컨테이너일 뿐 */
+  .contact-map{ background:linear-gradient(160deg,#EEF3FA 0%,#E3EAF4 100%); }
+  .field label{ color:rgba(43,43,43,.72); }
+  .contact-note{ color:rgba(43,43,43,.5); }
+  /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
+  #s3c8 .cv-val{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
+  #s3c8 .cv-val .k{ color:#6FB4FF; }
+  #s3c8 .cv-val .row{ border-top-color:rgba(255,255,255,.12); }
+  #s3c8 .cv-val .row span:first-child{ color:rgba(255,255,255,.45); }
+  #s3c8 .cv-val .row span:last-child{ color:rgba(255,255,255,.82); }
 </style>
 </head>
 <body>
@@ -1036,18 +1105,18 @@
             <path d="M0,168 C280,168 520,150 720,125" stroke="#0B7A6D" stroke-width="1.5" fill="none"/>
             <line x1="720" y1="125" x2="1000" y2="125" stroke="#0F5FD6" stroke-width="1.5"/>
 
-            <circle cx="150" cy="45" r="4" fill="rgba(14,20,32,.35)"/>
-            <circle cx="350" cy="58" r="4" fill="rgba(14,20,32,.35)"/>
-            <circle cx="550" cy="88" r="4" fill="rgba(14,20,32,.35)"/>
+            <circle cx="150" cy="45" r="4" fill="rgba(43,43,43,.35)"/>
+            <circle cx="350" cy="58" r="4" fill="rgba(43,43,43,.35)"/>
+            <circle cx="550" cy="88" r="4" fill="rgba(43,43,43,.35)"/>
             <circle cx="720" cy="125" r="7" fill="#0F5FD6"/>
-            <circle cx="960" cy="125" r="5" fill="none" stroke="rgba(14,20,32,.5)" stroke-width="1.5"/>
+            <circle cx="960" cy="125" r="5" fill="none" stroke="rgba(43,43,43,.5)" stroke-width="1.5"/>
 
-            <line x1="0" y1="186" x2="1000" y2="186" stroke="rgba(14,20,32,.1)" stroke-width="1"/>
-            <text x="150" y="206" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2023</text>
-            <text x="350" y="206" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2024</text>
-            <text x="550" y="206" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2025</text>
+            <line x1="0" y1="186" x2="1000" y2="186" stroke="rgba(43,43,43,.1)" stroke-width="1"/>
+            <text x="150" y="206" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2023</text>
+            <text x="350" y="206" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2024</text>
+            <text x="550" y="206" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2025</text>
             <text x="720" y="206" text-anchor="middle" fill="#1A6FD8" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace">2026.09 · TODAY</text>
-            <text x="960" y="206" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2027.03</text>
+            <text x="960" y="206" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="11" font-family="IBM Plex Mono, monospace">2027.03</text>
           </svg>
           <svg class="thc-mobile" viewBox="0 0 360 304" xmlns="http://www.w3.org/2000/svg">
             <text x="0" y="18" fill="#1A6FD8" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace">DOMAIN · 도메인 20년</text>
@@ -1056,18 +1125,18 @@
             <path d="M0,190 C110,190 190,165 250,150" stroke="#0B7A6D" stroke-width="3" fill="none"/>
             <line x1="250" y1="150" x2="360" y2="150" stroke="#0F5FD6" stroke-width="3"/>
 
-            <circle cx="55" cy="61" r="4" fill="rgba(14,20,32,.3)"/>
-            <circle cx="120" cy="79" r="4" fill="rgba(14,20,32,.3)"/>
-            <circle cx="185" cy="116" r="4" fill="rgba(14,20,32,.3)"/>
+            <circle cx="55" cy="61" r="4" fill="rgba(43,43,43,.3)"/>
+            <circle cx="120" cy="79" r="4" fill="rgba(43,43,43,.3)"/>
+            <circle cx="185" cy="116" r="4" fill="rgba(43,43,43,.3)"/>
             <circle cx="250" cy="150" r="8" fill="#0F5FD6"/>
-            <circle cx="350" cy="150" r="6" fill="none" stroke="rgba(14,20,32,.5)" stroke-width="2"/>
+            <circle cx="350" cy="150" r="6" fill="none" stroke="rgba(43,43,43,.5)" stroke-width="2"/>
 
-            <line x1="0" y1="212" x2="360" y2="212" stroke="rgba(14,20,32,.1)" stroke-width="1.5"/>
-            <text x="55" y="236" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2023</text>
-            <text x="160" y="236" text-anchor="middle" fill="rgba(14,20,32,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2025</text>
+            <line x1="0" y1="212" x2="360" y2="212" stroke="rgba(43,43,43,.1)" stroke-width="1.5"/>
+            <text x="55" y="236" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2023</text>
+            <text x="160" y="236" text-anchor="middle" fill="rgba(43,43,43,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2025</text>
             <text x="250" y="236" text-anchor="middle" fill="#1A6FD8" font-size="14" font-weight="700" font-family="IBM Plex Mono, monospace">2026.09</text>
             <text x="250" y="254" text-anchor="middle" fill="#1A6FD8" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace">TODAY</text>
-            <text x="360" y="236" text-anchor="end" fill="rgba(14,20,32,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2027</text>
+            <text x="360" y="236" text-anchor="end" fill="rgba(43,43,43,.4)" font-size="14" font-family="IBM Plex Mono, monospace">2027</text>
 
             <text x="0" y="296" fill="#0B7A6D" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace">AI · 프롬프트 → 컨텍스트 → 하네스</text>
           </svg>
@@ -1087,7 +1156,7 @@
 
         <div class="trend-timeline">
           <svg viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg" id="tlSvg">
-            <line x1="115" y1="45" x2="945" y2="45" stroke="rgba(14,20,32,.16)" stroke-width="1.5"/>
+            <line x1="115" y1="45" x2="945" y2="45" stroke="rgba(43,43,43,.16)" stroke-width="1.5"/>
             <line x1="115" y1="45" x2="530" y2="45" stroke="#1A6FD8" stroke-width="2"/>
 
             <g class="tl-node" data-idx="0" style="cursor:pointer;">
@@ -1163,16 +1232,16 @@
             const dot = g.querySelector('.tl-dot');
             const name = g.querySelector('.tl-name');
             const word = g.querySelector('.tl-word');
-            era.setAttribute('fill', isActive ? '#1A6FD8' : 'rgba(14,20,32,.4)');
+            era.setAttribute('fill', isActive ? '#1A6FD8' : 'rgba(43,43,43,.4)');
             era.setAttribute('font-weight', isActive ? '700' : '400');
-            name.setAttribute('fill', isActive ? '#0E1420' : 'rgba(14,20,32,.55)');
-            word.setAttribute('fill', isActive ? 'rgba(11,122,109,.9)' : 'rgba(14,20,32,.32)');
+            name.setAttribute('fill', isActive ? '#2B2B2B' : 'rgba(43,43,43,.55)');
+            word.setAttribute('fill', isActive ? 'rgba(11,122,109,.9)' : 'rgba(43,43,43,.32)');
             if (isEmpty) {
               dot.setAttribute('fill', 'none');
-              dot.setAttribute('stroke', isActive ? '#1A6FD8' : 'rgba(14,20,32,.4)');
+              dot.setAttribute('stroke', isActive ? '#1A6FD8' : 'rgba(43,43,43,.4)');
               dot.setAttribute('stroke-width', '1.5');
             } else {
-              dot.setAttribute('fill', isActive ? '#0F5FD6' : 'rgba(14,20,32,.3)');
+              dot.setAttribute('fill', isActive ? '#0F5FD6' : 'rgba(43,43,43,.3)');
               dot.removeAttribute('stroke');
             }
           });
@@ -1191,9 +1260,9 @@
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="kicker">PERSPECTIVE - 03</div>
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
-          <h3 style="margin:0;">코드는 부산물입니다</h3>
-          <button id="s4FlipBtn" class="badge-pill new" style="padding:8px 16px; font-size:12px; cursor:pointer; background:none; font-family:inherit;">BEFORE · ~2025</button>
+        <div class="ba-head">
+          <h3>코드는 부산물입니다</h3>
+          <button id="s4FlipBtn" class="badge-pill new">BEFORE · ~2025</button>
         </div>
 
         <div class="ba-mini-wrap">
@@ -1207,7 +1276,7 @@
           <div class="ba-mini">
             <div class="bm-eyebrow" id="s4RightKicker">원본</div>
             <div class="bm-bold" id="s4RightLabel" style="opacity:1; transition:opacity .6s ease;">코드</div>
-            <div class="bm-bar" id="s4RightBar" style="height:56px; background:rgba(14,20,32,.35);"></div>
+            <div class="bm-bar" id="s4RightBar" style="height:56px; background:rgba(43,43,43,.35);"></div>
             <p id="s4RightNote">코드가 유일한 진실이었고, 사람이 직접 썼다.</p>
           </div>
         </div>
@@ -1365,20 +1434,20 @@
             </defs>
 
             <ellipse cx="600" cy="205" rx="620" ry="150" fill="url(#band)" transform="rotate(-7 600 205)"/>
-            <line x1="392" y1="46" x2="392" y2="360" stroke="rgba(14,20,32,.1)" stroke-width="1" stroke-dasharray="4 8"/>
-            <line x1="852" y1="46" x2="852" y2="360" stroke="rgba(14,20,32,.1)" stroke-width="1" stroke-dasharray="4 8"/>
+            <line x1="392" y1="46" x2="392" y2="360" stroke="rgba(43,43,43,.1)" stroke-width="1" stroke-dasharray="4 8"/>
+            <line x1="852" y1="46" x2="852" y2="360" stroke="rgba(43,43,43,.1)" stroke-width="1" stroke-dasharray="4 8"/>
 
-            <text x="196" y="34" text-anchor="middle" fill="rgba(14,20,32,.72)" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">FADING · 저물어 가는</text>
+            <text x="196" y="34" text-anchor="middle" fill="rgba(43,43,43,.72)" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">FADING · 저물어 가는</text>
             <text x="622" y="34" text-anchor="middle" fill="#1A6FD8" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">PEAK · 지금 가장 밝은</text>
             <text x="1026" y="34" text-anchor="middle" fill="#0B7A6D" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">FORMING · 새로 태어나는</text>
 
             <g id="starsGroup"></g>
             <g id="labelsGroup"></g>
 
-            <line x1="30" y1="392" x2="1170" y2="392" stroke="rgba(14,20,32,.12)" stroke-width="1"/>
-            <circle cx="150" cy="392" r="3.5" fill="rgba(14,20,32,.35)"/>
-            <text x="150" y="416" text-anchor="middle" fill="rgba(14,20,32,.6)" font-size="12" font-family="IBM Plex Mono, monospace">2024</text>
-            <circle cx="622" cy="392" r="7" fill="#0E1420" stroke="#0F5FD6" stroke-width="3"/>
+            <line x1="30" y1="392" x2="1170" y2="392" stroke="rgba(43,43,43,.12)" stroke-width="1"/>
+            <circle cx="150" cy="392" r="3.5" fill="rgba(43,43,43,.35)"/>
+            <text x="150" y="416" text-anchor="middle" fill="rgba(43,43,43,.6)" font-size="12" font-family="IBM Plex Mono, monospace">2024</text>
+            <circle cx="622" cy="392" r="7" fill="#2B2B2B" stroke="#0F5FD6" stroke-width="3"/>
             <text x="622" y="418" text-anchor="middle" fill="#1A6FD8" font-size="12.5" font-weight="500" font-family="IBM Plex Mono, monospace">2026.09 · TODAY</text>
             <circle cx="1060" cy="392" r="6" fill="none" stroke="rgba(11,122,109,.8)" stroke-width="2" stroke-dasharray="3 3"/>
             <text x="1060" y="418" text-anchor="middle" fill="rgba(11,122,109,.9)" font-size="12.5" font-family="IBM Plex Mono, monospace">2027 · 예측</text>
@@ -1516,7 +1585,7 @@
             haloEls[idx].setAttribute('opacity', on ? '1' : (s.phase === 'fading' ? '.5' : '.75'));
             ringEls[idx].setAttribute('stroke', on ? pal.ring.replace(/[.]\d+\)/,'1)') : 'transparent');
             ringEls[idx].setAttribute('stroke-dasharray', s.phase === 'peak' ? 'none' : '2 4');
-            labelEls[idx].setAttribute('fill', on ? '#0E1420' : pal.label);
+            labelEls[idx].setAttribute('fill', on ? '#2B2B2B' : pal.label);
             labelEls[idx].setAttribute('font-weight', on ? 800 : s.weight);
           });
           const s = stars[active];
