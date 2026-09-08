@@ -633,13 +633,6 @@
 
   .cv-callout{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line-deep); font-size:14px; font-weight:500; line-height:1.7; max-width:760px; }
 
-  .cv-flow{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  .cv-flow-stage{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:20px 18px; }
-  .cv-flow-stage .k{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--blue-soft); margin-bottom:8px; }
-  .cv-flow-stage h4{ font-size:14px; font-weight:700; margin-bottom:10px; }
-  .cv-flow-stage ul{ list-style:none; }
-  .cv-flow-stage li{ font-size:13px; color:rgba(var(--text-base),.6); padding:6px 0; border-top:1px solid var(--line-deep); }
-  .cv-flow-stage li:first-child{ border-top:none; }
 
   .cv-pillars2{ margin-top:28px; display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--line-deep); border:1px solid var(--line-deep); }
   .cv-pillar2{ background:var(--bg-deep); padding:16px 12px; }
@@ -813,7 +806,7 @@
     .proj-grid{ grid-template-columns:1fr 1fr; }
     .sol-wrap{ grid-template-columns:1fr; }
     .sol-visual{ width:100%; max-width:460px; margin:28px auto 0; }
-    .cv-stat-row, .cv-prob-row, .cv-flow, .cv-val-row, .cv-hitl-row{ grid-template-columns:1fr; }
+    .cv-stat-row, .cv-prob-row, .cv-val-row, .cv-hitl-row{ grid-template-columns:1fr; }
     #s2 .cv-prob-row{ grid-template-columns:1fr; }
     #s2 .proof-open{ flex-wrap:wrap; }
     #s2 .proof-open span{ margin-left:0; width:100%; }
@@ -957,7 +950,6 @@
   .trend-split,
   .cv-prob,
   .cv-val,
-  .cv-flow-stage,
   .cv-stat,
   .cl-wf .c,
   .okf-node,
@@ -1054,7 +1046,7 @@
 
   /* 작은 글자는 딥 톤으로 — 가독성 확보 */
   .sec-eyebrow, .close-eyebrow, .sol-tag, .cv-sub, .cl-brand,
-  .pa-entry-client, .cl-step .n, .cv-prob .n, .cv-flow-stage .k,
+  .pa-entry-client, .cl-step .n, .cv-prob .n,
   .galaxy-detail .gd-tag, .okf-final-tag span, #s2 .proof-open span,
   .cl-mini-a, .cl-addflow .n, .cl-contact .k, .pillars b{ color:var(--blue-ink); }
 
@@ -1890,7 +1882,7 @@
           <div class="c last"><div class="t">사람 승인 (HITL)</div><div class="d">설계사 · 심사자 최종 확인</div></div>
         </div>
 
-        <div class="cl-subh" style="margin-top:44px;">이 흐름을 5명의 Specialist Agent가 분담합니다</div>
+        <div class="cl-subh" style="margin-top:44px;">Planner가 요청을 분석해 5개 Agent에 분담합니다</div>
         <div class="concept-diagram" aria-hidden="true">
           <svg class="cd-desktop" viewBox="0 0 1000 476" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans KR', sans-serif">
             <rect x="388" y="6" width="224" height="34" rx="17" fill="none" stroke="currentColor" stroke-opacity=".28"/>
@@ -1976,24 +1968,7 @@
           </svg>
         </div>
 
-        <div class="cv-flow" style="margin-top:32px;">
-          <div class="cv-flow-stage">
-            <div class="k">① PLAN</div>
-            <h4>Planner 오케스트레이터</h4>
-            <ul><li>자연어 요청을 분석해 워크플로우를 계획하고, 각 Specialist Agent에게 업무를 분담합니다.</li></ul>
-          </div>
-          <div class="cv-flow-stage">
-            <div class="k">② EXECUTE</div>
-            <h4>5 Specialist Agents</h4>
-            <ul><li>NLU·상품추천·설계추천·룰체크·에이전트관리, 5개 전문 Agent가 병렬로 다중 검증을 수행합니다.</li></ul>
-          </div>
-          <div class="cv-flow-stage">
-            <div class="k">③ REVIEW</div>
-            <h4>Human-in-the-Loop</h4>
-            <ul><li>최종 설계안은 사람이 검수·승인합니다 — AI는 추천하고, 결정은 사람이 합니다.</li></ul>
-          </div>
-        </div>
-
+        <div class="cl-subh" style="margin-top:44px;">5개 Specialist Agent가 맡는 일</div>
         <div class="cv-prob-row">
           <div class="cv-prob">
             <div class="n">01 · NLU Agent</div>
@@ -2022,7 +1997,7 @@
           </div>
         </div>
 
-        <div class="cl-subh" style="margin-top:44px;">AI는 추천, 결정은 사람이 — Pre · During · Post 3단 통제</div>
+        <div class="cl-subh" style="margin-top:44px;">Pre · During · Post — 3단 통제</div>
         <div class="cv-hitl-row">
           <div class="cv-hitl">
             <div class="n">PRE</div>
