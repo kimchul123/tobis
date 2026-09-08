@@ -664,6 +664,11 @@
   .cv-prob .n{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--blue-soft); margin-bottom:10px; }
   .cv-prob h4{ font-size:14.5px; font-weight:700; margin-bottom:8px; }
   .cv-prob p{ font-size:13.5px; color:rgba(var(--text-base),.6); line-height:1.65; }
+  /* 링크로 쓰이는 카드 — 현재는 PERSPECTIVE 01 의 AI 카드가 02 로 이어진다 */
+  a.cv-prob{ display:block; text-decoration:none; color:inherit; transition:border-color .2s ease, background .2s ease; }
+  a.cv-prob:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); }
+  a.cv-prob .n::after{ content:" ↗"; opacity:0; transition:opacity .2s ease; }
+  a.cv-prob:hover .n::after{ opacity:1; }
   #s2 .cv-prob-row{ grid-template-columns:repeat(2,1fr); }
   #s2 .cv-prob{ position:relative; padding-left:20px; }
   #s2 .cv-prob::before{ content:""; position:absolute; left:0; top:20px; bottom:20px; width:2px; border-radius:2px; background:linear-gradient(var(--blue-soft), var(--teal)); }
@@ -1407,8 +1412,8 @@
             <!-- 두 선 사이의 간격 — 오늘 닫힌다 -->
             <path d="M0,46 C340,46 570,105 760,168 C570,205 340,232 0,232 Z" fill="url(#thcWedge)"/>
 
-            <text x="0" y="30" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN — 보험 · 금융 · 제조 20년</text>
-            <text x="0" y="256" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI — 프롬프트 → 컨텍스트 → 하네스</text>
+            <text x="0" y="30" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN — 20년 쌓아 온 것</text>
+            <text x="0" y="256" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI — 반년마다 새로 배우는 것</text>
 
             <line x1="760" y1="40" x2="760" y2="272" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
 
@@ -1445,7 +1450,7 @@
 
             <path d="M0,58 C110,58 190,110 250,150 C190,180 110,205 0,205 Z" fill="url(#thcWedgeM)"/>
 
-            <text x="0" y="18" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN · 도메인 20년</text>
+            <text x="0" y="18" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN · 20년 쌓아 온 것</text>
 
             <line x1="250" y1="44" x2="250" y2="232" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
 
@@ -1464,21 +1469,21 @@
             <text x="250" y="256" text-anchor="middle" font-size="14" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">2026.09</text>
             <text x="250" y="274" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">지금</text>
 
-            <text x="0" y="298" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI · 프롬프트 → 컨텍스트 → 하네스</text>
+            <text x="0" y="298" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI · 반년마다 새로 배우는 것</text>
           </svg>
         </div>
 
         <div class="cv-prob-row">
           <div class="cv-prob">
             <div class="n">DOMAIN</div>
-            <h4>보험 · 금융 · 제조 20년</h4>
+            <h4>보험 · 금융 20년</h4>
             <p>무엇을 만들어야 하는지 아는 쪽입니다 — 업무 규칙과 예외가 어디에 숨어 있는지 압니다.</p>
           </div>
-          <div class="cv-prob">
+          <a class="cv-prob" href="#s1c2">
             <div class="n">AI</div>
-            <h4>프롬프트 → 컨텍스트 → 하네스</h4>
-            <p>어떻게 만드는지 아는 쪽입니다 — 반년마다 바뀌는 방식을 현장에서 따라잡아 왔습니다.</p>
-          </div>
+            <h4>반년마다 바뀌는 방식</h4>
+            <p>어떻게 만드는지 아는 쪽입니다 — 방식이 바뀔 때마다 현장에서 따라잡아 왔습니다.</p>
+          </a>
           <div class="cv-prob">
             <div class="n">교차점</div>
             <h4>CoverLink</h4>
@@ -1486,7 +1491,7 @@
           </div>
         </div>
 
-        <div class="trend-tagline">AI Sales Accelerator · 보험 · 금융 · 제조 도메인 × 최신 AI</div>
+        <div class="trend-tagline">AI Sales Accelerator · 보험 · 금융 도메인 × 최신 AI</div>
       </div>
     </div>
   </section>
