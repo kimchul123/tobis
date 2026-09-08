@@ -2157,7 +2157,6 @@
         <div class="pa-stat-row" style="margin-top:28px;">
           <div class="pa-stat"><b>24</b><span>개월간 AI 프로젝트 수행</span></div>
           <div class="pa-stat"><b>4</b><span>국내 대기업 AI 프로젝트</span></div>
-          <div class="pa-stat"><b>0</b><span>오픈 지연 건수</span></div>
         </div>
 
         <div class="trend-track-grid" style="margin-top:32px;">
@@ -2286,8 +2285,8 @@
       </div>
 
       <div class="pa-filters" id="paFilters">
-        <button class="active" data-range="all">전체</button>
-        <button data-range="2026">2026</button>
+        <button data-range="all">전체</button>
+        <button class="active" data-range="2026">2026</button>
         <button data-range="2025-2022">2025-2022</button>
         <button data-range="2021-2016">2021-2016</button>
         <button data-range="2015-2012">2015-2012</button>
@@ -2401,7 +2400,7 @@
         <div class="c"><div class="t">업무설계</div><div class="d">핵심 업무경험 20년 — 판단 기준과 예외를 위키로 씁니다</div></div>
         <div class="c"><div class="t">TA · AA</div><div class="d">기술 · 응용 아키텍처 — 자사 메타와 생성 규격을 정의합니다</div></div>
         <div class="c"><div class="t">개발</div><div class="d">가입설계 · 청약 · 전자청약 — 영업채널 최다 전문 개발자</div></div>
-        <div class="c last"><div class="t">PM</div><div class="d">금융 SI 현장 PM — 오픈 지연 0건을 지켜 왔습니다</div></div>
+        <div class="c last"><div class="t">PM</div><div class="d">금융 SI 현장 PM — 일정과 품질을 끝까지 책임집니다</div></div>
       </div>
 
       <p class="team-statement">이 다섯이 쓴 것이 커버링크의 원본이 됩니다. <b>나머지는 플랫폼이 생성합니다.</b></p>
@@ -2582,16 +2581,21 @@
   (function(){
     const buttons = document.querySelectorAll('#paFilters button');
     const blocks = document.querySelectorAll('.pa-year-block');
+    function apply(range){
+      blocks.forEach(block=>{
+        block.classList.toggle('hidden', range !== 'all' && block.dataset.range !== range);
+      });
+    }
     buttons.forEach(btn=>{
       btn.addEventListener('click', ()=>{
         buttons.forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        const range = btn.dataset.range;
-        blocks.forEach(block=>{
-          block.classList.toggle('hidden', range !== 'all' && block.dataset.range !== range);
-        });
+        apply(btn.dataset.range);
       });
     });
+    /* 초기 진입 시 기본 활성 버튼(2026) 기준으로 한 번 적용한다 */
+    const initial = document.querySelector('#paFilters button.active');
+    apply(initial ? initial.dataset.range : 'all');
   })();
 </script>
 
