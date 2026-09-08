@@ -25,6 +25,23 @@
     --blue-soft:#4fa4ff;
     --text-faint:rgba(var(--text-base),.4);
     --input-bg:#12182a;
+    /* 인라인 SVG 색 — 테마 전환을 위해 변수로 뺀다 (다크 기본값) */
+    --sv-blue:#1a87fe;
+    --sv-blue-soft:#4fa4ff;
+    --sv-teal:#17c3b2;
+    --sv-mint:#22D3A5;
+    --sv-peak:#7FBEFF;
+    --sv-dim:#4B5563;
+    --sv-gray:#9AA3B2;
+    --sv-core-blue:#EAF4FF;
+    --sv-core-mint:#EAFFF8;
+    --sv-bg:#0a0e17;
+    --sv-ink:255,255,255;
+    --sv-ink2:232,236,243;
+    --sv-mint-rgb:34,211,165;
+    --sv-teal-rgb:23,195,178;
+    --sv-gray-rgb:154,163,178;
+    --sv-peak-rgb:127,190,255;
     color-scheme:dark;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -201,7 +218,7 @@
     opacity:0; transform:translateY(16px);
     animation:rise .8s .75s ease forwards;
   }
-  .pillars div{
+  .pillars div, .pillars a{
     position:relative;
     background:var(--pillar-overlay);
     backdrop-filter:blur(18px);
@@ -209,6 +226,11 @@
     border:1px solid rgba(var(--text-base),.14);
     border-radius:14px; padding:26px 22px;
   }
+  /* 히어로 카드 — 각 섹션으로 이동한다 */
+  .pillars a{ text-decoration:none; color:inherit; display:block; transition:border-color .2s ease, background .2s ease; }
+  .pillars a:hover{ border-color:var(--blue); }
+  .pillars a b::after{ content:" ↗"; opacity:0; transition:opacity .2s ease; }
+  .pillars a:hover b::after{ opacity:1; }
   .pillars b{ display:block; font-size:16px; font-weight:700; color:var(--blue); word-break:keep-all; }
   .pillars small{ display:block; margin-top:12px; font-size:14px; color:rgba(var(--text-base),.62); line-height:1.6; word-break:keep-all; }
 
@@ -924,7 +946,331 @@
     /* 좁은 화면은 콘텐츠가 폭을 다 쓰므로 별먼지를 더 걷어낸다 */
     .dust{ opacity:.5; }
   }
+
+  /* ---------- 테마 토글 — 변수만 쓰므로 라이트에서 자동 대응 ---------- */
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; margin-left:18px; padding:0; flex-shrink:0;
+    background:transparent; border:1px solid rgba(var(--text-base),.3);
+    border-radius:10px; color:rgba(var(--text-base),.88); cursor:pointer;
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .theme-toggle:hover{ border-color:var(--blue); color:var(--blue-soft); background:rgba(26,135,254,.08); }
+  .theme-toggle:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+  .theme-toggle svg{ display:block; }
+  /* 바꿀 대상을 보여 준다 — 다크에서는 해, 라이트에서는 달 */
+  .theme-toggle .tt-moon{ display:none; }
+  [data-theme="light"] .theme-toggle .tt-moon{ display:block; }
+  [data-theme="light"] .theme-toggle .tt-sun{ display:none; }
+  @media (max-width:880px){ .theme-toggle{ margin-left:10px; width:36px; height:36px; } }
 </style>
+
+<!-- 라이트 테마 — media 로 켜고 끈다. 기본은 꺼짐(다크). 내용은 기존 화이트 빌드와 동일 -->
+<style id="themeLight" media="not all">
+  /* ================================================================
+     WHITE VERSION (2안) — 라이트 팔레트 · 풀버전
+     다크 원본의 반전이 아니라, 밝은 화면의 명도 위계로 다시 잡음.
+       · 바탕은 순백이 아닌 한랭 오프화이트(브랜드 블루 쪽 미세 편향)
+       · 카드는 순백 + 헤어라인 — 밝은 배경에서 '떠오름'은 대비로 표현
+       · 액센트는 흰 배경 대비 4.5:1을 넘도록 재보정
+     ================================================================ */
+  :root{
+    --ink:#0E1420;
+    --ink-soft:#5A6675;
+    --bg:#F5F8FC;
+    --bg-deep:#F5F8FC;
+    --blue:#0F5FD6;
+    --blue-deep:#0A47A3;
+    --blue-soft:#1A6FD8;
+    --teal:#0B7A6D;
+    --white:#0E1420;
+    --input-bg:#FFFFFF;
+    --line:rgba(14,20,32,.10);
+    --text-base:14,20,32;
+    --pillar-overlay:rgba(255,255,255,.92);
+    --cl-mint:#0B7A6D;
+    --cl-amber:#8A5A00;
+    --cl-card:#FFFFFF;
+    --cl-card2:#F0F5FB;
+    --cl-line:#D9E2ED;
+    --cl-line2:#E7EEF6;
+    color-scheme:light;
+  }
+
+  /* 다크 고정 블록 무력화 — id 특정도가 같아야 이기므로 뒤에서 재선언 */
+  #s1, #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{
+    --bg-deep:#F5F8FC;
+    --text-base:14,20,32;
+    --white:#0E1420;
+    --input-bg:#FFFFFF;
+    --line:rgba(14,20,32,.10);
+    color-scheme:light;
+  }
+
+  /* ---------- 히어로 ---------- */
+  #s1{
+    background:
+      radial-gradient(1100px 640px at 12% -8%, rgba(15,95,214,.13), transparent 62%),
+      radial-gradient(900px 560px at 96% 92%, rgba(11,122,109,.09), transparent 58%),
+      linear-gradient(165deg,#FFFFFF 0%,#EEF4FD 55%,#FFFFFF 100%);
+  }
+  #s1 .hero-bg line{ stroke:#0F5FD6; stroke-opacity:.14; }
+  #s1 .hero-bg circle[fill="#0F5FD6"]{ fill:#0F5FD6; }
+  #s1 .hero-bg circle[fill="#0B7A6D"]{ fill:#0B7A6D; }
+
+  /* ---------- 헤더 ---------- */
+  .header-bar{ background:rgba(245,248,252,.82); backdrop-filter:blur(14px); border-bottom:1px solid rgba(14,20,32,.07); }
+  .brandmark img.logo-white{ display:none; }
+  .brandmark img.logo-dark{ display:block; }
+  .topmenu a{ color:var(--ink-soft); }
+  .topmenu a:hover{ color:var(--ink); }
+  .hamburger span{ background:var(--ink); }
+  .mobile-menu{ background:rgba(245,248,252,.98); }
+  .mobile-menu a{ color:var(--ink); }
+
+  /* ---------- 카드 계열 — 오프화이트 위 순백 + 헤어라인 + 옅은 그림자 ---------- */
+  .pillars div, .pillars a,
+  .trend-track-card,
+  .trend-split,
+  .cv-prob,
+  .cv-val,
+  .cv-stat,
+  .cl-wf .c,
+  .okf-node,
+  .okf-answer,
+  .okf-slot,
+  .model-card,
+  .model-scroll-btn,
+  .ba-mini,
+  .answer-card,
+  .pa-entry{
+    background:#FFFFFF;
+    border-color:rgba(14,20,32,.10);
+    box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04);
+  }
+  .trend-track-card .tt-block{ background:#F3F7FC; border-color:rgba(14,20,32,.08); box-shadow:none; }
+  .okf-box{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 1px 2px rgba(15,95,214,.06), 0 10px 30px rgba(15,95,214,.07); }
+  .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  .okf-output-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .okf-final-tag span{ background:#FFFFFF; }
+  #s2 .proof-open{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 8px 24px rgba(15,95,214,.06); }
+  .tag-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .badge-pill{ background:#FFFFFF; }
+  .galaxy-detail{ background:#FFFFFF; box-shadow:0 8px 24px rgba(15,95,214,.06); }
+  .cl-wf .c.last{ background:#FFF8EC; border-color:#E3C489; }
+
+  /* 프로젝트 아카이브 필터 — 활성 버튼은 짙게 */
+  .pa-filters button{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .pa-filters button.active{ background:var(--ink); border-color:var(--ink); color:#FFFFFF; }
+
+  /* 문의 폼 */
+  input, textarea, select{ background:#FFFFFF; border-color:rgba(14,20,32,.16); color:var(--ink); }
+  ::placeholder{ color:rgba(14,20,32,.38); }
+
+  /* ---------- 은하 별자리 (#s1c7) — 발광을 밝은 배경용으로 재보정 ---------- */
+  #glowPeak stop:nth-child(1){ stop-color:#0F5FD6; stop-opacity:.30; }
+  #glowPeak stop:nth-child(2){ stop-color:#0F5FD6; stop-opacity:.15; }
+  #glowPeak stop:nth-child(3){ stop-color:#0F5FD6; stop-opacity:0; }
+  #glowNew  stop:nth-child(1){ stop-color:#0B7A6D; stop-opacity:.26; }
+  #glowNew  stop:nth-child(2){ stop-color:#0B7A6D; stop-opacity:.13; }
+  #glowNew  stop:nth-child(3){ stop-color:#0B7A6D; stop-opacity:0; }
+  #glowDim  stop:nth-child(1){ stop-color:#8894A6; stop-opacity:.22; }
+  #glowDim  stop:nth-child(2){ stop-color:#8894A6; stop-opacity:.11; }
+  #glowDim  stop:nth-child(3){ stop-color:#8894A6; stop-opacity:0; }
+  #band stop:nth-child(1){ stop-color:#8894A6; stop-opacity:.10; }
+  #band stop:nth-child(2){ stop-color:#0F5FD6; stop-opacity:.13; }
+  #band stop:nth-child(3){ stop-color:#0B7A6D; stop-opacity:.10; }
+  #galaxySvg line{ stroke:rgba(14,20,32,.16); }
+
+  /* ---------- 밝은 배경에서 흐려지는 보조 텍스트 보정 ---------- */
+  .cl-desc, .close-sub, .cv-lead, .okf-caption, .cl-wf .d,
+  .trend-track-card p, .pa-lead, .sec-desc, .team-statement{ color:rgba(14,20,32,.62); }
+  .cl-brand-en, .cl-meta, .tt-label, .mc-date, .pa-entry-date{ color:rgba(14,20,32,.45); }
+
+  /* 카드가 아닌 것들 — 배경 없이 색만 */
+  .pa-stat span{ color:rgba(14,20,32,.5); }
+  .cv-hitl{ border-top-color:rgba(14,20,32,.12); }
+  .pa-stat-row{ border-bottom-color:rgba(14,20,32,.12); }
+
+  /* ---------- CSS에 하드코딩된 다크 배경 — 라이트 대응 ----------
+     토큰을 안 타고 hex로 박혀 있어 팔레트 교체로는 안 바뀌던 것들.
+     SOLUTION 02(#s3d2)에서 글자가 묻히던 원인. */
+  .cl-panel.gen{ background:#EAF7F3; border:1px solid #A9DBD0; }
+  .cl-panel.human{ background:#FDF4E6; border:1px solid #E6C48D; }
+  .cl-step.hl{ background:#EAF1FC; border-color:var(--blue); }
+  .cl-bar .b80{ background:#0B7A6D; border-color:#0B7A6D; color:#FFFFFF; }
+  .cl-bar .b20{ background:#8A5A00; border-color:#8A5A00; color:#FFFFFF; }
+  .cl-mini-n.src{ color:#FFFFFF; background:var(--blue); border-color:var(--blue); }
+  .cl-mini-n.out{ color:#FFFFFF; background:var(--teal); border-color:var(--teal); }
+  .cl-addflow .a.done{ background:#EAF7F3; border-color:#A9DBD0; }
+  .cl-contact{ background:#EAF1FC; }
+  .cl-cinfo a.tel{ color:var(--ink); }
+  .mobile-menu-close{ background:rgba(14,20,32,.06); color:var(--ink); }
+
+  /* ================================================================
+     CI 정합 (Pantone 2727C #1A87FE / Pantone 419C #2B2B2B)
+       · #1A87FE 는 '브랜드 색'이지 '본문 글자색'이 아니다 — 흰 배경 3.6:1.
+         채움 · 보더 · 큰 활자 · 그래픽에는 CI 원색 그대로 쓰고,
+         작은 글자에만 명도를 낮춘 --blue-ink 를 쓴다.
+       · Secondary #2B2B2B 를 중립 다크(잉크)로 채택.
+     ================================================================ */
+  :root{
+    --blue:#1A87FE;        /* CI Primary — 원색 그대로 */
+    --blue-ink:#0F5FD6;    /* 작은 글자 전용 (흰 배경 5.8:1) */
+    --ink:#2B2B2B;         /* CI Secondary */
+    --text-base:43,43,43;
+  }
+  #s1, #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{
+    --text-base:43,43,43;
+    --white:#2B2B2B;
+    --line:rgba(43,43,43,.10);
+  }
+
+  /* 작은 글자는 딥 톤으로 — 가독성 확보 */
+  .sec-eyebrow, .close-eyebrow, .sol-tag, .cv-sub, .cl-brand,
+  .pa-entry-client, .cl-step .n, .cv-prob .n,
+  .galaxy-detail .gd-tag, .okf-final-tag span, #s2 .proof-open span,
+  .cl-mini-a, .cl-addflow .n, .cl-contact .k, .pillars b,
+  .okf-std-col.is-okf .okf-std-label, .okf-file .fpath, .okf-file .fkey,
+  .okf-std-arrow, .okf-std-note b,
+  a.okf-answer .oa-eyebrow::after{ color:var(--blue-ink); }
+
+  /* ---------- 임팩트 ① 브랜드 블루에 큰 자리를 준다 ---------- */
+  .hero-stats b{ color:var(--blue); font-weight:700; }
+  .pa-stat b{ color:var(--blue); }
+  .btn-primary{ background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 8px 22px rgba(26,135,254,.28); }
+  .btn-primary:hover{ background:#0F5FD6; border-color:#0F5FD6; }
+  .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  h1.hero-h em{ color:var(--blue); }
+
+  /* ---------- 임팩트 ② 결론 장을 다크 밴드로 — 흰 페이지의 앵커 ----------
+     CI 가이드가 '배경색에 따른 활용안'으로 다크 배경 로고를 규정하므로
+     Secondary(#2B2B2B) 위 화이트 로고/텍스트는 브랜드 규정 안이다. */
+  #s3c8{
+    --bg-deep:#2B2B2B;
+    --text-base:255,255,255;
+    --white:#FFFFFF;
+    --line:rgba(255,255,255,.12);
+    background:#2B2B2B;
+    color:#FFFFFF;
+  }
+  #s3c8 .cv-sub{ color:#6FB4FF; }
+  #s3c8 .cv-lead{ color:rgba(255,255,255,.68); }
+  #s3c8 .btn-primary{ box-shadow:0 10px 28px rgba(26,135,254,.4); }
+
+  /* 레이아웃 래퍼에는 배경을 주지 않는다 — .contact-panel 은 max-width 컨테이너일 뿐 */
+  .contact-map{ background:linear-gradient(160deg,#EEF3FA 0%,#E3EAF4 100%); }
+  .field label{ color:rgba(43,43,43,.72); }
+  .contact-note{ color:rgba(43,43,43,.5); }
+  /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
+  #s3c8 .cv-val{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
+  #s3c8 .cv-val .k{ color:#6FB4FF; }
+  #s3c8 .cv-val .row{ border-top-color:rgba(255,255,255,.12); }
+  #s3c8 .cv-val .row span:first-child{ color:rgba(255,255,255,.45); }
+  #s3c8 .cv-val .row span:last-child{ color:rgba(255,255,255,.82); }
+
+  /* ---------- 임팩트 ③ 챕터 리듬 — 장(章)마다 바닥 톤을 바꾼다 ----------
+     기준 톤(#F5F8FC) ↔ 한 단계 내린 바닥(#EBF1F9) 을 교대시키고,
+     성과(#s3c8)와 사람(#s5) 두 장은 임팩트 ②의 다크 밴드로 눌러 준다. */
+
+  /* SOLUTION 01–04 · ARCHIVE — 한 단계 내린 바닥 (카드가 흰색이므로 바닥을 낮춰야 카드가 산다) */
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:#EBF1F9; }
+
+  /* 강조 ② TEAM — 결론 장과 같은 다크 밴드 (CI 의 다크 배경 활용안 범위) */
+  #s5{
+    --bg-deep:#2B2B2B;
+    --text-base:255,255,255;
+    --white:#FFFFFF;
+    --line:rgba(255,255,255,.12);
+    --cl-card:rgba(255,255,255,.06);
+    --cl-card2:rgba(255,255,255,.04);
+    --cl-line:rgba(255,255,255,.14);
+    background:#2B2B2B;
+    color:#FFFFFF;
+  }
+  #s5 .close-eyebrow{ color:#6FB4FF; }
+  #s5 .close-sub, #s5 .team-statement, #s5 .cl-wf .d{ color:rgba(255,255,255,.68); }
+  #s5 .team-statement b{ color:#6FB4FF; }
+  /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
+  #s5 .cl-wf .c{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
+  #s5 .cl-wf .c.last{ background:rgba(245,165,36,.13); border-color:#E3C489; }
+  #s5 .cl-wf .c.last .t{ color:#F5A524; }
+
+  /* ---------- 은하수 히어로는 다크 전용 — 화이트에서는 걷어낸다 ----------
+     v4.5.0에서 다크 원본에 밤하늘이 들어갔고, 화이트는 그 원본에서 빌드된다.
+     밝은 배경에 흰 별을 뿌리면 노이즈가 되므로 여기서 끈다. */
+  #s1 .milky, #s1 .star-canvas{ display:none !important; }
+  #s1 .hero-bg svg.net{ opacity:1; }
+  #s1 .hero-content h1.hero-h,
+  #s1 .hero-content .hero-sub{ text-shadow:none; }
+
+  /* ---------- Perspective 잔광도 다크 전용 ----------
+     v4.6.0에서 다크 원본의 s1c1/s1c2/s1c4/s1c7 에 밤하늘 잔광이 들어갔다.
+     별먼지는 끄고, 잔광은 밝은 바탕에 맞춰 아주 옅은 브랜드 틴트로 낮춘다. */
+  canvas.dust{ display:none !important; }
+  #s1c1 .cv-block h3, #s1c2 .cv-block h3,
+  #s1c4 .cv-block h3, #s1c7 .cv-block h3{ text-shadow:none; }
+  #s1c1{
+    background:
+      radial-gradient(760px 430px at 90% 4%,  rgba(11,122,109,.055), transparent 62%),
+      radial-gradient(700px 400px at 4% 92%,  rgba(26,135,254,.055), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c2{
+    background:
+      radial-gradient(980px 300px at 50% -6%, rgba(26,135,254,.06), transparent 66%),
+      radial-gradient(640px 360px at 97% 94%, rgba(11,122,109,.045), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c4{
+    background:
+      radial-gradient(740px 420px at 3% 8%,   rgba(26,135,254,.055), transparent 62%),
+      radial-gradient(780px 440px at 99% 86%, rgba(11,122,109,.04), transparent 62%),
+      var(--bg-deep);
+  }
+  #s1c7{
+    background:
+      radial-gradient(1150px 520px at 50% 110%, rgba(26,135,254,.06), transparent 62%),
+      radial-gradient(700px 380px at 94% 2%,   rgba(11,122,109,.05), transparent 60%),
+      var(--bg-deep);
+  }
+
+
+  /* 인라인 SVG 색 — 라이트 대응 (다크 기본값은 위쪽 :root 참고) */
+  :root{
+    --sv-blue:#0F5FD6;
+    --sv-blue-soft:#1A6FD8;
+    --sv-teal:#0B7A6D;
+    --sv-mint:#0B7A6D;
+    --sv-peak:#1A6FD8;
+    --sv-dim:#8894A6;
+    --sv-gray:#5A6675;
+    --sv-core-blue:#0F5FD6;
+    --sv-core-mint:#0B7A6D;
+    --sv-bg:#2B2B2B;
+    --sv-ink:43,43,43;
+    --sv-ink2:43,43,43;
+    --sv-mint-rgb:11,122,109;
+    --sv-teal-rgb:11,122,109;
+    --sv-gray-rgb:90,102,117;
+    --sv-peak-rgb:15,95,214;
+  }
+</style>
+<script>
+  /* 페인트 전에 저장된 테마를 복원한다 — 깜빡임 방지 */
+  (function(){
+    try{
+      if(localStorage.getItem('tobis-theme') === 'light'){
+        document.documentElement.setAttribute('data-theme','light');
+        document.getElementById('themeLight').media = 'all';
+      }
+    }catch(e){}
+  })();
+</script>
 </head>
 <body>
 
@@ -940,6 +1286,21 @@
   <a href="#s5">Team</a>
   <a href="#s6">Contact</a>
 </nav>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="화이트 모드로 전환" aria-pressed="false" title="다크 / 화이트 전환">
+  <svg class="tt-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <line x1="12" y1="2.6" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.4"/>
+      <line x1="2.6" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.4" y2="12"/>
+      <line x1="5.3" y1="5.3" x2="7" y2="7"/><line x1="17" y1="17" x2="18.7" y2="18.7"/>
+      <line x1="18.7" y1="5.3" x2="17" y2="7"/><line x1="7" y1="17" x2="5.3" y2="18.7"/>
+    </g>
+  </svg>
+  <svg class="tt-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M20.2 14.8A8.6 8.6 0 1 1 9.2 3.8a7 7 0 0 0 11 11Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
   <span></span><span></span><span></span>
@@ -970,31 +1331,31 @@
       <canvas class="star-canvas" id="starCanvas" aria-hidden="true"></canvas>
       <svg class="net" viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <g>
-          <line x1="1003" y1="452" x2="1003" y2="659" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1003" y1="659" x2="1019" y2="490" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1019" y1="490" x2="903" y2="123" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="903" y1="123" x2="1125" y2="477" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1125" y1="477" x2="1138" y2="491" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1138" y1="491" x2="1257" y2="104" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1102" y1="605" x2="1264" y2="423" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1003" y1="452" x2="1125" y2="477" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1019" y1="490" x2="1102" y2="605" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="903" y1="123" x2="703" y2="119" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1138" y1="491" x2="1368" y2="757" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
-          <line x1="1003" y1="659" x2="1257" y2="104" stroke="#1a87fe" stroke-opacity=".12" stroke-width="1"/>
+          <line x1="1003" y1="452" x2="1003" y2="659" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1003" y1="659" x2="1019" y2="490" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1019" y1="490" x2="903" y2="123" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="903" y1="123" x2="1125" y2="477" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1125" y1="477" x2="1138" y2="491" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1138" y1="491" x2="1257" y2="104" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1102" y1="605" x2="1264" y2="423" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1003" y1="452" x2="1125" y2="477" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1019" y1="490" x2="1102" y2="605" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="903" y1="123" x2="703" y2="119" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1138" y1="491" x2="1368" y2="757" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
+          <line x1="1003" y1="659" x2="1257" y2="104" stroke-opacity=".12" stroke-width="1" style="stroke:var(--sv-blue)"/>
         </g>
         <g>
-          <circle cx="1003" cy="452" r="8.5" fill="#1a87fe" opacity=".5"/>
-          <circle cx="1003" cy="659" r="4.1" fill="#17c3b2" opacity=".5"/>
-          <circle cx="1019" cy="490" r="4.1" fill="#1a87fe" opacity=".5"/>
-          <circle cx="903" cy="123" r="7.9" fill="#17c3b2" opacity=".5"/>
-          <circle cx="1125" cy="477" r="5.4" fill="#1a87fe" opacity=".5"/>
-          <circle cx="1138" cy="491" r="3.9" fill="#1a87fe" opacity=".5"/>
-          <circle cx="1257" cy="104" r="3.2" fill="#1a87fe" opacity=".5"/>
-          <circle cx="1102" cy="605" r="5.0" fill="#17c3b2" opacity=".5"/>
-          <circle cx="1264" cy="423" r="6.8" fill="#1a87fe" opacity=".5"/>
-          <circle cx="703" cy="119" r="6.9" fill="#1a87fe" opacity=".5"/>
-          <circle cx="1368" cy="757" r="8.0" fill="#17c3b2" opacity=".5"/>
+          <circle cx="1003" cy="452" r="8.5" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="1003" cy="659" r="4.1" opacity=".5" style="fill:var(--sv-teal)"/>
+          <circle cx="1019" cy="490" r="4.1" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="903" cy="123" r="7.9" opacity=".5" style="fill:var(--sv-teal)"/>
+          <circle cx="1125" cy="477" r="5.4" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="1138" cy="491" r="3.9" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="1257" cy="104" r="3.2" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="1102" cy="605" r="5.0" opacity=".5" style="fill:var(--sv-teal)"/>
+          <circle cx="1264" cy="423" r="6.8" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="703" cy="119" r="6.9" opacity=".5" style="fill:var(--sv-blue)"/>
+          <circle cx="1368" cy="757" r="8.0" opacity=".5" style="fill:var(--sv-teal)"/>
         </g>
       </svg>
     </div>
@@ -1003,10 +1364,10 @@
       <h1 class="hero-h">금융의 새로운 표준<br><em>AI Native로 완성하다</em></h1>
       <p class="hero-sub">보험·금융 업무를 20년간 설계해 온 사람들이 AI의 가장 안쪽에 있습니다 — 투비아이에스컨설팅.</p>
       <div class="pillars">
-        <div><b>보험 도메인 20년</b><small>영업채널 · 가입설계<br>2012년부터 46개 프로젝트</small></div>
-        <div><b>업계 최초 레퍼런스</b><small>생성형 AI 가입설계<br>신한라이프 LICO 실서비스</small></div>
-        <div><b>자사 AI 플랫폼</b><small>CoverLink<br>위키가 원본, 코드는 출력</small></div>
-        <div><b>모델 비종속 구조</b><small>OKF 공용 포맷 · 슬롯 구조<br>플랫폼 그대로, 모델만 교체</small></div>
+        <a href="#s1c1"><b>보험 도메인 20년</b><small>영업채널 · 가입설계<br>2012년부터 46개 프로젝트</small></a>
+        <a href="#s2"><b>업계 최초 레퍼런스</b><small>생성형 AI 가입설계<br>신한라이프 LICO 실서비스</small></a>
+        <a href="#s3d1"><b>자사 AI 플랫폼</b><small>CoverLink<br>위키가 원본, 코드는 출력</small></a>
+        <a href="#s3d1"><b>모델 비종속 구조</b><small>OKF 공용 포맷 · 슬롯 구조<br>플랫폼 그대로, 모델만 교체</small></a>
       </div>
       <div class="hero-stats">
         <a href="#s4" style="text-decoration:none; color:inherit; display:block;"><b>46+</b><small>누적 프로젝트 수행</small></a>
@@ -1030,80 +1391,80 @@
           <svg class="thc-desktop" viewBox="0 0 1000 305" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="thcWedge" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity=".26"/>
-                <stop offset="1" stop-color="#17c3b2" stop-opacity=".05"/>
+                <stop offset="0" stop-opacity=".26" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity=".05" style="stop-color:var(--sv-teal)"/>
               </linearGradient>
               <radialGradient id="thcGlow">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity=".38"/>
-                <stop offset="1" stop-color="#1a87fe" stop-opacity="0"/>
+                <stop offset="0" stop-opacity=".38" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
               </radialGradient>
               <linearGradient id="thcFade" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity="1"/>
-                <stop offset="1" stop-color="#1a87fe" stop-opacity=".34"/>
+                <stop offset="0" stop-opacity="1" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity=".34" style="stop-color:var(--sv-blue)"/>
               </linearGradient>
             </defs>
 
             <!-- 두 선 사이의 간격 — 오늘 닫힌다 -->
             <path d="M0,46 C340,46 570,105 760,168 C570,205 340,232 0,232 Z" fill="url(#thcWedge)"/>
 
-            <text x="0" y="30" fill="#4fa4ff" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace">DOMAIN — 보험 · 금융 · 제조 20년</text>
-            <text x="0" y="256" fill="#17c3b2" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace">AI — 프롬프트 → 컨텍스트 → 하네스</text>
+            <text x="0" y="30" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN — 보험 · 금융 · 제조 20년</text>
+            <text x="0" y="256" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI — 프롬프트 → 컨텍스트 → 하네스</text>
 
-            <line x1="760" y1="40" x2="760" y2="272" stroke="rgba(255,255,255,.14)" stroke-width="1" stroke-dasharray="3 5"/>
+            <line x1="760" y1="40" x2="760" y2="272" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
 
-            <path d="M0,46 C340,46 570,105 760,168" stroke="#1a87fe" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-            <path d="M0,232 C340,232 570,205 760,168" stroke="#17c3b2" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M0,46 C340,46 570,105 760,168" stroke-width="3.5" fill="none" stroke-linecap="round" style="stroke:var(--sv-blue)"/>
+            <path d="M0,232 C340,232 570,205 760,168" stroke-width="3.5" fill="none" stroke-linecap="round" style="stroke:var(--sv-teal)"/>
             <line x1="760" y1="168" x2="1000" y2="168" stroke="url(#thcFade)" stroke-width="4.5" stroke-linecap="round"/>
 
             <circle cx="760" cy="168" r="30" fill="url(#thcGlow)"/>
-            <circle cx="760" cy="168" r="14" fill="none" stroke="#4fa4ff" stroke-width="1.5" stroke-opacity=".55"/>
-            <circle cx="760" cy="168" r="8" fill="#1a87fe"/>
-            <text x="760" y="134" text-anchor="middle" fill="#4fa4ff" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace">교차점</text>
+            <circle cx="760" cy="168" r="14" fill="none" stroke-width="1.5" stroke-opacity=".55" style="stroke:var(--sv-blue-soft)"/>
+            <circle cx="760" cy="168" r="8" style="fill:var(--sv-blue)"/>
+            <text x="760" y="134" text-anchor="middle" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">교차점</text>
 
-            <line x1="0" y1="272" x2="1000" y2="272" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-            <text x="140" y="294" text-anchor="middle" fill="rgba(255,255,255,.42)" font-size="12" font-family="IBM Plex Mono, monospace">2023</text>
-            <text x="345" y="294" text-anchor="middle" fill="rgba(255,255,255,.42)" font-size="12" font-family="IBM Plex Mono, monospace">2024</text>
-            <text x="550" y="294" text-anchor="middle" fill="rgba(255,255,255,.42)" font-size="12" font-family="IBM Plex Mono, monospace">2025</text>
-            <text x="760" y="294" text-anchor="middle" fill="#4fa4ff" font-size="12" font-weight="700" font-family="IBM Plex Mono, monospace">2026.09 · 지금</text>
+            <line x1="0" y1="272" x2="1000" y2="272" stroke-width="1" style="stroke:rgba(var(--sv-ink),.12)"/>
+            <text x="140" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2023</text>
+            <text x="345" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2024</text>
+            <text x="550" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2025</text>
+            <text x="760" y="294" text-anchor="middle" font-size="12" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">2026.09 · 지금</text>
           </svg>
           <svg class="thc-mobile" viewBox="0 0 360 304" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="thcWedgeM" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity=".26"/>
-                <stop offset="1" stop-color="#17c3b2" stop-opacity=".05"/>
+                <stop offset="0" stop-opacity=".26" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity=".05" style="stop-color:var(--sv-teal)"/>
               </linearGradient>
               <radialGradient id="thcGlowM">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity=".38"/>
-                <stop offset="1" stop-color="#1a87fe" stop-opacity="0"/>
+                <stop offset="0" stop-opacity=".38" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
               </radialGradient>
               <linearGradient id="thcFadeM" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#1a87fe" stop-opacity="1"/>
-                <stop offset="1" stop-color="#1a87fe" stop-opacity=".34"/>
+                <stop offset="0" stop-opacity="1" style="stop-color:var(--sv-blue)"/>
+                <stop offset="1" stop-opacity=".34" style="stop-color:var(--sv-blue)"/>
               </linearGradient>
             </defs>
 
             <path d="M0,58 C110,58 190,110 250,150 C190,180 110,205 0,205 Z" fill="url(#thcWedgeM)"/>
 
-            <text x="0" y="18" fill="#4fa4ff" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace">DOMAIN · 도메인 20년</text>
+            <text x="0" y="18" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN · 도메인 20년</text>
 
-            <line x1="250" y1="44" x2="250" y2="232" stroke="rgba(255,255,255,.14)" stroke-width="1" stroke-dasharray="3 5"/>
+            <line x1="250" y1="44" x2="250" y2="232" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
 
-            <path d="M0,58 C110,58 190,110 250,150" stroke="#1a87fe" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M0,205 C110,205 190,180 250,150" stroke="#17c3b2" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M0,58 C110,58 190,110 250,150" stroke-width="4" fill="none" stroke-linecap="round" style="stroke:var(--sv-blue)"/>
+            <path d="M0,205 C110,205 190,180 250,150" stroke-width="4" fill="none" stroke-linecap="round" style="stroke:var(--sv-teal)"/>
             <line x1="250" y1="150" x2="360" y2="150" stroke="url(#thcFadeM)" stroke-width="5" stroke-linecap="round"/>
 
             <circle cx="250" cy="150" r="24" fill="url(#thcGlowM)"/>
-            <circle cx="250" cy="150" r="13" fill="none" stroke="#4fa4ff" stroke-width="1.5" stroke-opacity=".55"/>
-            <circle cx="250" cy="150" r="8" fill="#1a87fe"/>
-            <text x="250" y="120" text-anchor="middle" fill="#4fa4ff" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace">교차점</text>
+            <circle cx="250" cy="150" r="13" fill="none" stroke-width="1.5" stroke-opacity=".55" style="stroke:var(--sv-blue-soft)"/>
+            <circle cx="250" cy="150" r="8" style="fill:var(--sv-blue)"/>
+            <text x="250" y="120" text-anchor="middle" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">교차점</text>
 
-            <line x1="0" y1="232" x2="360" y2="232" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
-            <text x="55" y="256" text-anchor="middle" fill="rgba(255,255,255,.42)" font-size="14" font-family="IBM Plex Mono, monospace">2023</text>
-            <text x="150" y="256" text-anchor="middle" fill="rgba(255,255,255,.42)" font-size="14" font-family="IBM Plex Mono, monospace">2025</text>
-            <text x="250" y="256" text-anchor="middle" fill="#4fa4ff" font-size="14" font-weight="700" font-family="IBM Plex Mono, monospace">2026.09</text>
-            <text x="250" y="274" text-anchor="middle" fill="#4fa4ff" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace">지금</text>
+            <line x1="0" y1="232" x2="360" y2="232" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.12)"/>
+            <text x="55" y="256" text-anchor="middle" font-size="14" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2023</text>
+            <text x="150" y="256" text-anchor="middle" font-size="14" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2025</text>
+            <text x="250" y="256" text-anchor="middle" font-size="14" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">2026.09</text>
+            <text x="250" y="274" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">지금</text>
 
-            <text x="0" y="298" fill="#17c3b2" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace">AI · 프롬프트 → 컨텍스트 → 하네스</text>
+            <text x="0" y="298" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI · 프롬프트 → 컨텍스트 → 하네스</text>
           </svg>
         </div>
 
@@ -1140,8 +1501,8 @@
 
         <div class="trend-timeline">
           <svg viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg" id="tlSvg">
-            <line x1="115" y1="45" x2="945" y2="45" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
-            <line x1="115" y1="45" x2="530" y2="45" stroke="#4fa4ff" stroke-width="2"/>
+            <line x1="115" y1="45" x2="945" y2="45" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.16)"/>
+            <line x1="115" y1="45" x2="530" y2="45" stroke-width="2" style="stroke:var(--sv-blue-soft)"/>
 
             <g class="tl-node" data-idx="0" style="cursor:pointer;">
               <text class="tl-era" x="115" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">2022–23</text>
@@ -1216,17 +1577,17 @@
             const dot = g.querySelector('.tl-dot');
             const name = g.querySelector('.tl-name');
             const word = g.querySelector('.tl-word');
-            era.setAttribute('fill', isActive ? '#4fa4ff' : 'rgba(255,255,255,.4)');
+            era.style.fill = isActive ? 'var(--sv-blue-soft)' : 'rgba(var(--sv-ink),.4)';
             era.setAttribute('font-weight', isActive ? '700' : '400');
-            name.setAttribute('fill', isActive ? '#ffffff' : 'rgba(255,255,255,.55)');
-            word.setAttribute('fill', isActive ? 'rgba(23,195,178,.9)' : 'rgba(255,255,255,.32)');
+            name.style.fill = isActive ? 'rgb(var(--sv-ink))' : 'rgba(var(--sv-ink),.55)';
+            word.style.fill = isActive ? 'rgba(var(--sv-teal-rgb),.9)' : 'rgba(var(--sv-ink),.32)';
             if (isEmpty) {
-              dot.setAttribute('fill', 'none');
-              dot.setAttribute('stroke', isActive ? '#4fa4ff' : 'rgba(255,255,255,.4)');
+              dot.style.fill = 'none';
+              dot.style.stroke = isActive ? 'var(--sv-blue-soft)' : 'rgba(var(--sv-ink),.4)';
               dot.setAttribute('stroke-width', '1.5');
             } else {
-              dot.setAttribute('fill', isActive ? '#1a87fe' : 'rgba(255,255,255,.3)');
-              dot.removeAttribute('stroke');
+              dot.style.fill = isActive ? 'var(--sv-blue)' : 'rgba(var(--sv-ink),.3)';
+              dot.style.stroke = '';
             }
           });
           document.getElementById('s2LeftName').textContent = phases[active].name;
@@ -1398,45 +1759,45 @@
           <svg viewBox="0 0 1200 430" xmlns="http://www.w3.org/2000/svg" id="galaxySvg">
             <defs>
               <radialGradient id="glowPeak" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#EAF4FF" stop-opacity=".95"/>
-                <stop offset="34%" stop-color="#1A87FE" stop-opacity=".55"/>
-                <stop offset="100%" stop-color="#1A87FE" stop-opacity="0"/>
+                <stop offset="0%" stop-opacity=".95" style="stop-color:var(--sv-core-blue)"/>
+                <stop offset="34%" stop-opacity=".55" style="stop-color:var(--sv-blue)"/>
+                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
               </radialGradient>
               <radialGradient id="glowNew" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#EAFFF8" stop-opacity=".95"/>
-                <stop offset="34%" stop-color="#22D3A5" stop-opacity=".5"/>
-                <stop offset="100%" stop-color="#22D3A5" stop-opacity="0"/>
+                <stop offset="0%" stop-opacity=".95" style="stop-color:var(--sv-core-mint)"/>
+                <stop offset="34%" stop-opacity=".5" style="stop-color:var(--sv-mint)"/>
+                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-mint)"/>
               </radialGradient>
               <radialGradient id="glowDim" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#9AA3B2" stop-opacity=".5"/>
-                <stop offset="40%" stop-color="#4B5563" stop-opacity=".28"/>
-                <stop offset="100%" stop-color="#4B5563" stop-opacity="0"/>
+                <stop offset="0%" stop-opacity=".5" style="stop-color:var(--sv-gray)"/>
+                <stop offset="40%" stop-opacity=".28" style="stop-color:var(--sv-dim)"/>
+                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-dim)"/>
               </radialGradient>
               <linearGradient id="band" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#4B5563" stop-opacity=".16"/>
-                <stop offset="48%" stop-color="#1A87FE" stop-opacity=".2"/>
-                <stop offset="100%" stop-color="#22D3A5" stop-opacity=".16"/>
+                <stop offset="0%" stop-opacity=".16" style="stop-color:var(--sv-dim)"/>
+                <stop offset="48%" stop-opacity=".2" style="stop-color:var(--sv-blue)"/>
+                <stop offset="100%" stop-opacity=".16" style="stop-color:var(--sv-mint)"/>
               </linearGradient>
             </defs>
 
             <ellipse cx="600" cy="205" rx="620" ry="150" fill="url(#band)" transform="rotate(-7 600 205)"/>
-            <line x1="392" y1="46" x2="392" y2="360" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="4 8"/>
-            <line x1="852" y1="46" x2="852" y2="360" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="4 8"/>
+            <line x1="392" y1="46" x2="392" y2="360" stroke-width="1" stroke-dasharray="4 8" stroke="rgba(255,255,255,.1)"/>
+            <line x1="852" y1="46" x2="852" y2="360" stroke-width="1" stroke-dasharray="4 8" stroke="rgba(255,255,255,.1)"/>
 
-            <text x="196" y="34" text-anchor="middle" fill="rgba(232,236,243,.72)" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">FADING · 저물어 가는</text>
-            <text x="622" y="34" text-anchor="middle" fill="#7FBEFF" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">PEAK · 지금 가장 밝은</text>
-            <text x="1026" y="34" text-anchor="middle" fill="#22D3A5" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace">FORMING · 새로 태어나는</text>
+            <text x="196" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink2),.72)">FADING · 저물어 가는</text>
+            <text x="622" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-peak)">PEAK · 지금 가장 밝은</text>
+            <text x="1026" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-mint)">FORMING · 새로 태어나는</text>
 
             <g id="starsGroup"></g>
             <g id="labelsGroup"></g>
 
-            <line x1="30" y1="392" x2="1170" y2="392" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-            <circle cx="150" cy="392" r="3.5" fill="rgba(232,236,243,.35)"/>
-            <text x="150" y="416" text-anchor="middle" fill="rgba(232,236,243,.6)" font-size="12" font-family="IBM Plex Mono, monospace">2024</text>
-            <circle cx="622" cy="392" r="7" fill="#0a0e17" stroke="#1A87FE" stroke-width="3"/>
-            <text x="622" y="418" text-anchor="middle" fill="#7FBEFF" font-size="12.5" font-weight="500" font-family="IBM Plex Mono, monospace">2026.09 · TODAY</text>
-            <circle cx="1060" cy="392" r="6" fill="none" stroke="rgba(34,211,165,.8)" stroke-width="2" stroke-dasharray="3 3"/>
-            <text x="1060" y="418" text-anchor="middle" fill="rgba(34,211,165,.9)" font-size="12.5" font-family="IBM Plex Mono, monospace">2027 · 예측</text>
+            <line x1="30" y1="392" x2="1170" y2="392" stroke-width="1" stroke="rgba(255,255,255,.12)"/>
+            <circle cx="150" cy="392" r="3.5" style="fill:rgba(var(--sv-ink2),.35)"/>
+            <text x="150" y="416" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink2),.6)">2024</text>
+            <circle cx="622" cy="392" r="7" stroke-width="3" style="fill:var(--sv-bg);stroke:var(--sv-blue)"/>
+            <text x="622" y="418" text-anchor="middle" font-size="12.5" font-weight="500" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-peak)">2026.09 · TODAY</text>
+            <circle cx="1060" cy="392" r="6" fill="none" stroke-width="2" stroke-dasharray="3 3" style="stroke:rgba(var(--sv-mint-rgb),.8)"/>
+            <text x="1060" y="418" text-anchor="middle" font-size="12.5" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-mint-rgb),.9)">2027 · 예측</text>
           </svg>
         </div>
 
@@ -1523,9 +1884,9 @@
         const starsGroup = document.getElementById('starsGroup');
         const labelsGroup = document.getElementById('labelsGroup');
         const phaseInfo = {
-          fading: { tag:"FADING · 저물어 가는", color:"#9AA3B2", border:"rgba(154,163,178,.45)", panelBorder:"rgba(154,163,178,.28)", panelBg:"rgba(154,163,178,.05)", glow:"url(#glowDim)", core:"#8A93A1", label:"#8A93A1", ring:"rgba(75,85,99,.7)" },
-          peak: { tag:"PEAK · 지금 가장 밝은", color:"#7FBEFF", border:"rgba(127,190,255,.45)", panelBorder:"rgba(26,135,254,.35)", panelBg:"rgba(26,135,254,.07)", glow:"url(#glowPeak)", core:"#EAF4FF", label:"#DCEBFF", ring:"rgba(26,135,254,.5)" },
-          forming: { tag:"FORMING · 새로 태어나는", color:"#22D3A5", border:"rgba(34,211,165,.45)", panelBorder:"rgba(34,211,165,.3)", panelBg:"rgba(34,211,165,.05)", glow:"url(#glowNew)", core:"#EAFFF8", label:"#BFF3E4", ring:"rgba(34,211,165,.5)" }
+          fading: { tag:"FADING · 저물어 가는", color:"var(--sv-gray)", border:"rgba(var(--sv-gray-rgb),.45)", panelBorder:"rgba(var(--sv-gray-rgb),.28)", panelBg:"rgba(var(--sv-gray-rgb),.05)", glow:"url(#glowDim)", core:"#8A93A1", label:"#8A93A1", ring:"rgba(75,85,99,.7)" },
+          peak: { tag:"PEAK · 지금 가장 밝은", color:"var(--sv-peak)", border:"rgba(var(--sv-peak-rgb),.45)", panelBorder:"rgba(26,135,254,.35)", panelBg:"rgba(26,135,254,.07)", glow:"url(#glowPeak)", core:"var(--sv-core-blue)", label:"#DCEBFF", ring:"rgba(26,135,254,.5)" },
+          forming: { tag:"FORMING · 새로 태어나는", color:"var(--sv-mint)", border:"rgba(var(--sv-mint-rgb),.45)", panelBorder:"rgba(var(--sv-mint-rgb),.3)", panelBg:"rgba(var(--sv-mint-rgb),.05)", glow:"url(#glowNew)", core:"var(--sv-core-mint)", label:"#BFF3E4", ring:"rgba(var(--sv-mint-rgb),.5)" }
         };
 
         let active = 4;
@@ -1538,7 +1899,7 @@
           halo.setAttribute('fill', pal.glow);
           const core = document.createElementNS(svgNS, 'circle');
           core.setAttribute('cx', s.cx); core.setAttribute('cy', s.cy); core.setAttribute('r', s.core);
-          core.setAttribute('fill', pal.core);
+          core.style.fill = pal.core;
           core.setAttribute('opacity', s.phase === 'fading' ? '.55' : '1');
           const ring = document.createElementNS(svgNS, 'circle');
           ring.setAttribute('cx', s.cx); ring.setAttribute('cy', s.cy); ring.setAttribute('r', s.ring);
@@ -1569,9 +1930,9 @@
             const on = idx === active;
             const pal = phaseInfo[s.phase];
             haloEls[idx].setAttribute('opacity', on ? '1' : (s.phase === 'fading' ? '.5' : '.75'));
-            ringEls[idx].setAttribute('stroke', on ? pal.ring.replace(/[.]\d+\)/,'1)') : 'transparent');
+            ringEls[idx].style.stroke = on ? pal.ring.replace(/[.]\d+\)/,'1)') : 'transparent';
             ringEls[idx].setAttribute('stroke-dasharray', s.phase === 'peak' ? 'none' : '2 4');
-            labelEls[idx].setAttribute('fill', on ? '#ffffff' : pal.label);
+            labelEls[idx].style.fill = on ? 'rgb(var(--sv-ink))' : pal.label;
             labelEls[idx].setAttribute('font-weight', on ? 800 : s.weight);
           });
           const s = stars[active];
@@ -1776,11 +2137,11 @@
             <text x="500" y="28" text-anchor="middle" font-size="13" fill="currentColor" fill-opacity=".75">자연어 설계 요청</text>
             <line x1="500" y1="40" x2="500" y2="66" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
 
-            <rect x="288" y="66" width="424" height="62" rx="12" fill="#1a87fe" fill-opacity=".10" stroke="#1a87fe"/>
-            <text x="500" y="91" text-anchor="middle" font-size="14" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">PLANNER · 오케스트레이터</text>
+            <rect x="288" y="66" width="424" height="62" rx="12" fill-opacity=".10" style="fill:var(--sv-blue);stroke:var(--sv-blue)"/>
+            <text x="500" y="91" text-anchor="middle" font-size="14" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">PLANNER · 오케스트레이터</text>
             <text x="500" y="112" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".7">자연어 요청 분석 → 워크플로우 계획 · 5개 Agent에 업무 분담</text>
 
-            <text x="500" y="172" text-anchor="middle" font-size="11" fill="#17c3b2" letter-spacing="1.5" font-family="'IBM Plex Mono', monospace">5 SPECIALIST AGENTS · 병렬 다중 검증</text>
+            <text x="500" y="172" text-anchor="middle" font-size="11" letter-spacing="1.5" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-teal)">5 SPECIALIST AGENTS · 병렬 다중 검증</text>
 
             <path d="M500,128 C500,160 100,155 100,196" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="1.5"/>
             <path d="M500,128 C500,160 300,160 300,196" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="1.5"/>
@@ -1790,27 +2151,27 @@
 
             <g font-family="'Noto Sans KR', sans-serif">
               <rect x="15" y="196" width="170" height="98" rx="10" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-              <text x="100" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">01 · NLU</text>
+              <text x="100" y="226" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">01 · NLU</text>
               <text x="100" y="249" text-anchor="middle" font-size="12.5" fill="currentColor" fill-opacity=".85">자연어 이해</text>
               <text x="100" y="270" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">의도 · 담보 파악</text>
 
               <rect x="215" y="196" width="170" height="98" rx="10" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-              <text x="300" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">02 · PRODUCT</text>
+              <text x="300" y="226" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">02 · PRODUCT</text>
               <text x="300" y="249" text-anchor="middle" font-size="12.5" fill="currentColor" fill-opacity=".85">상품 추천</text>
               <text x="300" y="270" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">영업전략 · 질병심사</text>
 
               <rect x="415" y="196" width="170" height="98" rx="10" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-              <text x="500" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">03 · PLAN</text>
+              <text x="500" y="226" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">03 · PLAN</text>
               <text x="500" y="249" text-anchor="middle" font-size="12.5" fill="currentColor" fill-opacity=".85">설계 추천/수정</text>
               <text x="500" y="270" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">보장분석 · 특약 · 보험료</text>
 
               <rect x="615" y="196" width="170" height="98" rx="10" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-              <text x="700" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">04 · RULE</text>
+              <text x="700" y="226" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">04 · RULE</text>
               <text x="700" y="249" text-anchor="middle" font-size="12.5" fill="currentColor" fill-opacity=".85">룰 체크</text>
               <text x="700" y="270" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">한도 · 정합성 다중검증</text>
 
               <rect x="815" y="196" width="170" height="98" rx="10" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-              <text x="900" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">05 · MGMT</text>
+              <text x="900" y="226" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">05 · MGMT</text>
               <text x="900" y="249" text-anchor="middle" font-size="12.5" fill="currentColor" fill-opacity=".85">에이전트 관리</text>
               <text x="900" y="270" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">모델 · 프롬프트 · 모니터링</text>
             </g>
@@ -1821,8 +2182,8 @@
             <path d="M700,294 C700,326 500,326 500,356" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="1.5"/>
             <path d="M900,294 C900,326 500,322 500,356" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="1.5"/>
 
-            <rect x="288" y="356" width="424" height="62" rx="12" fill="#17c3b2" fill-opacity=".09" stroke="#17c3b2"/>
-            <text x="500" y="381" text-anchor="middle" font-size="13" font-weight="700" fill="#17c3b2" font-family="'IBM Plex Mono', monospace">HUMAN-IN-THE-LOOP</text>
+            <rect x="288" y="356" width="424" height="62" rx="12" fill-opacity=".09" style="fill:var(--sv-teal);stroke:var(--sv-teal)"/>
+            <text x="500" y="381" text-anchor="middle" font-size="13" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-teal)">HUMAN-IN-THE-LOOP</text>
             <text x="500" y="402" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".7">최종 설계안 검수 · 승인 — AI는 추천, 결정은 사람</text>
 
             <line x1="500" y1="418" x2="500" y2="440" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
@@ -1834,19 +2195,19 @@
             <text x="180" y="25" text-anchor="middle" font-size="13" fill="currentColor" fill-opacity=".75">자연어 설계 요청</text>
             <line x1="180" y1="36" x2="180" y2="60" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
 
-            <rect x="10" y="60" width="340" height="60" rx="12" fill="#1a87fe" fill-opacity=".10" stroke="#1a87fe"/>
-            <text x="180" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#4fa4ff" font-family="'IBM Plex Mono', monospace">PLANNER · 오케스트레이터</text>
+            <rect x="10" y="60" width="340" height="60" rx="12" fill-opacity=".10" style="fill:var(--sv-blue);stroke:var(--sv-blue)"/>
+            <text x="180" y="85" text-anchor="middle" font-size="13" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-blue-soft)">PLANNER · 오케스트레이터</text>
             <text x="180" y="105" text-anchor="middle" font-size="11.5" fill="currentColor" fill-opacity=".7">워크플로우 계획 · 업무 분담</text>
             <line x1="180" y1="120" x2="180" y2="144" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
 
             <rect x="10" y="144" width="340" height="84" rx="12" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".18"/>
-            <text x="180" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#17c3b2" font-family="'IBM Plex Mono', monospace">5 SPECIALIST AGENTS · 병렬 검증</text>
+            <text x="180" y="168" text-anchor="middle" font-size="12" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-teal)">5 SPECIALIST AGENTS · 병렬 검증</text>
             <text x="180" y="190" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".82">NLU · Product · Plan · Rule · Mgmt</text>
             <text x="180" y="210" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity=".5">5개 전문 Agent가 다중 검증을 병렬 수행</text>
             <line x1="180" y1="228" x2="180" y2="252" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
 
-            <rect x="10" y="252" width="340" height="60" rx="12" fill="#17c3b2" fill-opacity=".09" stroke="#17c3b2"/>
-            <text x="180" y="277" text-anchor="middle" font-size="12.5" font-weight="700" fill="#17c3b2" font-family="'IBM Plex Mono', monospace">HUMAN-IN-THE-LOOP</text>
+            <rect x="10" y="252" width="340" height="60" rx="12" fill-opacity=".09" style="fill:var(--sv-teal);stroke:var(--sv-teal)"/>
+            <text x="180" y="277" text-anchor="middle" font-size="12.5" font-weight="700" font-family="'IBM Plex Mono', monospace" style="fill:var(--sv-teal)">HUMAN-IN-THE-LOOP</text>
             <text x="180" y="297" text-anchor="middle" font-size="11.5" fill="currentColor" fill-opacity=".7">검수 · 승인 — 결정은 사람</text>
             <line x1="180" y1="312" x2="180" y2="336" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
 
@@ -2277,7 +2638,7 @@
         <p>문의사항 남겨주시면<br>담당자가 빠르게 연락드리겠습니다.</p>
         <svg class="contact-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="ci-icon-stroke" d="M18 40h46v20a16 16 0 0 1-16 16H34a16 16 0 0 1-16-16V40Z" stroke-width="2.4" stroke-linejoin="round"/>
-          <path d="M64 46h6a9 9 0 0 1 0 18h-6" stroke="#1a87fe" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M64 46h6a9 9 0 0 1 0 18h-6" stroke-width="2.4" stroke-linejoin="round" style="stroke:var(--sv-blue)"/>
           <path class="ci-icon-stroke" d="M28 32c0-4 4-4 4-8s-4-4-4-8" stroke-width="2" stroke-linecap="round"/>
           <path class="ci-icon-stroke" d="M41 32c0-4 4-4 4-8s-4-4-4-8" stroke-width="2" stroke-linecap="round"/>
           <path class="ci-icon-stroke" d="M78 30l3 3M78 33l3-3" stroke-width="2" stroke-linecap="round"/>
@@ -2303,7 +2664,6 @@
             <textarea id="cf-message" name="message" rows="4" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">문의하기</button>
-          <p class="contact-note">보내기를 누르면 메일 작성 화면으로 연결됩니다.</p>
         </form>
       </div>
     </div>
@@ -2573,5 +2933,30 @@
     });
   })();
   </script>
+<script>
+  /* 다크 / 화이트 토글 — head 의 조기 복원 스크립트가 첫 페인트를 이미 맞춰 둔다 */
+  (function(){
+    var btn   = document.getElementById('themeToggle');
+    var sheet = document.getElementById('themeLight');
+    var root  = document.documentElement;
+    if(!btn || !sheet) return;
+
+    function paint(light){
+      root.setAttribute('data-theme', light ? 'light' : 'dark');
+      sheet.media = light ? 'all' : 'not all';
+      btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+      btn.setAttribute('aria-label', light ? '다크 모드로 전환' : '화이트 모드로 전환');
+    }
+    /* 초기 동기화 — 저장은 하지 않는다 (사용자가 고른 적 없을 수 있다) */
+    paint(root.getAttribute('data-theme') === 'light');
+
+    btn.addEventListener('click', function(){
+      var light = root.getAttribute('data-theme') !== 'light';
+      paint(light);
+      try{ localStorage.setItem('tobis-theme', light ? 'light' : 'dark'); }catch(e){}
+    });
+  })();
+</script>
 </body>
+
 </html>
