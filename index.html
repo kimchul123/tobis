@@ -490,8 +490,30 @@
   .okf-answer{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:18px 18px; text-align:center; }
   .okf-answer .oa-eyebrow{ font-size:11px; color:var(--text-faint); margin-bottom:10px; }
   .okf-answer .oa-bold{ font-size:14px; font-weight:700; line-height:1.5; }
+  a.okf-answer{ display:block; text-decoration:none; color:inherit; transition:border-color .2s ease, background .2s ease; }
+  a.okf-answer:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); }
+  a.okf-answer .oa-eyebrow::after{ content:" ↗"; color:var(--blue-soft); opacity:0; transition:opacity .2s ease; }
+  a.okf-answer:hover .oa-eyebrow::after{ opacity:1; }
   .okf-final-tag{ margin-top:28px; text-align:center; }
   .okf-final-tag span{ display:inline-block; padding:10px 22px; border-radius:20px; border:1px solid var(--blue); color:var(--blue-soft); font-size:13px; font-weight:700; }
+
+  /* ---------- OKF — Open Knowledge Format · 흩어진 지식을 한 포맷으로 ---------- */
+  .okf-std{ display:grid; grid-template-columns:1fr auto 1fr; gap:18px; margin-top:18px; }
+  .okf-std-col{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:18px 20px; }
+  .okf-std-col.is-okf{ border-color:var(--blue); background:rgba(26,135,254,.06); }
+  .okf-std-label{ font-size:12px; font-weight:800; color:rgba(var(--text-base),.5); margin-bottom:12px; }
+  .okf-std-col.is-okf .okf-std-label{ color:var(--blue-soft); }
+  .okf-std-col ul{ list-style:none; }
+  .okf-std-col li{ font-size:13.5px; color:rgba(var(--text-base),.62); padding:7px 0; border-top:1px solid var(--line-deep); }
+  .okf-std-col li:first-child{ border-top:none; }
+  .okf-std-col.is-okf li{ color:rgba(var(--text-base),.85); }
+  .okf-std-arrow{ align-self:center; color:var(--blue-soft); font-size:20px; }
+  .okf-file{ grid-column:1 / -1; border:1px solid var(--cl-line); background:var(--cl-card2); border-radius:12px; padding:16px 20px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; line-height:1.9; color:rgba(var(--text-base),.72); overflow-x:auto; }
+  .okf-file .fpath{ color:var(--blue-soft); font-weight:600; }
+  .okf-file .fkey{ color:var(--blue-soft); }
+  .okf-file .fdim{ color:rgba(var(--text-base),.38); }
+  .okf-std-note{ margin-top:18px; font-size:15px; line-height:1.8; color:rgba(var(--text-base),.62); }
+  .okf-std-note b{ color:var(--blue-soft); font-weight:800; }
 
   .galaxy-wrap{ margin-top:32px; }
   .galaxy-wrap svg{ width:100%; height:auto; display:block; }
@@ -584,7 +606,8 @@
     #s3d1 .okf-pipeline{ display:block; }
     #s3d1 .okf-arrow{ transform:none; padding:10px 0; }
     #s3d1 .okf-outputs{ margin-bottom:10px; }
-    .cl-split, .cl-steps, .cl-wf, .cl-addflow, .cl-contact, .cl-band{ grid-template-columns:1fr; }
+    .cl-split, .cl-steps, .cl-wf, .cl-addflow, .cl-contact, .cl-band, .okf-std{ grid-template-columns:1fr; }
+    .okf-std-arrow{ transform:rotate(90deg); text-align:center; }
     .cl-cinfo, .cl-langs{ text-align:left; justify-content:flex-start; }
   }
 
@@ -983,7 +1006,7 @@
         <div><b>보험 도메인 20년</b><small>영업채널 · 가입설계<br>2012년부터 46개 프로젝트</small></div>
         <div><b>업계 최초 레퍼런스</b><small>생성형 AI 가입설계<br>신한라이프 LICO 실서비스</small></div>
         <div><b>자사 AI 플랫폼</b><small>CoverLink<br>위키가 원본, 코드는 출력</small></div>
-        <div><b>모델 비종속 구조</b><small>오픈소스 LLM · 슬롯 구조<br>플랫폼 그대로, 모델만 교체</small></div>
+        <div><b>모델 비종속 구조</b><small>OKF 공용 포맷 · 슬롯 구조<br>플랫폼 그대로, 모델만 교체</small></div>
       </div>
       <div class="hero-stats">
         <a href="#s4" style="text-decoration:none; color:inherit; display:block;"><b>46+</b><small>누적 프로젝트 수행</small></a>
@@ -1586,18 +1609,18 @@
           <div class="okf-node">
             <div class="on-eyebrow">SOURCE OF TRUTH</div>
             <div class="on-bold">업무 위키</div>
-            <div class="on-sub">도메인 전문가가 직접 씁니다</div>
+            <div class="on-sub">도메인 전문가가 OKF 로 직접 씁니다</div>
           </div>
           <div class="okf-arrow">↓</div>
           <div class="okf-box">
-            <div class="okf-box-head"><b>OKF</b><span>MODEL SLOT — 갈아끼움</span></div>
+            <div class="okf-box-head"><b>OKF</b><span>OPEN KNOWLEDGE FORMAT</span></div>
             <div class="okf-slots" id="okfSlots">
               <div class="okf-slot">Claude</div>
               <div class="okf-slot">GPT</div>
               <div class="okf-slot">Gemini</div>
               <div class="okf-slot">오픈 LLM</div>
             </div>
-            <div class="okf-caption">업무 규칙 · 검증 · 승인 흐름은 플랫폼에 남고, 모델만 교체됩니다.</div>
+            <div class="okf-caption">업무 규칙 · 검증 · 승인은 OKF 에 남고, 모델만 교체됩니다.</div>
           </div>
           <div class="okf-arrow">↓</div>
           <div class="okf-outputs">
@@ -1611,24 +1634,56 @@
         </div>
       </div>
 
+      <div class="cv-block" style="margin-top:56px;">
+        <div class="cl-subh">OKF — 사람도 에이전트도 그대로 읽는 지식 표준</div>
+        <div class="okf-std">
+          <div class="okf-std-col">
+            <div class="okf-std-label">흩어진 지식</div>
+            <ul>
+              <li>DB 카탈로그</li>
+              <li>위키 페이지</li>
+              <li>코드 주석</li>
+              <li>개인 경험 · 메모</li>
+            </ul>
+          </div>
+          <div class="okf-std-arrow">→</div>
+          <div class="okf-std-col is-okf">
+            <div class="okf-std-label">하나의 포맷, OKF</div>
+            <ul>
+              <li>.md 마크다운 파일</li>
+              <li>YAML 프론트매터</li>
+              <li>git 버전 관리</li>
+              <li>개념 그래프</li>
+            </ul>
+          </div>
+          <pre class="okf-file"><span class="fpath">products/암보험.md</span>
+<span class="fdim">---</span>
+<span class="fkey">title:</span>   암보험 가입 규칙
+<span class="fkey">owner:</span>   상품기획팀
+<span class="fkey">status:</span>  published
+<span class="fdim">---</span></pre>
+        </div>
+        <p class="okf-std-note">지식이 한 포맷에 모이면, <b>모델은 갈아끼우는 부품이 됩니다.</b></p>
+      </div>
+
       <div class="cv-block" style="margin-top:64px;">
         <div class="cl-subh">위키 한 장에서 두 가지가 나옵니다</div>
         <div class="okf-answers">
-          <div class="okf-answer">
-            <div class="oa-eyebrow">이어서 · 02</div>
+          <a class="okf-answer" href="#s3d2">
+            <div class="oa-eyebrow">SOLUTION 02</div>
             <div class="oa-bold">업무 시스템을 생성한다<br>위키 작성만으로 80%</div>
-          </div>
-          <div class="okf-answer">
-            <div class="oa-eyebrow">이어서 · 03</div>
+          </a>
+          <a class="okf-answer" href="#s3c4">
+            <div class="oa-eyebrow">SOLUTION 03</div>
             <div class="oa-bold">AI 에이전트를 생성한다<br>가입설계 5 Specialist</div>
-          </div>
-          <div class="okf-answer">
-            <div class="oa-eyebrow">이어서 · 04</div>
+          </a>
+          <a class="okf-answer" href="#s3c5">
+            <div class="oa-eyebrow">SOLUTION 04</div>
             <div class="oa-bold">하나의 아키텍처가<br>둘을 함께 운영한다</div>
-          </div>
+          </a>
         </div>
 
-        <div class="okf-final-tag"><span>업계 최초 위키 기반 개발 플랫폼</span></div>
+        <div class="okf-final-tag"><span>OKF — 업계 최초 위키 기반 개발 플랫폼</span></div>
       </div>
     </div>
     <script>
