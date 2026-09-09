@@ -367,13 +367,13 @@
   .diagram-line{ stroke:rgba(var(--text-base),.3); }
 
   /* ========== 공통 콘텐츠 섹션 (PERSPECTIVE 01-04 · SOLUTION 01-05 · REFERENCE) ========== */
-  #s2, #s1c1, #s1c2, #s1c4, #s1c7, #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{ background:var(--bg-deep); color:var(--white); padding-top:120px; padding-bottom:70px; justify-content:flex-start; }
+  #s2, #s1c1, #s1c2, #s1c4, #s1c7, #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{ background:var(--bg-deep); color:var(--white); padding-top:120px; padding-bottom:70px; justify-content:flex-start; }
 
   /* 콘텐츠 섹션 팔레트 — 흰색 계열 본문·헤어라인 (:root 의 --line 은 어두운 선이므로 여기서 반전) */
   #s2, #s4, #s5, #s6,
   #s1c1, #s1c2, #s1c4, #s1c7,
   #s3d1, #s3d2,
-  #s3c4, #s3c5, #s3c8{
+  #s3c4, #s3c5, #s3c8, #s3p{
     --bg-deep:#0a0e17;
     --text-base:255,255,255;
     --white:#ffffff;
@@ -438,6 +438,58 @@
 
   .tag-row{ margin-top:24px; display:flex; flex-wrap:wrap; gap:10px; }
   .tag-pill{ font-size:12.5px; padding:8px 16px; border-radius:20px; border:1px solid rgba(var(--text-base),.18); color:rgba(var(--text-base),.65); }
+
+  /* ---------- PRODUCTS — Cover 시리즈 ---------- */
+  .prd-layer{ margin-top:34px; }
+  .prd-layer + .prd-layer{ margin-top:30px; }
+  .prd-layer-head{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    padding-bottom:10px; margin-bottom:16px; border-bottom:1px solid var(--line-deep);
+  }
+  .prd-layer-head b{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
+    letter-spacing:.14em; color:var(--blue-soft);
+  }
+  .prd-layer-head span{ font-size:13px; color:rgba(var(--text-base),.5); }
+
+  .prd-grid{ display:grid; gap:14px; }
+  .prd-grid.two{ grid-template-columns:repeat(2,1fr); }
+  .prd-grid.three{ grid-template-columns:repeat(3,1fr); }
+
+  .prd-card{
+    background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
+    border-radius:10px; padding:22px 20px;
+    display:flex; flex-direction:column; gap:9px;
+  }
+  /* 접두어는 눌러 두고 뒷말만 살린다 — 시리즈라는 게 이름에서 바로 보이게 */
+  .prd-name{ font-size:21px; font-weight:800; letter-spacing:-.01em; line-height:1.25; }
+  .prd-name i{ font-style:normal; color:rgba(var(--text-base),.42); }
+  .prd-name b{ font-weight:800; color:var(--blue-soft); }
+
+  .prd-role{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:13px; color:rgba(var(--text-base),.72);
+  }
+  .prd-stat{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600;
+    letter-spacing:.08em; padding:3px 8px; border-radius:3px;
+    border:1px solid currentColor; white-space:nowrap;
+  }
+  .prd-stat.live{ color:var(--teal); }
+  .prd-stat.wip{ color:var(--blue-soft); }
+  .prd-stat.plan{ color:rgba(var(--text-base),.45); }
+
+  .prd-card p{ margin:0; font-size:13.5px; line-height:1.75; color:rgba(var(--text-base),.58); }
+
+  .prd-foot{
+    margin-top:30px; padding-top:20px; border-top:1px solid var(--line-deep);
+    font-size:13.5px; line-height:1.8; color:rgba(var(--text-base),.55); max-width:760px;
+  }
+  .prd-foot b{ color:rgba(var(--text-base),.8); font-weight:700; }
+
+  @media (max-width:880px){
+    .prd-grid.two, .prd-grid.three{ grid-template-columns:1fr; }
+  }
 
   .answer-card{ margin-top:28px; padding:26px 28px; border-radius:12px; background:rgba(23,195,178,.06); border:1px solid rgba(23,195,178,.4); }
   .answer-card .ac-eyebrow{ font-size:12px; font-weight:700; color:var(--teal); margin-bottom:10px; letter-spacing:.02em; }
@@ -928,7 +980,7 @@
      성과·사람이 나오는 두 장만 강조 톤으로 눌러 준다. */
 
   /* SOLUTION 01–04 · ARCHIVE — 한 단계 올린 바닥 */
-  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:var(--panel-deep); }
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4, #s3p{ background:var(--panel-deep); }
 
   /* 강조 ① SOLUTION 05 — 성과가 나오는 장 */
   #s3c8{
@@ -1160,7 +1212,7 @@
   /* 다크 고정 블록 무력화 — id 특정도가 같아야 이기므로 뒤에서 재선언 */
   #s1, #s2, #s4, #s5, #s6,
   #s1c1, #s1c2, #s1c4, #s1c7,
-  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{
     --bg-deep:#F5F8FC;
     --text-base:14,20,32;
     --white:#0E1420;
@@ -1223,6 +1275,7 @@
   .okf-final-tag span{ background:#FFFFFF; }
   #s2 .proof-open{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 8px 24px rgba(15,95,214,.06); }
   .tag-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .prd-card{ background:#FFFFFF; border-color:rgba(14,20,32,.10); box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04); }
   .badge-pill{ background:#FFFFFF; }
   .galaxy-detail{ background:#FFFFFF; box-shadow:0 8px 24px rgba(15,95,214,.06); }
   .cl-wf .c.last{ background:#FFF8EC; border-color:#E3C489; }
@@ -1290,7 +1343,7 @@
   }
   #s1, #s2, #s4, #s5, #s6,
   #s1c1, #s1c2, #s1c4, #s1c7,
-  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8{
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{
     --text-base:43,43,43;
     --white:#2B2B2B;
     --line:rgba(43,43,43,.10);
@@ -1344,7 +1397,7 @@
      성과(#s3c8)와 사람(#s5) 두 장은 임팩트 ②의 다크 밴드로 눌러 준다. */
 
   /* SOLUTION 01–04 · ARCHIVE — 한 단계 내린 바닥 (카드가 흰색이므로 바닥을 낮춰야 카드가 산다) */
-  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:#EBF1F9; }
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4, #s3p{ background:#EBF1F9; }
 
   /* 강조 ② TEAM — 결론 장과 같은 다크 밴드 (CI 의 다크 배경 활용안 범위) */
   #s5{
@@ -1466,6 +1519,7 @@
 <nav class="topmenu" id="topmenu">
   <a href="#s1c1">Perspective</a>
   <a href="#s3d1">Solutions</a>
+  <a href="#s3p">Products</a>
   <a href="#s2">Reference</a>
   <a href="#s4">Archive</a>
   <a href="#s5">Team</a>
@@ -1499,6 +1553,7 @@
   </button>
   <a href="#s1c1">Perspective</a>
   <a href="#s3d1">Solutions</a>
+  <a href="#s3p">Products</a>
   <a href="#s2">Reference</a>
   <a href="#s4">Archive</a>
   <a href="#s5">Team</a>
@@ -2202,9 +2257,10 @@
               <li>개념 그래프</li>
             </ul>
           </div>
-          <pre class="okf-file"><span class="fpath">products/암보험.md</span>
+          <pre class="okf-file"><span class="fpath">약관/원문/특약/5대질병플러스보장특약@미지급형/index.md</span>
 <span class="fdim">---</span>
-<span class="fkey">title:</span>   암보험 가입 규칙
+<span class="fkey">type:</span>    Rider
+<span class="fkey">title:</span>   5대질병플러스보장특약 (미지급형)
 <span class="fkey">owner:</span>   상품기획팀
 <span class="fkey">status:</span>  published
 <span class="fdim">---</span></pre>
@@ -2554,6 +2610,73 @@
     </div>
   </section>
 
+  <!-- ============ PRODUCTS — Cover 시리즈 ============ -->
+  <section id="s3p">
+    <canvas class="dust" aria-hidden="true"></canvas>
+    <div class="cv-wrap">
+      <div class="cv-block">
+        <div class="cv-sub">PRODUCTS — Cover 시리즈</div>
+        <h3>위키 하나에서 다섯 개의 제품이 나옵니다</h3>
+        <p class="cv-lead">
+          제품마다 모델을 따로 붙이지 않습니다. 업무 규칙을 위키에 적으면 그것이 곧 제품이 됩니다 —
+          기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
+        </p>
+
+        <div class="prd-layer">
+          <div class="prd-layer-head">
+            <b>FOUNDATION</b><span>플랫폼과 제작 도구 — 나머지 전부가 이 위에서 돕니다</span>
+          </div>
+          <div class="prd-grid two">
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>Link</b></div>
+              <div class="prd-role">AI 개발 플랫폼</div>
+              <p>위키가 원본이고 코드는 그 출력입니다. 규칙을 고치면 구현이 따라옵니다.
+                 OKF 공용 포맷과 슬롯 구조라 모델은 갈아 끼울 수 있습니다.</p>
+            </div>
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>Studio</b></div>
+              <div class="prd-role">에이전트 제작 환경</div>
+              <p>업무별 에이전트를 정의하고, 시험하고, 배포합니다.
+                 사람이 지킬 승인 지점을 어디에 둘지도 여기서 정합니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prd-layer">
+          <div class="prd-layer-head">
+            <b>BUSINESS</b><span>보험 핵심 업무 — 20년치 도메인이 그대로 들어간 자리</span>
+          </div>
+          <div class="prd-grid three">
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>Plan</b></div>
+              <div class="prd-role">가입설계 · 청약<span class="prd-stat live">실서비스</span></div>
+              <p>신한라이프 LICO에서 생성형 AI 가입설계·청약을 업계 최초로 열었습니다. 2026.02.
+                 별도 챗봇이 아니라 설계 화면 안에 인라인으로 들어갑니다.</p>
+            </div>
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>UW</b></div>
+              <div class="prd-role">언더라이팅 · 심사<span class="prd-stat wip">고도화 중</span></div>
+              <p>설계와 동시에 심사를 돌리는 One-stop 흐름입니다.
+                 한도·특약·심사기준을 함께 검증해 재설계를 줄입니다.</p>
+            </div>
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>Claim</b></div>
+              <div class="prd-role">보험금 청구 · 지급<span class="prd-stat plan">준비 중</span></div>
+              <p>청구 접수부터 지급 심사까지, 같은 위키 위에서 준비하고 있습니다.
+                 앞의 둘과 규칙을 공유하기 때문에 처음부터 다시 만들지 않습니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="prd-foot">
+          다섯 제품이 <b>같은 위키, 같은 하네스</b>를 씁니다. 한 업무에서 검증한 승인·검증 흐름이
+          다음 업무로 그대로 넘어가고, 모델이 바뀌어도 규칙은 남습니다.
+          <a href="#s3d1" style="color:var(--blue-soft);">CoverLink 구조 보기 →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ REFERENCE — AI Track Record ============ -->
   <section id="s2">
     <div class="cv-wrap">
@@ -2880,6 +3003,7 @@
         <div class="footer-col">
           <h5>Solutions</h5>
           <a href="#s3d1">CoverLink</a>
+          <a href="#s3p">Cover 시리즈</a>
           <a href="#s3c4">가입설계 AI</a>
         </div>
         <div class="footer-col">
