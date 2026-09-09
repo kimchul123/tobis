@@ -557,10 +557,12 @@
   .okf-pipeline{ margin-top:40px; max-width:640px; margin-left:auto; margin-right:auto; }
   /* s3d1 — 1단 · 파이프라인 가로 한 줄 · 세로 리듬 */
   #s3p .cl-hero{ grid-template-columns:1fr; gap:46px; align-items:start; }
-  #s3p .cl-name{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin:12px 0 28px; }
-  #s3p .cl-h1{ margin:0; }
-  #s3p .cl-brand-en{ margin:0; }
-  #s3p .cl-claim{ word-break:keep-all; margin-bottom:18px; line-height:1.35; }
+  /* 제품 이름은 섹션 제목(h3 32px)을 넘지 않는다 — 이 섹션의 대제목은 하나뿐이다 */
+  #s3p .cl-name{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin:0 0 14px; }
+  #s3p .cl-h1{ font-size:clamp(26px,3.2vw,34px); line-height:1.15; }
+  #s3p .cl-brand-en{ font-size:13px; margin:0; }
+  #s3p .cl-claim{ font-size:clamp(15px,1.7vw,18px); font-weight:700; margin:0; line-height:1.4; }
+  #s3p .cl-claim{ word-break:keep-all; }
   #s3p .cl-desc{ max-width:none; margin-bottom:0; line-height:1.85; }
   #s3p .cl-subh{ margin-bottom:20px; }
   #s3p .okf-answers{ margin-top:0; }
@@ -1908,14 +1910,14 @@
           기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
         </p>
 
+      <div class="cl-subh" style="margin-top:40px;">다섯을 떠받치는 하나 — 커버링크</div>
       <div class="cl-hero">
         <div>
-          <div class="cl-brand">FOUNDATION · 다섯을 떠받치는 하나</div>
           <div class="cl-name">
             <h1 class="cl-h1">커버링크</h1>
             <div class="cl-brand-en">CoverLink</div>
+            <span class="cl-claim">위키가 원본, 코드는 출력</span>
           </div>
-          <div class="cl-claim">위키가 원본, 코드는 출력</div>
           <p class="cl-desc">업무 위키 한 장이면 됩니다. 언어에 관계없이 자사 메타에 맞춰 80%를 생성하고, 남은 상세 보정만 사람의 손을 거쳐 완성합니다.</p>
         </div>
         <div class="okf-pipeline">
@@ -1949,7 +1951,7 @@
 
         <div class="prd-layer">
           <div class="prd-layer-head">
-            <b>FOUNDATION</b><span>플랫폼과 제작 도구 — 나머지 전부가 이 위에서 돕니다</span>
+            <b>제품 다섯</b><span>기반 둘, 보험 핵심 업무 셋</span>
           </div>
           <div class="prd-grid two">
             <a class="prd-card" href="#s3p">
@@ -1971,7 +1973,7 @@
 
         <div class="prd-layer">
           <div class="prd-layer-head">
-            <b>BUSINESS</b><span>보험 핵심 업무 — 현장 규칙이 그대로 들어간 자리</span>
+            <b>업무</b><span>현장 규칙이 그대로 들어간 자리</span>
           </div>
           <div class="prd-grid three">
             <a class="prd-card" href="#s3c4">
