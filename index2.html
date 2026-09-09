@@ -24,11 +24,14 @@
   /* 한랭 편향 종이 — 순백이 아니라 브랜드 블루 쪽으로 아주 살짝 기운 오프화이트 */
   --paper:#F7F9FD;
   --paper-2:#FFFFFF;
-  --ink:#0C1320;
-  --ink-2:#3A465A;
-  --ink-3:#6C7A90;
-  --hair:rgba(12,19,32,.10);
-  --hair-2:rgba(12,19,32,.06);
+  /* 글자 톤은 index.html 의 라이트 체계를 따른다 —
+     본문 #2B2B2B(CI Secondary) 계열, 보조 #5A6675, 작은 파란 글자는 #0F5FD6.
+     CI 원색 #1A87FE 는 흰 배경에서 3.6:1 이라 본문·라벨에 쓰지 않는다. */
+  --ink:#0C1320;      /* 헤드라인 */
+  --ink-2:#2B3648;    /* 본문 — 이전 #3A465A 에서 한 단계 내림 */
+  --ink-3:#5A6675;    /* 라벨·캡션 — 이전 #6C7A90 은 4.0:1 로 흐렸다 */
+  --hair:rgba(12,19,32,.12);
+  --hair-2:rgba(12,19,32,.07);
 
   --blue:#1a87fe;
   --blue-deep:#0F5FD6;
@@ -39,8 +42,8 @@
   --night:#080C15;
   --night-2:#0E1524;
   --night-ink:#EEF2F9;
-  --night-ink-2:rgba(238,242,249,.62);
-  --night-hair:rgba(238,242,249,.14);
+  --night-ink-2:rgba(238,242,249,.76);   /* 어두운 장의 본문 — .62 는 너무 흐렸다 */
+  --night-hair:rgba(238,242,249,.16);
 
   --measure:60ch;
   color-scheme:light;
@@ -58,6 +61,7 @@ body{
   font-size:16px;
   line-height:1.8;
   -webkit-font-smoothing:antialiased;
+  word-break:keep-all;   /* 한글이 단어 중간에서 끊기지 않게 */
   overflow-x:hidden;
 }
 
@@ -89,9 +93,9 @@ body{
   border-bottom:1px solid var(--hair-2);
 }
 .top-in{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 0; }
-.mark{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
-.mark b{ font-family:'IBM Plex Mono',monospace; font-size:17px; font-weight:600; letter-spacing:.18em; }
-.mark span{ font-size:11px; color:var(--ink-3); letter-spacing:.02em; }
+/* 로고는 index.html 라이트 모드와 같은 자산(logo-dark)을 같은 높이로 쓴다 */
+.mark{ display:block; height:26px; text-decoration:none; }
+.mark img{ height:100%; width:auto; display:block; }
 .top a.back{
   font-size:13px; color:var(--ink-2); text-decoration:none;
   border:1px solid var(--hair); border-radius:999px; padding:7px 15px;
@@ -142,7 +146,7 @@ body{
 .ch-year{
   font-family:'IBM Plex Mono',monospace; font-weight:500;
   font-size:clamp(30px,5.4vw,58px); line-height:1; letter-spacing:-.03em;
-  color:transparent; -webkit-text-stroke:1px rgba(12,19,32,.26);
+  color:transparent; -webkit-text-stroke:1px rgba(12,19,32,.36);
   flex-shrink:0; padding-top:6px;
 }
 .ch-no{
@@ -155,7 +159,7 @@ body{
   margin:12px 0 0; text-wrap:balance;
 }
 .chapter .body{ margin-top:22px; max-width:var(--measure); }
-.chapter .body p{ margin:0 0 18px; color:var(--ink-2); }
+.chapter .body p{ margin:0 0 18px; font-size:16.5px; line-height:1.88; color:var(--ink-2); }
 .chapter .body p:last-child{ margin-bottom:0; }
 .chapter .body b{ color:var(--ink); font-weight:600; }
 
@@ -186,7 +190,7 @@ body{
   background:linear-gradient(120deg,var(--blue-deep),var(--teal));
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-.fig span{ display:block; margin-top:11px; font-size:13px; line-height:1.65; color:var(--ink-3); }
+.fig span{ display:block; margin-top:11px; font-size:13.5px; line-height:1.7; color:var(--ink-3); }
 
 /* ---------- 규칙 변화 스트립 ---------- */
 .rules{ margin-top:44px; padding:30px clamp(20px,3vw,34px); }
@@ -199,7 +203,7 @@ body{
   margin-top:5px; font-family:'Hahmlet',serif; font-size:14px; color:var(--ink-3);
 }
 .rules li:nth-child(3) .nm{ color:var(--blue-deep); }
-.rules li:nth-child(3) .wd{ color:var(--blue); }
+.rules li:nth-child(3) .wd{ color:var(--blue-deep); }
 .rules .now{
   display:inline-block; margin-top:9px; font-family:'IBM Plex Mono',monospace;
   font-size:9.5px; letter-spacing:.14em; padding:2px 7px; border-radius:3px;
@@ -218,7 +222,7 @@ body{
   color:var(--night-ink);
 }
 .turn .ch-no{ color:#7FBEFF; }
-.turn .ch-year{ -webkit-text-stroke-color:rgba(238,242,249,.30); }
+.turn .ch-year{ -webkit-text-stroke-color:rgba(238,242,249,.40); }
 .turn h2{ color:var(--night-ink); }
 .turn .body p{ color:var(--night-ink-2); }
 .turn .body b{ color:var(--night-ink); }
@@ -233,11 +237,11 @@ body{
 .flip .box.src{ border-color:rgba(127,190,255,.42); background:rgba(26,135,254,.10); }
 .flip .k{
   font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.2em;
-  text-transform:uppercase; color:rgba(238,242,249,.45);
+  text-transform:uppercase; color:rgba(238,242,249,.62);
 }
 .flip .box.src .k{ color:#7FBEFF; }
 .flip .v{ margin-top:12px; font-family:'Hahmlet',serif; font-size:clamp(20px,2.6vw,28px); font-weight:600; letter-spacing:-.02em; }
-.flip .d{ margin-top:10px; font-size:13.5px; line-height:1.75; color:var(--night-ink-2); }
+.flip .d{ margin-top:10px; font-size:14px; line-height:1.8; color:var(--night-ink-2); }
 .flip .ar{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:#7FBEFF; }
 
 /* ---------- 증명 ---------- */
@@ -248,7 +252,7 @@ body{
 }
 .proof .date small{ display:block; font-size:11px; font-weight:500; letter-spacing:.18em; color:var(--ink-3); margin-top:8px; }
 .proof .what b{ font-size:18px; font-weight:600; letter-spacing:-.01em; }
-.proof .what p{ margin:9px 0 0; font-size:14.5px; line-height:1.8; color:var(--ink-2); }
+.proof .what p{ margin:9px 0 0; font-size:15px; line-height:1.85; color:var(--ink-2); }
 
 /* ---------- 제품 ---------- */
 .prods{ margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
@@ -256,7 +260,7 @@ body{
 .prod .n{ font-size:19px; font-weight:600; letter-spacing:-.015em; }
 .prod .n i{ font-style:normal; color:var(--ink-3); font-weight:400; }
 .prod .n b{ background:linear-gradient(120deg,var(--blue-deep),var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.prod .r{ font-size:12.5px; color:var(--ink-3); }
+.prod .r{ font-size:13px; line-height:1.6; color:var(--ink-3); }
 .prod .s{
   margin-top:auto; padding-top:12px;
   font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em;
@@ -280,7 +284,7 @@ body{
   font-size:clamp(28px,4.6vw,52px); line-height:1.24; letter-spacing:-.025em; margin:14px 0 0;
   text-wrap:balance;
 }
-.last .eyebrow{ color:rgba(238,242,249,.5); }
+.last .eyebrow{ color:rgba(238,242,249,.68); }
 .last p{ margin:24px 0 0; max-width:48ch; color:var(--night-ink-2); }
 .cta{ margin-top:42px; display:flex; flex-wrap:wrap; gap:12px; }
 .cta a{
@@ -297,7 +301,7 @@ body{
 .cta .ghost:hover{ border-color:#7FBEFF; background:rgba(127,190,255,.08); }
 
 /* ---------- 꼬리말 ---------- */
-.foot{ padding:44px 0 56px; background:var(--night-2); color:rgba(238,242,249,.5); font-size:12.5px; }
+.foot{ padding:44px 0 56px; background:var(--night-2); color:rgba(238,242,249,.66); font-size:12.5px; }
 .foot-in{ display:flex; flex-wrap:wrap; gap:14px 32px; justify-content:space-between; align-items:flex-end; }
 .foot b{ color:rgba(238,242,249,.8); font-weight:600; }
 .foot .sig{ font-family:'IBM Plex Mono',monospace; letter-spacing:.16em; font-size:11px; }
@@ -337,8 +341,8 @@ body{
 
 <header class="top">
   <div class="wrap top-in">
-    <a class="mark" href="#top">
-      <b>TOBIS</b><span>TO BE INTELLIGENT SYSTEMS</span>
+    <a class="mark" href="#top" aria-label="TOBIS 홈으로">
+      <img src="data:image/png;base64,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" alt="TOBIS">
     </a>
     <a class="back" href="./">기존 사이트로 &rarr;</a>
   </div>
