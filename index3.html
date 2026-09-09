@@ -1102,9 +1102,58 @@
   }
   .st-after{ margin-top:36px; }
 
+  /* 숫자 타일 */
+  .st-figs{ margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; max-width:760px; }
+  .st-fig{
+    padding:22px 20px; border-radius:12px;
+    background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
+  }
+  .st-fig b{
+    display:block; font-family:'Hahmlet', serif; font-weight:600;
+    font-size:clamp(28px,3.4vw,38px); line-height:1; letter-spacing:-.03em; color:var(--blue-soft);
+  }
+  .st-fig span{ display:block; margin-top:10px; font-size:12.5px; line-height:1.65; color:rgba(var(--text-base),.5); }
+
+  /* 규칙 변화 스트립 */
+  .st-rules{
+    list-style:none; margin:38px 0 0; padding:26px 24px; max-width:860px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border-radius:12px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
+  }
+  .st-rules li{ padding-right:14px; }
+  .st-rules li + li{ padding-left:18px; border-left:1px solid rgba(var(--text-base),.12); }
+  .st-rules .yr{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.08em; color:rgba(var(--text-base),.45); }
+  .st-rules .nm{ margin-top:7px; font-size:15.5px; font-weight:700; color:var(--white); }
+  .st-rules .wd{ margin-top:4px; font-family:'Hahmlet', serif; font-size:13.5px; color:rgba(var(--text-base),.45); }
+  .st-rules li.on .nm{ color:var(--blue-soft); }
+  .st-rules li.on .wd{ color:var(--teal); }
+  .st-rules .now{
+    display:inline-block; margin-top:9px; font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px; letter-spacing:.14em; padding:2px 7px; border-radius:3px;
+    color:var(--blue-soft); border:1px solid rgba(26,135,254,.45);
+  }
+
+  /* 원본 → 출력 */
+  .st-flip{ margin-top:38px; max-width:860px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(12px,2.4vw,24px); }
+  .st-flip .box{ padding:22px 20px; border-radius:12px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); }
+  .st-flip .box.src{ background:rgba(26,135,254,.09); border-color:rgba(26,135,254,.38); }
+  .st-flip .k{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(var(--text-base),.42); }
+  .st-flip .box.src .k{ color:var(--blue-soft); }
+  .st-flip .v{ margin-top:11px; font-family:'Hahmlet', serif; font-size:clamp(19px,2.3vw,25px); font-weight:600; letter-spacing:-.02em; color:var(--white); }
+  .st-flip .d{ margin-top:9px; font-size:13px; line-height:1.75; color:rgba(var(--text-base),.55); }
+  .st-flip .ar{ font-family:'IBM Plex Mono', monospace; font-size:20px; color:var(--blue-soft); text-align:center; }
+
+  @media (max-width:880px){
+    .st-rules{ grid-template-columns:repeat(2,1fr); gap:20px 0; }
+    .st-rules li:nth-child(3){ border-left:none; padding-left:0; }
+    .st-flip{ grid-template-columns:1fr; }
+    .st-flip .ar{ transform:rotate(90deg); }
+  }
   @media (max-width:560px){
     .st-head{ flex-direction:column; gap:8px; }
     .st-year{ padding-top:0; }
+    .st-rules{ grid-template-columns:1fr; }
+    .st-rules li + li{ border-left:none; padding-left:0; padding-top:16px; border-top:1px solid rgba(var(--text-base),.12); }
   }
 
   /* ================================================================
@@ -1353,6 +1402,15 @@
     box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04);
   }
   .trend-track-card .tt-flow{ border-top-color:rgba(14,20,32,.10); border-bottom-color:rgba(14,20,32,.10); }
+
+  /* ---------- STORY 층 — 밝은 바탕 위에서 카드가 뜨도록 흰 면 + 헤어라인 ---------- */
+  .st-fig, .st-rules, .st-flip .box{
+    background:#FFFFFF; border-color:rgba(14,20,32,.10);
+    box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04);
+  }
+  .st-flip .box.src{ background:#F2F7FF; border-color:rgba(15,95,214,.32); box-shadow:0 1px 2px rgba(15,95,214,.05), 0 10px 28px rgba(15,95,214,.06); }
+  .st-rules li + li{ border-left-color:rgba(14,20,32,.10); }
+  .st-year{ -webkit-text-stroke-color:rgba(43,43,43,.28); }
   .okf-box{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 1px 2px rgba(15,95,214,.06), 0 10px 30px rgba(15,95,214,.07); }
   .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
   .okf-output-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
@@ -1711,695 +1769,137 @@
     </div>
   </section>
 
-  <!-- ============ STORY 01 · 축적 — 같은 일을 46번 하면 ============ -->
+  <!-- ============ STORY 01 · 2012 시작 ============ -->
   <section id="s1c1">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
-      <div class="cv-block">
-        <div class="st-head">
-          <div class="st-year">2012</div>
-          <div>
-            <div class="st-no">Chapter 01 · 축적</div>
-            <h3 class="st-h">같은 일을 46번 하면<br>알게 되는 것이 있습니다</h3>
-            <div class="st-body">
-              <p>
-                설계사가 상품을 고르고, 보험료를 계산하고, 청약서를 넘기는 화면.
-                그 뒤에서 한도를 확인하고 특약 조합을 검증하는 규칙.
-                <b>투비는 그런 걸 만드는 회사로 시작했습니다.</b>
-              </p>
-              <p>
-                신한라이프, 동양생명, NH손해보험, 우체국금융 — 회사가 달라도 가입설계는 가입설계였고
-                언더라이팅은 언더라이팅이었습니다. 달라지는 건 <b>규칙</b>뿐이었습니다.
-                그리고 그 규칙은 대부분 <b>오래 일한 사람의 머릿속에</b> 있었습니다.
-              </p>
-            </div>
-            <blockquote class="st-say">
-              우리가 20년간 쌓은 건 코드가 아니라,<br>그 규칙을 알아듣는 능력이었습니다.
-            </blockquote>
+      <div class="cv-block st-head">
+        <div class="st-year">2012</div>
+        <div>
+          <div class="st-no">Chapter 01 · 시작</div>
+          <h3 class="st-h">우리는 화면을 만들었습니다</h3>
+          <div class="st-body">
+            <p>
+              설계사가 상품을 고르고, 보험료를 계산하고, 청약서를 넘기는 화면.
+              그 뒤에서 한도를 확인하고 특약 조합을 검증하는 규칙.
+              <b>투비아이에스컨설팅은 그런 걸 만드는 회사로 시작했습니다.</b>
+            </p>
+            <p>
+              화려한 일은 아니었습니다. 상품기획팀이 건네준 규정을 읽고, 현업에게 되묻고,
+              예외를 찾아내고, 다시 화면으로 옮기는 일. 한 프로젝트에 보통 1년이 걸렸습니다.
+            </p>
           </div>
         </div>
-
-        <div class="trend-hero-chart st-after">
-          <svg class="thc-desktop" viewBox="0 0 1000 305" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="thcWedge" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-opacity=".26" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity=".05" style="stop-color:var(--sv-teal)"/>
-              </linearGradient>
-              <radialGradient id="thcGlow">
-                <stop offset="0" stop-opacity=".38" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
-              </radialGradient>
-              <linearGradient id="thcFade" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-opacity="1" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity=".34" style="stop-color:var(--sv-blue)"/>
-              </linearGradient>
-            </defs>
-
-            <!-- 두 선 사이의 간격 — 오늘 닫힌다 -->
-            <path d="M0,46 C340,46 570,105 760,168 C570,205 340,232 0,232 Z" fill="url(#thcWedge)"/>
-
-            <text x="0" y="30" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN — 20년 쌓아 온 것</text>
-            <text x="0" y="256" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI — 반년마다 새로 배우는 것</text>
-
-            <line x1="760" y1="40" x2="760" y2="272" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
-
-            <path d="M0,46 C340,46 570,105 760,168" stroke-width="3.5" fill="none" stroke-linecap="round" style="stroke:var(--sv-blue)"/>
-            <path d="M0,232 C340,232 570,205 760,168" stroke-width="3.5" fill="none" stroke-linecap="round" style="stroke:var(--sv-teal)"/>
-            <line x1="760" y1="168" x2="1000" y2="168" stroke="url(#thcFade)" stroke-width="4.5" stroke-linecap="round"/>
-
-            <circle cx="760" cy="168" r="30" fill="url(#thcGlow)"/>
-            <circle cx="760" cy="168" r="14" fill="none" stroke-width="1.5" stroke-opacity=".55" style="stroke:var(--sv-blue-soft)"/>
-            <circle cx="760" cy="168" r="8" style="fill:var(--sv-blue)"/>
-            <text x="760" y="134" text-anchor="middle" font-size="12.5" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">교차점</text>
-
-            <line x1="0" y1="272" x2="1000" y2="272" stroke-width="1" style="stroke:rgba(var(--sv-ink),.12)"/>
-            <text x="140" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2023</text>
-            <text x="345" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2024</text>
-            <text x="550" y="294" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2025</text>
-            <text x="760" y="294" text-anchor="middle" font-size="12" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">2026.09 · 지금</text>
-          </svg>
-          <svg class="thc-mobile" viewBox="0 0 360 304" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="thcWedgeM" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-opacity=".26" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity=".05" style="stop-color:var(--sv-teal)"/>
-              </linearGradient>
-              <radialGradient id="thcGlowM">
-                <stop offset="0" stop-opacity=".38" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
-              </radialGradient>
-              <linearGradient id="thcFadeM" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-opacity="1" style="stop-color:var(--sv-blue)"/>
-                <stop offset="1" stop-opacity=".34" style="stop-color:var(--sv-blue)"/>
-              </linearGradient>
-            </defs>
-
-            <path d="M0,58 C110,58 190,110 250,150 C190,180 110,205 0,205 Z" fill="url(#thcWedgeM)"/>
-
-            <text x="0" y="18" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">DOMAIN · 20년 쌓아 온 것</text>
-
-            <line x1="250" y1="44" x2="250" y2="232" stroke-width="1" stroke-dasharray="3 5" style="stroke:rgba(var(--sv-ink),.14)"/>
-
-            <path d="M0,58 C110,58 190,110 250,150" stroke-width="4" fill="none" stroke-linecap="round" style="stroke:var(--sv-blue)"/>
-            <path d="M0,205 C110,205 190,180 250,150" stroke-width="4" fill="none" stroke-linecap="round" style="stroke:var(--sv-teal)"/>
-            <line x1="250" y1="150" x2="360" y2="150" stroke="url(#thcFadeM)" stroke-width="5" stroke-linecap="round"/>
-
-            <circle cx="250" cy="150" r="24" fill="url(#thcGlowM)"/>
-            <circle cx="250" cy="150" r="13" fill="none" stroke-width="1.5" stroke-opacity=".55" style="stroke:var(--sv-blue-soft)"/>
-            <circle cx="250" cy="150" r="8" style="fill:var(--sv-blue)"/>
-            <text x="250" y="120" text-anchor="middle" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">교차점</text>
-
-            <line x1="0" y1="232" x2="360" y2="232" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.12)"/>
-            <text x="55" y="256" text-anchor="middle" font-size="14" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2023</text>
-            <text x="150" y="256" text-anchor="middle" font-size="14" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink),.42)">2025</text>
-            <text x="250" y="256" text-anchor="middle" font-size="14" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">2026.09</text>
-            <text x="250" y="274" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-blue-soft)">지금</text>
-
-            <text x="0" y="298" font-size="15" font-weight="700" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-teal)">AI · 반년마다 새로 배우는 것</text>
-          </svg>
-        </div>
-
-        <div class="cv-prob-row">
-          <div class="cv-prob">
-            <div class="n">DOMAIN</div>
-            <h4>보험 · 금융 20년</h4>
-            <p>무엇을 만들어야 하는지 아는 쪽입니다 — 업무 규칙과 예외가 어디에 숨어 있는지 압니다.</p>
-          </div>
-          <a class="cv-prob" href="#s1c2">
-            <div class="n">AI</div>
-            <h4>반년마다 바뀌는 방식</h4>
-            <p>어떻게 만드는지 아는 쪽입니다 — 방식이 바뀔 때마다 현장에서 따라잡아 왔습니다.</p>
-          </a>
-          <div class="cv-prob">
-            <div class="n">교차점</div>
-            <h4>CoverLink</h4>
-            <p>두 선이 겹치는 자리에서만 나오는 결과물입니다 — 2026.02 신한라이프 실서비스.</p>
-          </div>
-        </div>
-
-        <div class="trend-tagline">AI Sales Accelerator · 보험 · 금융 도메인 × 최신 AI</div>
       </div>
     </div>
   </section>
 
-  <!-- ============ STORY 02 · 흔들림 — 규칙이 계속 바뀌기 시작했습니다 ============ -->
+  <!-- ============ STORY 02 · ×46 축적 ============ -->
   <section id="s1c2">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
-      <div class="cv-block">
-        <div class="st-head">
-          <div class="st-year">2022</div>
-          <div>
-            <div class="st-no">Chapter 02 · 흔들림</div>
-            <h3 class="st-h">그런데 규칙이<br>계속 바뀌기 시작했습니다</h3>
-            <div class="st-body">
-              <p>
-                AI가 왔습니다. 처음엔 말을 잘 거는 법이 실력이었습니다.
-                얼마 뒤엔 무엇을 보여줄지 고르는 법이 실력이 됐습니다.
-                지금은 모델 주변을 어떻게 짜는가가 승부처입니다.
-              </p>
-              <p>
-                <b>2년마다 잘한다의 정의가 바뀌었습니다.</b> 모델을 쫓아가는 회사들은 그때마다
-                처음부터 다시 만들었습니다. 우리는 다른 질문을 했습니다 —
-                이 변화에서 <b>안 바뀌는 건 뭐지?</b>
-              </p>
-            </div>
+      <div class="cv-block st-head">
+        <div class="st-year">×46</div>
+        <div>
+          <div class="st-no">Chapter 02 · 축적</div>
+          <h3 class="st-h">같은 일을 46번 하면<br>알게 되는 것이 있습니다</h3>
+          <div class="st-body">
+            <p>
+              신한라이프, 동양생명, NH손해보험, 우체국금융, DB생명 —
+              회사가 달라도 가입설계는 가입설계였고, 언더라이팅은 언더라이팅이었습니다.
+              달라지는 건 <b>규칙</b>뿐이었습니다.
+            </p>
+            <p>
+              그리고 그 규칙은 어디에도 제대로 적혀 있지 않았습니다.
+              일부는 규정집에, 일부는 코드 주석에, 대부분은 <b>오래 일한 사람의 머릿속에</b> 있었습니다.
+              프로젝트가 끝나면 그 사람과 함께 사라졌습니다.
+            </p>
+          </div>
+          <blockquote class="st-say">
+            우리가 20년간 쌓은 건 코드가 아니라,<br>그 규칙을 알아듣는 능력이었습니다.
+          </blockquote>
+          <div class="st-figs">
+            <div class="st-fig"><b>46</b><span>2012년부터 수행한 프로젝트</span></div>
+            <div class="st-fig"><b>25</b><span>함께한 금융·기관 파트너</span></div>
+            <div class="st-fig"><b>20년</b><span>영업채널 · 가입설계 · 청약 · 언더라이팅</span></div>
           </div>
         </div>
-
-        <div class="trend-timeline st-after">
-          <svg class="tl-desktop" viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg" id="tlSvg">
-            <line x1="115" y1="45" x2="945" y2="45" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.16)"/>
-            <line x1="115" y1="45" x2="530" y2="45" stroke-width="2" style="stroke:var(--sv-blue-soft)"/>
-
-            <g class="tl-node" data-idx="0" style="cursor:pointer;">
-              <text class="tl-era" x="115" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">2022–23</text>
-              <circle class="tl-dot" cx="115" cy="45" r="6"/>
-              <text class="tl-name" x="115" y="76" text-anchor="middle" font-size="14" font-weight="700" font-family="Noto Sans KR">프롬프트</text>
-              <text class="tl-word" x="115" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">말</text>
-            </g>
-            <g class="tl-node" data-idx="1" style="cursor:pointer;">
-              <text class="tl-era" x="322.5" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">2024–25</text>
-              <circle class="tl-dot" cx="322.5" cy="45" r="6"/>
-              <text class="tl-name" x="322.5" y="76" text-anchor="middle" font-size="14" font-weight="700" font-family="Noto Sans KR">컨텍스트</text>
-              <text class="tl-word" x="322.5" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">재료</text>
-            </g>
-            <g class="tl-node" data-idx="2" style="cursor:pointer;">
-              <text class="tl-era" x="530" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">2026</text>
-              <circle class="tl-dot" cx="530" cy="45" r="9"/>
-              <text class="tl-name" x="530" y="76" text-anchor="middle" font-size="15" font-weight="700" font-family="Noto Sans KR">하네스</text>
-              <text class="tl-word" x="530" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">구조</text>
-            </g>
-            <g class="tl-node" data-idx="3" style="cursor:pointer;">
-              <text class="tl-era" x="737.5" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">2026 후반–</text>
-              <circle class="tl-dot" cx="737.5" cy="45" r="6"/>
-              <text class="tl-name" x="737.5" y="76" text-anchor="middle" font-size="14" font-weight="700" font-family="Noto Sans KR">루프</text>
-              <text class="tl-word" x="737.5" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">순환</text>
-            </g>
-            <g class="tl-node" data-idx="4" style="cursor:pointer;">
-              <text class="tl-era" x="945" y="16" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace">NEXT</text>
-              <circle class="tl-dot" cx="945" cy="45" r="6" fill="none"/>
-              <text class="tl-name" x="945" y="76" text-anchor="middle" font-size="14" font-weight="700" font-family="Noto Sans KR">(?)</text>
-              <text class="tl-word" x="945" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">미정</text>
-            </g>
-          </svg>
-
-          <!-- 모바일 — 같은 데이터를 세로로 세운다. data-idx 는 데스크톱과 짝을 맞춘다. -->
-          <svg class="tl-mobile" viewBox="0 0 360 296" xmlns="http://www.w3.org/2000/svg" id="tlSvgM">
-            <line x1="26" y1="24" x2="26" y2="272" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.16)"/>
-            <line x1="26" y1="24" x2="26" y2="148" stroke-width="2.5" style="stroke:var(--sv-blue-soft)"/>
-
-            <g class="tl-node" data-idx="0" style="cursor:pointer;">
-              <rect x="0" y="0" width="360" height="52" fill="transparent"/>
-              <circle class="tl-dot" cx="26" cy="24" r="6"/>
-              <text class="tl-era" x="50" y="17" font-size="12" font-family="IBM Plex Mono, monospace">2022–23</text>
-              <text class="tl-name" x="50" y="36" font-size="16" font-weight="700" font-family="Noto Sans KR">프롬프트</text>
-              <text class="tl-word" x="350" y="30" text-anchor="end" font-size="13" font-family="Noto Sans KR">말</text>
-            </g>
-            <g class="tl-node" data-idx="1" style="cursor:pointer;">
-              <rect x="0" y="56" width="360" height="52" fill="transparent"/>
-              <circle class="tl-dot" cx="26" cy="86" r="6"/>
-              <text class="tl-era" x="50" y="79" font-size="12" font-family="IBM Plex Mono, monospace">2024–25</text>
-              <text class="tl-name" x="50" y="98" font-size="16" font-weight="700" font-family="Noto Sans KR">컨텍스트</text>
-              <text class="tl-word" x="350" y="92" text-anchor="end" font-size="13" font-family="Noto Sans KR">재료</text>
-            </g>
-            <g class="tl-node" data-idx="2" style="cursor:pointer;">
-              <rect x="0" y="118" width="360" height="52" fill="transparent"/>
-              <circle class="tl-dot" cx="26" cy="148" r="9"/>
-              <text class="tl-era" x="50" y="141" font-size="12" font-family="IBM Plex Mono, monospace">2026</text>
-              <text class="tl-name" x="50" y="160" font-size="17" font-weight="700" font-family="Noto Sans KR">하네스</text>
-              <text class="tl-word" x="350" y="154" text-anchor="end" font-size="13" font-family="Noto Sans KR">구조</text>
-            </g>
-            <g class="tl-node" data-idx="3" style="cursor:pointer;">
-              <rect x="0" y="180" width="360" height="52" fill="transparent"/>
-              <circle class="tl-dot" cx="26" cy="210" r="6"/>
-              <text class="tl-era" x="50" y="203" font-size="12" font-family="IBM Plex Mono, monospace">2026 후반–</text>
-              <text class="tl-name" x="50" y="222" font-size="16" font-weight="700" font-family="Noto Sans KR">루프</text>
-              <text class="tl-word" x="350" y="216" text-anchor="end" font-size="13" font-family="Noto Sans KR">순환</text>
-            </g>
-            <g class="tl-node" data-idx="4" style="cursor:pointer;">
-              <rect x="0" y="242" width="360" height="52" fill="transparent"/>
-              <circle class="tl-dot" cx="26" cy="272" r="6" fill="none"/>
-              <text class="tl-era" x="50" y="265" font-size="12" font-family="IBM Plex Mono, monospace">NEXT</text>
-              <text class="tl-name" x="50" y="284" font-size="16" font-weight="700" font-family="Noto Sans KR">(?)</text>
-              <text class="tl-word" x="350" y="278" text-anchor="end" font-size="13" font-family="Noto Sans KR">미정</text>
-            </g>
-          </svg>
-        </div>
-
-        <div class="trend-split">
-          <div>
-            <div class="ts-eyebrow">세상은 이렇다</div>
-            <div class="ts-bold" id="s2LeftName">하네스 엔지니어링</div>
-            <p id="s2LeftDesc">모델 주변 인프라 — 도구·검증·메모리·가드레일·관측 — 가 승부처입니다. Agent = Model + Harness.</p>
-          </div>
-          <div>
-            <div class="ts-eyebrow">투비는 여기서</div>
-            <div class="ts-bold" id="s2RightTobis">승인·검증 흐름을 내장한 AI Hub · AI 가입설계 오픈</div>
-          </div>
-        </div>
-
-        <p class="cv-lead" style="margin-top:24px;">다음 노드가 켜질 때, 투비는 이미 거기 있을 겁니다.</p>
-
-        <div class="tag-row" style="margin-top:24px;">
-          <span class="tag-pill">2026.1 · AI 기본법 시행</span>
-          <span class="tag-pill">금융위 통합 AI 가이드라인(안)</span>
-        </div>
-        <p class="cv-lead" style="margin-top:10px;">규칙은 기술만 바뀌는 게 아닙니다. 2026년, 금융권 AI 도입의 표준 프레임이 제도로 확정됩니다.</p>
       </div>
     </div>
-    <script>
-      (function(){
-        const phases = [
-          { name:"프롬프트", desc:"말을 잘 거는 법이 실력이었습니다. AI는 똑똑한 자동완성이었고, 사람이 계속 방향을 잡아줘야 했습니다.", tobis:"업무 용어와 규정을 반영한 도메인 프롬프트 설계" },
-          { name:"컨텍스트", desc:"무엇을 보여줄지 고르는 법이 실력이 됐습니다. RAG와 MCP로 모델에 넣을 재료를 설계했습니다.", tobis:"업무 지식 RAG 적용, 규정·상품 문서의 위키화 시작" },
-          { name:"하네스 엔지니어링", desc:"모델 주변 인프라 — 도구·검증·메모리·가드레일·관측 — 가 승부처입니다. Agent = Model + Harness.", tobis:"승인·검증 흐름을 내장한 AI Hub · AI 가입설계 오픈" },
-          { name:"루프", desc:"스스로 관찰하고 고치는 자기개선 에이전트. 사람은 승인 지점만 지킵니다.", tobis:"자체 개선 루프 실험 진행 중" },
-          { name:"다섯 번째 규칙", desc:"반년 안에 이름이 붙습니다. 그때 필요한 실력이 또 달라집니다.", tobis:"다음 노드가 켜지는 순간, 투비는 이미 그 안에 있습니다" }
-        ];
-        /* 데스크톱·모바일 두 SVG 를 함께 잡는다 — 한쪽만 보이지만 상태는 같이 움직인다 */
-        const nodes = document.querySelectorAll('#tlSvg .tl-node, #tlSvgM .tl-node');
-        function render(active){
-          nodes.forEach(g => {
-            const idx = Number(g.getAttribute('data-idx'));
-            const isActive = idx === active;
-            const isEmpty = idx === 4;
-            const era = g.querySelector('.tl-era');
-            const dot = g.querySelector('.tl-dot');
-            const name = g.querySelector('.tl-name');
-            const word = g.querySelector('.tl-word');
-            era.style.fill = isActive ? 'var(--sv-blue-soft)' : 'rgba(var(--sv-ink),.4)';
-            era.setAttribute('font-weight', isActive ? '700' : '400');
-            name.style.fill = isActive ? 'rgb(var(--sv-ink))' : 'rgba(var(--sv-ink),.55)';
-            word.style.fill = isActive ? 'rgba(var(--sv-teal-rgb),.9)' : 'rgba(var(--sv-ink),.32)';
-            if (isEmpty) {
-              dot.style.fill = 'none';
-              dot.style.stroke = isActive ? 'var(--sv-blue-soft)' : 'rgba(var(--sv-ink),.4)';
-              dot.setAttribute('stroke-width', '1.5');
-            } else {
-              dot.style.fill = isActive ? 'var(--sv-blue)' : 'rgba(var(--sv-ink),.3)';
-              dot.style.stroke = '';
-            }
-          });
-          document.getElementById('s2LeftName').textContent = phases[active].name;
-          document.getElementById('s2LeftDesc').textContent = phases[active].desc;
-          document.getElementById('s2RightTobis').textContent = phases[active].tobis;
-        }
-        nodes.forEach(g => g.addEventListener('click', () => render(Number(g.getAttribute('data-idx')))));
-        render(2);
-      })();
-    </script>
   </section>
 
-  <!-- ============ STORY 03 · 수명 — 가장 밝은 별도 결국 저뭅니다 ============ -->
+  <!-- ============ STORY 03 · 2022 흔들림 ============ -->
   <section id="s1c7">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
-      <div class="cv-block">
-        <div class="st-head">
-          <div class="st-year">3개월</div>
-          <div>
-            <div class="st-no">Chapter 03 · 수명</div>
-            <h3 class="st-h">가장 밝은 별도<br>결국 저뭅니다</h3>
-            <div class="st-body">
-              <p>
-                이번 달에만 신모델이 여섯 개 나왔습니다. 작년 이맘때 최고였던 모델은
-                지금 아무도 쓰지 않습니다. <b>기술의 평균 수명이 1년을 넘지 못합니다.</b>
-              </p>
-              <p>
-                그래서 우리는 모델을 <b>고르지 않기로</b> 했습니다.
-                고르는 순간 그 모델의 수명이 우리 제품의 수명이 되기 때문입니다.
-                대신 갈아 끼울 수 있게 만들었습니다.
-              </p>
-            </div>
+      <div class="cv-block st-head">
+        <div class="st-year">2022</div>
+        <div>
+          <div class="st-no">Chapter 03 · 흔들림</div>
+          <h3 class="st-h">그런데 규칙이<br>계속 바뀌기 시작했습니다</h3>
+          <div class="st-body">
+            <p>
+              AI가 왔습니다. 처음엔 말을 잘 거는 법이 실력이었습니다.
+              얼마 뒤엔 무엇을 보여줄지 고르는 법이 실력이 됐습니다.
+              지금은 모델 주변을 어떻게 짜는가가 승부처입니다.
+            </p>
+            <p>
+              <b>2년마다 잘한다의 정의가 바뀌었습니다.</b>
+              모델을 쫓아가는 회사들은 그때마다 처음부터 다시 만들었습니다.
+              우리는 다른 질문을 했습니다 — 이 변화에서 <b>안 바뀌는 건 뭐지?</b>
+            </p>
           </div>
+          <ol class="st-rules">
+            <li><div class="yr">2022–23</div><div class="nm">프롬프트</div><div class="wd">말</div></li>
+            <li><div class="yr">2024–25</div><div class="nm">컨텍스트</div><div class="wd">재료</div></li>
+            <li class="on"><div class="yr">2026</div><div class="nm">하네스</div><div class="wd">구조</div><span class="now">NOW</span></li>
+            <li><div class="yr">다음</div><div class="nm">(?)</div><div class="wd">아직 이름 없음</div></li>
+          </ol>
         </div>
-
-        <div class="cl-subh st-after">이번 달 신모델 6개 · 폐기 주기 12개월</div>
-        <div class="model-scroll-wrap">
-          <div class="model-row" id="modelRow">
-            <div class="model-card">
-              <div class="mc-date">2026.09</div>
-              <div class="mc-name">GPT-6 Astra</div>
-              <div class="mc-spec">1M 컨텍스트</div>
-              <span class="badge-pill new">NEW</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.09</div>
-              <div class="mc-name">Claude Fable 5.1</div>
-              <div class="mc-spec">프론티어</div>
-              <span class="badge-pill new">NEW</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.09</div>
-              <div class="mc-name">Gemini 3.8 Flash</div>
-              <div class="mc-spec">경량 · 고속</div>
-              <span class="badge-pill new">NEW</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.08</div>
-              <div class="mc-name">Kimi K3</div>
-              <div class="mc-spec">2.8T · 최대 오픈</div>
-              <span class="badge-pill open">OPEN</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.07</div>
-              <div class="mc-name">Claude 5 family</div>
-              <div class="mc-spec">전 라인업 1M</div>
-              <span class="badge-pill live">LIVE</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.06</div>
-              <div class="mc-name">MiniMax M2.5</div>
-              <div class="mc-spec">SWE-bench 80.2</div>
-              <span class="badge-pill open">OPEN</span>
-            </div>
-            <div class="model-card">
-              <div class="mc-date">2026.05</div>
-              <div class="mc-name">DeepSeek V4</div>
-              <div class="mc-spec">1M · MIT</div>
-              <span class="badge-pill open">OPEN</span>
-            </div>
-            <div class="model-card faded">
-              <div class="mc-date">2025.09</div>
-              <div class="mc-name">이전 세대</div>
-              <div class="mc-spec">12개월 경과</div>
-              <span class="badge-pill">폐기</span>
-            </div>
-          </div>
-          <div class="model-scrollbar">
-            <button class="model-scroll-btn" onclick="document.getElementById('modelRow').scrollBy({left:-320,behavior:'smooth'})" aria-label="이전 모델 보기">◂</button>
-            <div class="model-scroll-track"><div class="model-scroll-thumb" id="modelScrollThumb"></div></div>
-            <button class="model-scroll-btn" onclick="document.getElementById('modelRow').scrollBy({left:320,behavior:'smooth'})" aria-label="다음 모델 보기">▸</button>
-          </div>
-          <script>
-            (function(){
-              const row = document.getElementById('modelRow');
-              const thumb = document.getElementById('modelScrollThumb');
-              function updateThumb(){
-                const ratio = row.clientWidth / row.scrollWidth;
-                const maxScroll = row.scrollWidth - row.clientWidth;
-                const pos = maxScroll > 0 ? row.scrollLeft / maxScroll : 0;
-                thumb.style.width = (ratio * 100) + '%';
-                thumb.style.left = (pos * (100 - ratio * 100)) + '%';
-              }
-              row.addEventListener('scroll', updateThumb);
-              window.addEventListener('resize', updateThumb);
-              updateThumb();
-            })();
-          </script>
-        </div>
-
-        <div class="cl-subh" style="margin-top:44px;">지금 밝은 별, 저무는 별 — 눌러 보세요</div>
-        <div class="galaxy-wrap">
-          <svg viewBox="0 0 1200 430" xmlns="http://www.w3.org/2000/svg" id="galaxySvg">
-            <defs>
-              <radialGradient id="glowPeak" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-opacity=".95" style="stop-color:var(--sv-core-blue)"/>
-                <stop offset="34%" stop-opacity=".55" style="stop-color:var(--sv-blue)"/>
-                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-blue)"/>
-              </radialGradient>
-              <radialGradient id="glowNew" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-opacity=".95" style="stop-color:var(--sv-core-mint)"/>
-                <stop offset="34%" stop-opacity=".5" style="stop-color:var(--sv-mint)"/>
-                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-mint)"/>
-              </radialGradient>
-              <radialGradient id="glowDim" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-opacity=".5" style="stop-color:var(--sv-gray)"/>
-                <stop offset="40%" stop-opacity=".28" style="stop-color:var(--sv-dim)"/>
-                <stop offset="100%" stop-opacity="0" style="stop-color:var(--sv-dim)"/>
-              </radialGradient>
-              <linearGradient id="band" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-opacity=".16" style="stop-color:var(--sv-dim)"/>
-                <stop offset="48%" stop-opacity=".2" style="stop-color:var(--sv-blue)"/>
-                <stop offset="100%" stop-opacity=".16" style="stop-color:var(--sv-mint)"/>
-              </linearGradient>
-            </defs>
-
-            <ellipse cx="600" cy="205" rx="620" ry="150" fill="url(#band)" transform="rotate(-7 600 205)"/>
-            <line x1="392" y1="46" x2="392" y2="360" stroke-width="1" stroke-dasharray="4 8" stroke="rgba(255,255,255,.1)"/>
-            <line x1="852" y1="46" x2="852" y2="360" stroke-width="1" stroke-dasharray="4 8" stroke="rgba(255,255,255,.1)"/>
-
-            <text x="196" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink2),.72)">FADING · 저물어 가는</text>
-            <text x="622" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-peak)">PEAK · 지금 가장 밝은</text>
-            <text x="1026" y="34" text-anchor="middle" font-size="12.5" letter-spacing="1" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-mint)">FORMING · 새로 태어나는</text>
-
-            <g id="starsGroup"></g>
-            <g id="labelsGroup"></g>
-
-            <line x1="30" y1="392" x2="1170" y2="392" stroke-width="1" stroke="rgba(255,255,255,.12)"/>
-            <circle cx="150" cy="392" r="3.5" style="fill:rgba(var(--sv-ink2),.35)"/>
-            <text x="150" y="416" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-ink2),.6)">2024</text>
-            <circle cx="622" cy="392" r="7" stroke-width="3" style="fill:var(--sv-bg);stroke:var(--sv-blue)"/>
-            <text x="622" y="418" text-anchor="middle" font-size="12.5" font-weight="500" font-family="IBM Plex Mono, monospace" style="fill:var(--sv-peak)">2026.09 · TODAY</text>
-            <circle cx="1060" cy="392" r="6" fill="none" stroke-width="2" stroke-dasharray="3 3" style="stroke:rgba(var(--sv-mint-rgb),.8)"/>
-            <text x="1060" y="418" text-anchor="middle" font-size="12.5" font-family="IBM Plex Mono, monospace" style="fill:rgba(var(--sv-mint-rgb),.9)">2027 · 예측</text>
-          </svg>
-        </div>
-
-        <div class="galaxy-detail" id="galaxyDetail">
-          <span class="gd-tag" id="gdTag">PEAK · 지금 가장 밝은</span>
-          <div class="gd-name" id="gdName">하네스 엔지니어링</div>
-          <div class="galaxy-cols">
-            <div>
-              <div class="gc-label">지금 (2026.09)</div>
-              <p id="gdNow">도구·검증·메모리·가드레일·관측을 설계하는 일이 성능을 가릅니다. Agent = Model + Harness.</p>
-            </div>
-            <div>
-              <div class="gc-label">2027 전망</div>
-              <p id="gdNext">표준화·제품화가 진행되며 기본 소양이 됩니다. 차별화는 '무슨 규칙을 넣었는가'로 좁혀집니다.</p>
-            </div>
-            <div>
-              <div class="gc-label">투비의 준비</div>
-              <p id="gdTobis"><b>하네스의 재료가 곧 업무 규칙입니다. 20년치 도메인이 그대로 자산입니다.</b></p>
-            </div>
-          </div>
-        </div>
-
-        <p class="cv-lead" style="margin-top:24px;">새로 나오는 기술, 사라지는 기술. 그 한가운데서 다음 트렌드를 씁니다. — 이 별자리는 6개월마다 다시 그립니다.</p>
       </div>
     </div>
-    <script>
-      (function(){
-        const stars = [
-          { phase:"fading", label:"단순 RAG 파이프라인", cx:152, cy:152, core:9, halo:44, ring:27, lx:152, ly:96, size:14, weight:700, anchor:"middle",
-            now:"벡터 검색 + 청킹 파이프라인을 직접 짜는 방식이 지난 2년의 표준이었습니다.",
-            next:"1M 컨텍스트가 표준이 되고 에이전트가 스스로 검색하면서 규모와 쓰임새가 크게 줄어듭니다. 단순 문서 Q&A용으로만 남습니다.",
-            tobis:"검색은 도구의 하나로 내리고, 업무 규칙·검증 중심 하네스로 무게를 옮겼습니다." },
-          { phase:"fading", label:"수동 프롬프트 튜닝", cx:258, cy:268, core:6, halo:30, ring:18, lx:258, ly:306, size:13, weight:600, anchor:"middle",
-            now:"사람이 문구를 다듬어 성능을 끌어올리는 작업이 여전히 남아 있습니다.",
-            next:"모델이 스스로 재작성하고 하네스가 컨텍스트를 조립합니다. 직무로서는 사라집니다.",
-            tobis:"프롬프트는 산출물로 두고, 위키에서 자동 생성되게 바꿨습니다." },
-          { phase:"fading", label:"파인튜닝 중심 커스터마이징", cx:108, cy:306, core:5, halo:26, ring:15, lx:40, ly:342, size:13, weight:600, anchor:"start",
-            now:"도메인 적응을 위해 모델을 학습시키는 접근이 아직 쓰입니다.",
-            next:"3개월 주기 세대교체를 학습 비용이 따라가지 못합니다. 특수 목적에만 남습니다.",
-            tobis:"학습이 아니라 지식·규칙으로 도메인을 주입합니다. 모델이 바뀌어도 그대로 씁니다." },
-          { phase:"fading", label:"챗봇 UI 중심", cx:336, cy:100, core:5, halo:24, ring:14, lx:336, ly:74, size:13, weight:600, anchor:"middle",
-            now:"대화창을 하나 붙이는 것이 'AI 도입'의 기본 형태였습니다.",
-            next:"업무 화면 안에 녹아드는 인라인 AI로 이동합니다. 별도 챗봇은 부가 채널이 됩니다.",
-            tobis:"가입설계·청약 화면 안에 인라인으로 넣는 방식으로 처음부터 설계했습니다." },
-          { phase:"peak", label:"하네스 엔지니어링", cx:566, cy:196, core:15, halo:74, ring:44, lx:566, ly:126, size:16, weight:800, anchor:"middle",
-            now:"도구·검증·메모리·가드레일·관측을 설계하는 일이 성능을 가릅니다. Agent = Model + Harness.",
-            next:"표준화·제품화가 진행되며 기본 소양이 됩니다. 차별화는 '무슨 규칙을 넣었는가'로 좁혀집니다.",
-            tobis:"하네스의 재료가 곧 업무 규칙입니다. 20년치 도메인이 그대로 자산입니다." },
-          { phase:"peak", label:"에이전트 오케스트레이션 · MCP", cx:712, cy:302, core:11, halo:54, ring:32, lx:712, ly:350, size:14, weight:700, anchor:"middle",
-            now:"여러 도구와 시스템을 표준 프로토콜로 잇는 구조가 빠르게 자리 잡았습니다.",
-            next:"프로토콜은 인프라가 되고, 관심은 권한·감사·실패 복구로 옮겨갑니다.",
-            tobis:"기간계 연동 설계 경험을 그대로 도구 연결에 씁니다." },
-          { phase:"peak", label:"스펙 주도 개발", cx:458, cy:306, core:9, halo:46, ring:27, lx:458, ly:350, size:14, weight:700, anchor:"middle",
-            now:"스펙이 원본, 코드는 재생성 산출물. 업계 흐름이 이 방향으로 수렴하고 있습니다.",
-            next:"조직의 지식 저장소 품질이 곧 개발 속도가 됩니다. 도구보다 지식이 병목입니다.",
-            tobis:"위키 기반 OKF로 이미 이 방식으로 개발하고 있습니다." },
-          { phase:"peak", label:"HITL 거버넌스", cx:676, cy:104, core:8, halo:42, ring:25, lx:676, ly:70, size:14, weight:700, anchor:"middle",
-            now:"규제 산업에서 사람 승인 지점 설계가 하네스의 필수 레이어입니다.",
-            next:"감사·인증 요구로 확장됩니다. 승인 이력이 규제 대응 자료가 됩니다.",
-            tobis:"보험·금융 청약 승인 흐름을 만들어 온 경험이 그대로 적용됩니다." },
-          { phase:"peak", label:"1M 컨텍스트 · 오픈 웨이트", cx:812, cy:208, core:7, halo:38, ring:22, lx:826, ly:176, size:13, weight:600, anchor:"middle",
-            now:"100만 토큰이 표준이 되고 오픈 모델이 프론티어를 추격합니다.",
-            next:"금융권 온프레미스에서도 최상위 성능을 쓸 수 있게 됩니다.",
-            tobis:"규정 문서 전체를 넣는 설계를 전제로 아키텍처를 잡았습니다." },
-          { phase:"forming", label:"루프 엔지니어링", cx:962, cy:182, core:8, halo:42, ring:25, lx:962, ly:142, size:14, weight:700, anchor:"middle",
-            now:"실패를 관측해 스스로 구조를 고치는 실험 단계입니다.",
-            next:"2027년의 주 무대가 됩니다. 관건은 어디까지 자동으로 고치게 둘지의 승인 설계입니다.",
-            tobis:"자체 프로젝트에서 개선 루프를 먼저 실험하고 있습니다." },
-          { phase:"forming", label:"지속 메모리 · 지식 그래프", cx:1062, cy:272, core:6, halo:32, ring:19, lx:1062, ly:306, size:13, weight:600, anchor:"middle",
-            now:"세션이 끝나면 사라지는 기억이 한계로 지적됩니다.",
-            next:"조직 단위 장기 기억이 표준 요구가 됩니다. 지식 구조를 가진 쪽이 유리합니다.",
-            tobis:"업무 위키가 이미 장기 기억의 원본 역할을 합니다." },
-          { phase:"forming", label:"에이전트 감사 · 인증", cx:908, cy:312, core:5, halo:26, ring:16, lx:908, ly:344, size:13, weight:600, anchor:"middle",
-            now:"AI 코딩·실행 사고를 계기로 거버넌스가 경영진 아젠다가 됐습니다.",
-            next:"금융권 보안 심사 항목에 에이전트 감사 기준이 들어옵니다.",
-            tobis:"금융권 보안·증적 요건을 다뤄 온 조직입니다. 준비 항목이 겹칩니다." },
-          { phase:"forming", label:"온프레미스 오픈 프론티어", cx:1104, cy:124, core:6, halo:30, ring:18, lx:1176, ly:96, size:13, weight:600, anchor:"end",
-            now:"망분리 환경에서 쓸 수 있는 고성능 오픈 모델이 나오기 시작했습니다.",
-            next:"민감 업무는 사내로, 어려운 추론만 외부로 가는 하이브리드가 기본이 됩니다.",
-            tobis:"모델 슬롯 구조라 사내·외부 배치를 바꿔 끼울 수 있습니다." }
-        ];
-
-        const svgNS = "http://www.w3.org/2000/svg";
-        const starsGroup = document.getElementById('starsGroup');
-        const labelsGroup = document.getElementById('labelsGroup');
-        const phaseInfo = {
-          fading: { tag:"FADING · 저물어 가는", color:"var(--sv-gray)", border:"rgba(var(--sv-gray-rgb),.45)", panelBorder:"rgba(var(--sv-gray-rgb),.28)", panelBg:"rgba(var(--sv-gray-rgb),.05)", glow:"url(#glowDim)", core:"#8A93A1", label:"var(--sv-label-fade)", ring:"rgba(75,85,99,.7)" },
-          peak: { tag:"PEAK · 지금 가장 밝은", color:"var(--sv-peak)", border:"rgba(var(--sv-peak-rgb),.45)", panelBorder:"rgba(26,135,254,.35)", panelBg:"rgba(26,135,254,.07)", glow:"url(#glowPeak)", core:"var(--sv-core-blue)", label:"var(--sv-label-peak)", ring:"rgba(26,135,254,.5)" },
-          forming: { tag:"FORMING · 새로 태어나는", color:"var(--sv-mint)", border:"rgba(var(--sv-mint-rgb),.45)", panelBorder:"rgba(var(--sv-mint-rgb),.3)", panelBg:"rgba(var(--sv-mint-rgb),.05)", glow:"url(#glowNew)", core:"var(--sv-core-mint)", label:"var(--sv-label-form)", ring:"rgba(var(--sv-mint-rgb),.5)" }
-        };
-
-        let active = 4;
-        const haloEls = [], coreEls = [], ringEls = [], labelEls = [];
-
-        stars.forEach((s, i) => {
-          const pal = phaseInfo[s.phase];
-          const halo = document.createElementNS(svgNS, 'circle');
-          halo.setAttribute('cx', s.cx); halo.setAttribute('cy', s.cy); halo.setAttribute('r', s.halo);
-          halo.setAttribute('fill', pal.glow);
-          const core = document.createElementNS(svgNS, 'circle');
-          core.setAttribute('cx', s.cx); core.setAttribute('cy', s.cy); core.setAttribute('r', s.core);
-          core.style.fill = pal.core;
-          core.setAttribute('opacity', s.phase === 'fading' ? '.55' : '1');
-          const ring = document.createElementNS(svgNS, 'circle');
-          ring.setAttribute('cx', s.cx); ring.setAttribute('cy', s.cy); ring.setAttribute('r', s.ring);
-          ring.setAttribute('fill', 'none'); ring.setAttribute('stroke-width', '1.5');
-          const g = document.createElementNS(svgNS, 'g');
-          g.style.cursor = 'pointer';
-          g.appendChild(halo); g.appendChild(core); g.appendChild(ring);
-          g.addEventListener('click', () => setActive(i));
-          starsGroup.appendChild(g);
-
-          const label = document.createElementNS(svgNS, 'text');
-          label.setAttribute('x', s.lx); label.setAttribute('y', s.ly);
-          label.setAttribute('text-anchor', s.anchor);
-          label.setAttribute('font-size', s.size);
-          label.setAttribute('font-weight', s.weight);
-          label.setAttribute('font-family', 'Noto Sans KR');
-          label.style.cursor = 'pointer';
-          label.textContent = s.label;
-          label.addEventListener('click', () => setActive(i));
-          labelsGroup.appendChild(label);
-
-          haloEls.push(halo); coreEls.push(core); ringEls.push(ring); labelEls.push(label);
-        });
-
-        function setActive(i){
-          active = i;
-          stars.forEach((s, idx) => {
-            const on = idx === active;
-            const pal = phaseInfo[s.phase];
-            haloEls[idx].setAttribute('opacity', on ? '1' : (s.phase === 'fading' ? '.5' : '.75'));
-            ringEls[idx].style.stroke = on ? pal.ring.replace(/[.]\d+\)/,'1)') : 'transparent';
-            ringEls[idx].setAttribute('stroke-dasharray', s.phase === 'peak' ? 'none' : '2 4');
-            labelEls[idx].style.fill = on ? 'rgb(var(--sv-ink))' : pal.label;
-            labelEls[idx].setAttribute('font-weight', on ? 800 : s.weight);
-          });
-          const s = stars[active];
-          const pal = phaseInfo[s.phase];
-          document.getElementById('gdTag').textContent = pal.tag;
-          document.getElementById('gdTag').style.color = pal.color;
-          document.getElementById('gdTag').style.borderColor = pal.border;
-          document.getElementById('gdName').textContent = s.label;
-          document.getElementById('gdNow').textContent = s.now;
-          document.getElementById('gdNext').textContent = s.next;
-          document.getElementById('gdTobis').innerHTML = '<b>' + s.tobis + '</b>';
-          const panel = document.getElementById('galaxyDetail');
-          panel.style.borderColor = pal.panelBorder;
-          panel.style.background = pal.panelBg;
-        }
-        setActive(4);
-      })();
-    </script>
   </section>
 
-  <!-- ============ STORY 04 · 전환점 — 코드는 부산물입니다 ============ -->
+  <!-- ============ STORY 04 · 2025 전환점 ============ -->
   <section id="s1c4">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
-      <div class="cv-block">
-        <div class="st-head">
-          <div class="st-year">2025</div>
-          <div>
-            <div class="st-no">Chapter 04 · 전환점</div>
-            <h3 class="st-h">안 바뀌는 건 업무 규칙이었습니다.<br>그래서 순서를 뒤집었습니다</h3>
-            <div class="st-body">
-              <p>
-                모델은 반년마다 바뀝니다. 프레임워크는 더 자주 바뀝니다. 그런데
-                <b>“암보험 가입한도는 이렇게 계산한다”</b>는 20년째 그대로입니다.
-                바뀌는 걸 원본으로 두고 안 바뀌는 걸 베껴 쓰고 있었던 겁니다.
-              </p>
-              <p>
-                그래서 자리를 바꿨습니다. 업무 규칙을 위키에 적고,
-                <b>코드를 그 위키의 출력물로 내렸습니다.</b>
-                규칙을 고치면 구현이 따라옵니다. 모델이 바뀌어도 규칙은 남습니다.
-              </p>
+      <div class="cv-block st-head">
+        <div class="st-year">2025</div>
+        <div>
+          <div class="st-no">Chapter 04 · 전환점</div>
+          <h3 class="st-h">안 바뀌는 건 업무 규칙이었습니다.<br>그래서 순서를 뒤집었습니다</h3>
+          <div class="st-body">
+            <p>
+              모델은 반년마다 바뀝니다. 프레임워크는 더 자주 바뀝니다.
+              그런데 <b>&ldquo;암보험 가입한도는 이렇게 계산한다&rdquo;</b>는 20년째 그대로입니다.
+              바뀌는 걸 원본으로 두고 안 바뀌는 걸 베껴 쓰고 있었던 겁니다.
+            </p>
+            <p>
+              그래서 자리를 바꿨습니다. 업무 규칙을 위키에 적고,
+              <b>코드를 그 위키의 출력물로 내렸습니다.</b>
+              규칙을 고치면 구현이 따라옵니다. 모델이 바뀌어도 규칙은 남습니다.
+            </p>
+          </div>
+          <blockquote class="st-say">
+            코드는 산출물이 아니라 부산물입니다.
+          </blockquote>
+          <div class="st-flip">
+            <div class="box src">
+              <div class="k">Source of truth</div>
+              <div class="v">업무 위키</div>
+              <div class="d">도메인 전문가가 직접 씁니다. 마크다운 한 장, 그 위에 규칙과 예외.</div>
             </div>
-            <blockquote class="st-say">
-              코드는 산출물이 아니라 부산물입니다.
-            </blockquote>
+            <div class="ar">&rarr;</div>
+            <div class="box">
+              <div class="k">Output</div>
+              <div class="v">코드 · 화면 · API</div>
+              <div class="d">언어에 관계없이 자사 메타에 맞춰 생성됩니다. 사람은 남은 상세만 손봅니다.</div>
+            </div>
           </div>
-        </div>
-
-        <div class="ba-head st-after">
-          <div class="cl-subh" style="margin:0;">2025년 전후, 무엇이 원본이었나</div>
-          <button id="s4FlipBtn" class="badge-pill new">BEFORE · ~2025</button>
-        </div>
-
-        <div class="ba-mini-wrap">
-          <div class="ba-mini">
-            <div class="bm-eyebrow" id="s4LeftKicker">참고 문서</div>
-            <div class="bm-bold" id="s4LeftLabel" style="opacity:.45; transition:opacity .6s ease;">스펙 · 업무 위키</div>
-            <div class="bm-bar" id="s4LeftBar" style="height:12px; background:linear-gradient(90deg,#1a87fe,#4fa4ff); opacity:.35;"></div>
-            <p id="s4LeftNote">요구사항 문서는 참고 자료였고, 구현과 곧 어긋났다.</p>
-          </div>
-          <div class="ba-arrow">→</div>
-          <div class="ba-mini">
-            <div class="bm-eyebrow" id="s4RightKicker">원본</div>
-            <div class="bm-bold" id="s4RightLabel" style="opacity:1; transition:opacity .6s ease;">코드</div>
-            <div class="bm-bar" id="s4RightBar" style="height:56px;"></div>
-            <p id="s4RightNote">코드가 유일한 진실이었고, 사람이 직접 썼다.</p>
-          </div>
-        </div>
-
-        <div class="tag-row">
-          <span class="tag-pill">Spec-Driven Development</span>
-          <span class="tag-pill">개발자 = 오케스트레이터</span>
-          <span class="tag-pill">AI 코딩 거버넌스</span>
-        </div>
-
-        <div class="answer-card">
-          <div class="ac-eyebrow">투비의 대응</div>
-          <div class="ac-bold">원본을 쓰는 사람이 도메인 전문가여야 합니다.</div>
-          <p>'무엇을'과 '왜'를 정확히 쓰는 일 — 20년간 업무 규칙을 만들어 온 사람들의 일입니다.</p>
         </div>
       </div>
     </div>
-    <script>
-      (function(){
-        let flip = false;
-        const btn = document.getElementById('s4FlipBtn');
-        const leftKicker = document.getElementById('s4LeftKicker');
-        const rightKicker = document.getElementById('s4RightKicker');
-        const leftLabel = document.getElementById('s4LeftLabel');
-        const rightLabel = document.getElementById('s4RightLabel');
-        const leftBar = document.getElementById('s4LeftBar');
-        const rightBar = document.getElementById('s4RightBar');
-        const leftNote = document.getElementById('s4LeftNote');
-        const rightNote = document.getElementById('s4RightNote');
-        function render(){
-          btn.textContent = flip ? 'AFTER · 2026' : 'BEFORE · ~2025';
-          leftKicker.textContent = flip ? '원본' : '참고 문서';
-          rightKicker.textContent = flip ? '재생성 산출물' : '원본';
-          leftLabel.style.opacity = flip ? '1' : '.45';
-          rightLabel.style.opacity = flip ? '.5' : '1';
-          leftBar.style.height = flip ? '56px' : '12px';
-          rightBar.style.height = flip ? '12px' : '56px';
-          leftBar.style.opacity = flip ? '1' : '.35';
-          rightBar.style.opacity = flip ? '.45' : '1';
-          leftNote.textContent = flip ? "스펙이 source of truth. 사람이 '무엇을'과 '왜'를 쓴다." : '요구사항 문서는 참고 자료였고, 구현과 곧 어긋났다.';
-          rightNote.textContent = flip ? '코드는 스펙에서 다시 생성된다. 버려도 된다.' : '코드가 유일한 진실이었고, 사람이 직접 썼다.';
-        }
-        btn.addEventListener('click', () => { flip = !flip; render(); });
-      })();
-    </script>
   </section>
 
   <!-- ============ PRODUCTS · 무엇을 파는가 (Cover 시리즈) ============ -->
