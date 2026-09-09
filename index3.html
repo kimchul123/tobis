@@ -453,21 +453,11 @@
   .tag-pill{ font-size:12.5px; padding:8px 16px; border-radius:20px; border:1px solid rgba(var(--text-base),.18); color:rgba(var(--text-base),.65); }
 
   /* ---------- PRODUCTS — Cover 시리즈 ---------- */
-  .prd-layer{ margin-top:34px; }
-  .prd-layer + .prd-layer{ margin-top:30px; }
-  .prd-layer-head{
-    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
-    padding-bottom:10px; margin-bottom:16px; border-bottom:1px solid var(--line-deep);
-  }
-  .prd-layer-head b{
-    font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
-    letter-spacing:.14em; color:var(--blue-soft);
-  }
-  .prd-layer-head span{ font-size:13px; color:rgba(var(--text-base),.5); }
-
+  /* 제품 카드 — 계층 머리말과 긴 설명을 걷어낸 단순형.
+     기반/업무 구분은 카드 안의 태그가 대신하고, 상세는 뒤따르는 SOLUTION 장이 맡는다. */
   .prd-grid{ display:grid; gap:14px; }
-  .prd-grid.two{ grid-template-columns:repeat(2,1fr); }
-  .prd-grid.three{ grid-template-columns:repeat(3,1fr); }
+  .prd-grid.simple{ grid-template-columns:repeat(2,1fr); }
+  .prd-card.wide{ grid-column:span 2; }
 
   .prd-card{
     background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
@@ -481,8 +471,8 @@
   }
   a.prd-card:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); transform:translateY(-2px); }
   a.prd-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+  /* 바닥으로 미는 건 .prd-tag 하나뿐이다 — auto 마진이 둘이면 남는 공간을 나눠 가진다 */
   .prd-more{
-    margin-top:auto; padding-top:4px;
     font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
     letter-spacing:.06em; color:var(--blue-soft); opacity:0; transition:opacity .2s ease;
   }
@@ -493,29 +483,23 @@
   .prd-name i{ font-style:normal; color:rgba(var(--text-base),.42); }
   .prd-name b{ font-weight:800; color:var(--blue-soft); }
 
-  .prd-role{
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    font-size:13px; color:rgba(var(--text-base),.72);
-  }
-  .prd-stat{
-    font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600;
-    letter-spacing:.08em; padding:3px 8px; border-radius:3px;
-    border:1px solid currentColor; white-space:nowrap;
-  }
-  .prd-stat.live{ color:var(--teal); }
-  .prd-stat.wip{ color:var(--blue-soft); }
-  .prd-stat.plan{ color:rgba(var(--text-base),.45); }
+  .prd-role{ font-size:13px; line-height:1.6; color:rgba(var(--text-base),.6); }
 
-  .prd-card p{ margin:0; font-size:13.5px; line-height:1.75; color:rgba(var(--text-base),.58); }
-
-  .prd-foot{
-    margin-top:30px; padding-top:20px; border-top:1px solid var(--line-deep);
-    font-size:13.5px; line-height:1.8; color:rgba(var(--text-base),.55); max-width:760px;
+  /* 상태 — 테두리 없는 모노 한 줄. 카드가 다섯 개뿐이라 알약까지 두르면 시끄러워진다 */
+  .prd-tag{
+    margin-top:auto; padding-top:10px;
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em;
   }
-  .prd-foot b{ color:rgba(var(--text-base),.8); font-weight:700; }
+  .prd-tag.found{ color:var(--blue-soft); }
+  .prd-tag.live{ color:var(--teal); }
+  .prd-tag.wip{ color:var(--blue-soft); }
+  .prd-tag.plan{ color:rgba(var(--text-base),.42); }
 
-  @media (max-width:880px){
-    .prd-grid.two, .prd-grid.three{ grid-template-columns:1fr; }
+  .prd-more{ padding-top:2px; }
+
+  @media (max-width:720px){
+    .prd-grid.simple{ grid-template-columns:1fr; }
+    .prd-card.wide{ grid-column:auto; }
   }
 
   .answer-card{ margin-top:28px; padding:26px 28px; border-radius:12px; background:rgba(23,195,178,.06); border:1px solid rgba(23,195,178,.4); }
@@ -2004,60 +1988,36 @@
           </div>
         </div>
 
-        <div class="prd-layer">
-          <div class="prd-layer-head">
-            <b>FOUNDATION</b><span>플랫폼과 제작 도구 — 나머지 전부가 이 위에서 돕니다</span>
+        <div class="prd-grid simple">
+          <a class="prd-card wide" href="#s3d1">
+            <div class="prd-name"><i>Cover</i><b>Link</b></div>
+            <div class="prd-role">AI 개발 플랫폼 — 위키가 원본, 코드는 출력</div>
+            <div class="prd-tag found">FOUNDATION</div>
+            <div class="prd-more">SOLUTION 01 · 구조 보기 →</div>
+          </a>
+          <a class="prd-card" href="#s3d2">
+            <div class="prd-name"><i>Cover</i><b>Studio</b></div>
+            <div class="prd-role">에이전트 제작 환경</div>
+            <div class="prd-tag found">FOUNDATION</div>
+            <div class="prd-more">SOLUTION 02 · 만드는 방식 보기 →</div>
+          </a>
+          <a class="prd-card" href="#s3c4">
+            <div class="prd-name"><i>Cover</i><b>Plan</b></div>
+            <div class="prd-role">가입설계 · 청약</div>
+            <div class="prd-tag live">실서비스</div>
+            <div class="prd-more">SOLUTION 03 · 에이전트 구성 보기 →</div>
+          </a>
+          <div class="prd-card">
+            <div class="prd-name"><i>Cover</i><b>UW</b></div>
+            <div class="prd-role">언더라이팅 · 심사</div>
+            <div class="prd-tag wip">고도화 중</div>
           </div>
-          <div class="prd-grid two">
-            <a class="prd-card" href="#s3d1">
-              <div class="prd-name"><i>Cover</i><b>Link</b></div>
-              <div class="prd-role">AI 개발 플랫폼</div>
-              <p>위키가 원본이고 코드는 그 출력입니다. 규칙을 고치면 구현이 따라옵니다.
-                 OKF 공용 포맷과 슬롯 구조라 모델은 갈아 끼울 수 있습니다.</p>
-              <div class="prd-more">SOLUTION 01 · 구조 보기 →</div>
-            </a>
-            <a class="prd-card" href="#s3d2">
-              <div class="prd-name"><i>Cover</i><b>Studio</b></div>
-              <div class="prd-role">에이전트 제작 환경</div>
-              <p>업무별 에이전트를 정의하고, 시험하고, 배포합니다.
-                 사람이 지킬 승인 지점을 어디에 둘지도 여기서 정합니다.</p>
-              <div class="prd-more">SOLUTION 02 · 만드는 방식 보기 →</div>
-            </a>
-          </div>
-        </div>
-
-        <div class="prd-layer">
-          <div class="prd-layer-head">
-            <b>BUSINESS</b><span>보험 핵심 업무 — 현장 규칙이 그대로 들어간 자리</span>
-          </div>
-          <div class="prd-grid three">
-            <a class="prd-card" href="#s3c4">
-              <div class="prd-name"><i>Cover</i><b>Plan</b></div>
-              <div class="prd-role">가입설계 · 청약<span class="prd-stat live">실서비스</span></div>
-              <p>신한라이프 LICO에서 생성형 AI 가입설계·청약을 업계 최초로 열었습니다. 2026.02.
-                 별도 챗봇이 아니라 설계 화면 안에 인라인으로 들어갑니다.</p>
-              <div class="prd-more">SOLUTION 03 · 에이전트 구성 보기 →</div>
-            </a>
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>UW</b></div>
-              <div class="prd-role">언더라이팅 · 심사<span class="prd-stat wip">고도화 중</span></div>
-              <p>설계와 동시에 심사를 돌리는 One-stop 흐름입니다.
-                 한도·특약·심사기준을 함께 검증해 재설계를 줄입니다.</p>
-            </div>
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>Claim</b></div>
-              <div class="prd-role">보험금 청구 · 지급<span class="prd-stat plan">준비 중</span></div>
-              <p>청구 접수부터 지급 심사까지, 같은 위키 위에서 준비하고 있습니다.
-                 앞의 둘과 규칙을 공유하기 때문에 처음부터 다시 만들지 않습니다.</p>
-            </div>
+          <div class="prd-card">
+            <div class="prd-name"><i>Cover</i><b>Claim</b></div>
+            <div class="prd-role">보험금 청구 · 지급</div>
+            <div class="prd-tag plan">준비 중</div>
           </div>
         </div>
-
-        <p class="prd-foot">
-          다섯 제품이 <b>같은 위키, 같은 하네스</b>를 씁니다. 한 업무에서 검증한 승인·검증 흐름이
-          다음 업무로 그대로 넘어가고, 모델이 바뀌어도 규칙은 남습니다.
-          아래에서 그 구조를 하나씩 봅니다.
-        </p>
       </div>
     </div>
   </section>
