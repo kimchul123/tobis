@@ -689,6 +689,14 @@
   .cl-wf .c.last .t{ color:var(--cl-amber); }
   .cl-wf .d{ font-size:11px; color:rgba(var(--text-base),.55); margin-top:5px; line-height:1.5; }
 
+  /* TEAM — 다섯 그룹은 같은 무게다. PM 만 고정으로 켜 두는 대신, 마우스를 올린 카드가 켜진다.
+     SOLUTION 의 '사람 승인(HITL)' 앰버는 '여기는 사람이 한다'는 뜻이므로 건드리지 않는다. */
+  #s5 .cl-wf .c{ transition:border-color .22s ease, background .22s ease; }
+  #s5 .cl-wf .c.last{ border-color:var(--cl-line); background:var(--cl-card); }
+  #s5 .cl-wf .c.last .t{ color:inherit; }
+  #s5 .cl-wf .c:hover{ border-color:var(--cl-amber); background:rgba(245,165,36,.10); }
+  #s5 .cl-wf .c:hover .t{ color:var(--cl-amber); }
+
   .cl-addflow{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px; }
   .cl-addflow .a{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:16px; }
   .cl-addflow .a.done{ border-color:var(--cl-mint); background:#0D1A17; }
@@ -1469,8 +1477,10 @@
   #s5 .team-statement b{ color:#6FB4FF; }
   /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
   #s5 .cl-wf .c{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
-  #s5 .cl-wf .c.last{ background:rgba(245,165,36,.13); border-color:#E3C489; }
-  #s5 .cl-wf .c.last .t{ color:#F5A524; }
+  #s5 .cl-wf .c.last{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }
+  #s5 .cl-wf .c.last .t{ color:inherit; }
+  #s5 .cl-wf .c:hover{ background:rgba(245,165,36,.13); border-color:#E3C489; }
+  #s5 .cl-wf .c:hover .t{ color:#F5A524; }
 
   /* ---------- 은하수 히어로는 다크 전용 — 화이트에서는 걷어낸다 ----------
      v4.5.0에서 다크 원본에 밤하늘이 들어갔고, 화이트는 그 원본에서 빌드된다.
