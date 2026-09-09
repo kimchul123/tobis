@@ -1028,7 +1028,7 @@
 
   /* 증명 패널 (#s1c5) */
   .st-proof{
-    margin-top:38px; max-width:860px; padding:28px clamp(20px,3vw,32px);
+    margin-top:26px; max-width:860px; padding:24px clamp(18px,2.6vw,28px);
     display:grid; grid-template-columns:auto 1fr; gap:clamp(18px,3.2vw,36px); align-items:center;
     border-radius:12px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
   }
@@ -1040,7 +1040,7 @@
   .st-proof .what b{ font-size:17px; font-weight:700; color:var(--white); }
   .st-proof .what p{ margin:8px 0 0; font-size:14px; line-height:1.8; color:rgba(var(--text-base),.6); }
 
-  .st-cta{ margin-top:38px; display:flex; flex-wrap:wrap; gap:12px; }
+  .st-cta{ margin-top:26px; display:flex; flex-wrap:wrap; gap:12px; }
 
   @media (max-width:760px){ .st-proof{ grid-template-columns:1fr; gap:16px; } }
 
@@ -1099,6 +1099,14 @@
      index2(스토리판)에서 화법만 가져오고, 색은 이 사이트의 것을 그대로 쓴다.
      세리프 헤드라인 · 윤곽선 연도 · 인용문 셋뿐이라 나머지 장과 충돌하지 않는다.
      ================================================================ */
+  /* 이야기 장은 한 화면을 채우지 않는다 — min-height:100vh 를 풀어 글이 끊기지 않고 이어지게 한다.
+     이게 없으면 짧은 장마다 화면 절반이 빈 채로 남는다. */
+  #s1c1, #s1c2, #s1c7, #s1c4, #s1c5, #s3p, #s1c9{
+    min-height:0;
+    padding-top:clamp(52px,8vh,80px);
+    padding-bottom:clamp(52px,8vh,80px);
+  }
+
   .st-head{ display:flex; align-items:flex-start; gap:clamp(16px,3.4vw,44px); }
   .st-year{
     font-family:'IBM Plex Mono', monospace; font-weight:500;
@@ -1113,14 +1121,14 @@
   .st-h{
     font-family:'Hahmlet', serif; font-weight:600;
     font-size:clamp(26px,3.9vw,44px); line-height:1.26; letter-spacing:-.022em;
-    margin:12px 0 0; color:var(--white); text-wrap:balance;
+    margin:10px 0 0; color:var(--white); text-wrap:balance;
   }
-  .st-body{ margin-top:20px; max-width:60ch; }
-  .st-body p{ margin:0 0 16px; font-size:15px; line-height:1.9; color:rgba(var(--text-base),.62); }
+  .st-body{ margin-top:16px; max-width:60ch; }
+  .st-body p{ margin:0 0 12px; font-size:15px; line-height:1.75; color:rgba(var(--text-base),.62); }
   .st-body p:last-child{ margin-bottom:0; }
   .st-body b{ color:var(--white); font-weight:700; }
   .st-say{
-    margin:32px 0 0; padding-left:clamp(16px,2.6vw,26px);
+    margin:24px 0 0; padding-left:clamp(16px,2.6vw,26px);
     border-left:2px solid var(--blue);
     font-family:'Hahmlet', serif; font-weight:400;
     font-size:clamp(18px,2.3vw,25px); line-height:1.62; letter-spacing:-.015em;
@@ -1129,7 +1137,7 @@
   .st-after{ margin-top:36px; }
 
   /* 숫자 타일 */
-  .st-figs{ margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; max-width:760px; }
+  .st-figs{ margin-top:26px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; max-width:760px; }
   .st-fig{
     padding:22px 20px; border-radius:12px;
     background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
@@ -1142,7 +1150,7 @@
 
   /* 규칙 변화 스트립 */
   .st-rules{
-    list-style:none; margin:38px 0 0; padding:26px 24px; max-width:860px;
+    list-style:none; margin:26px 0 0; padding:22px 20px; max-width:860px;
     display:grid; grid-template-columns:repeat(4,1fr); gap:0;
     border-radius:12px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
   }
@@ -1160,7 +1168,7 @@
   }
 
   /* 원본 → 출력 */
-  .st-flip{ margin-top:38px; max-width:860px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(12px,2.4vw,24px); }
+  .st-flip{ margin-top:26px; max-width:860px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(12px,2.4vw,24px); }
   .st-flip .box{ padding:22px 20px; border-radius:12px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); }
   .st-flip .box.src{ background:rgba(26,135,254,.09); border-color:rgba(26,135,254,.38); }
   .st-flip .k{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:rgba(var(--text-base),.42); }
@@ -2054,6 +2062,34 @@
     </div>
   </section>
 
+
+  <!-- ============ STORY 07 · 다음 ============ -->
+  <section id="s1c9">
+    <div class="cv-wrap">
+      <div class="cv-block st-head">
+        <div class="st-year">NEXT</div>
+        <div>
+          <div class="st-no">Chapter 07 · 다음</div>
+          <h3 class="st-h">다음 규칙은<br>아직 이름이 없습니다</h3>
+          <div class="st-body">
+            <p>
+              반년 안에 이름이 붙을 겁니다. 그때 필요한 실력도 또 달라지겠지요.
+              다만 그때도 업무 규칙은 그대로일 것이고,
+              우리는 이미 그걸 적어 두는 쪽에 서 있습니다.
+            </p>
+            <p>
+              다음 노드가 켜지는 순간, 투비는 이미 그 안에 있습니다.
+            </p>
+          </div>
+          <div class="st-cta">
+            <a href="#s6" class="btn btn-primary">프로젝트 문의하기 →</a>
+            <a href="#s3p" class="btn btn-ghost">제품과 구조 다시 보기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ SOLUTION 01 · 무엇으로 만드나 (CoverLink — 위키가 원본, 코드는 출력) ============ -->
   <section id="s3d1">
     <div class="cv-wrap">
@@ -2701,33 +2737,6 @@
       </div>
 
       <p class="team-statement">이 다섯이 쓴 것이 커버링크의 원본이 됩니다. <b>나머지는 플랫폼이 생성합니다.</b></p>
-    </div>
-  </section>
-
-  <!-- ============ STORY 07 · 다음 ============ -->
-  <section id="s1c9">
-    <div class="cv-wrap">
-      <div class="cv-block st-head">
-        <div class="st-year">NEXT</div>
-        <div>
-          <div class="st-no">Chapter 07 · 다음</div>
-          <h3 class="st-h">다음 규칙은<br>아직 이름이 없습니다</h3>
-          <div class="st-body">
-            <p>
-              반년 안에 이름이 붙을 겁니다. 그때 필요한 실력도 또 달라지겠지요.
-              다만 그때도 업무 규칙은 그대로일 것이고,
-              우리는 이미 그걸 적어 두는 쪽에 서 있습니다.
-            </p>
-            <p>
-              다음 노드가 켜지는 순간, 투비는 이미 그 안에 있습니다.
-            </p>
-          </div>
-          <div class="st-cta">
-            <a href="#s6" class="btn btn-primary">프로젝트 문의하기 →</a>
-            <a href="#s3p" class="btn btn-ghost">제품과 구조 다시 보기</a>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
   <!-- ============ CONTACT US ============ -->
