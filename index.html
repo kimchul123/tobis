@@ -42,6 +42,10 @@
     --sv-teal-rgb:23,195,178;
     --sv-gray-rgb:154,163,178;
     --sv-peak-rgb:127,190,255;
+    /* 별자리 라벨 — 비활성 상태 색. 테마마다 바닥이 반대라 변수로 뺀다 */
+    --sv-label-fade:#8A93A1;
+    --sv-label-peak:#DCEBFF;
+    --sv-label-form:#BFF3E4;
     color-scheme:dark;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -1515,6 +1519,10 @@
     --sv-teal-rgb:11,122,109;
     --sv-gray-rgb:90,102,117;
     --sv-peak-rgb:15,95,214;
+    /* 밝은 바닥에서는 라벨을 눌러 내린다 — 다크 값(#DCEBFF·#BFF3E4)은 흰 배경에서 사라진다 */
+    --sv-label-fade:#6B7688;
+    --sv-label-peak:#1B5FB8;
+    --sv-label-form:#0A6B60;
   }
 
   /* ---------- AI 어시스턴트 — 밝은 배경용 재보정 ---------- */
@@ -2160,9 +2168,9 @@
         const starsGroup = document.getElementById('starsGroup');
         const labelsGroup = document.getElementById('labelsGroup');
         const phaseInfo = {
-          fading: { tag:"FADING · 저물어 가는", color:"var(--sv-gray)", border:"rgba(var(--sv-gray-rgb),.45)", panelBorder:"rgba(var(--sv-gray-rgb),.28)", panelBg:"rgba(var(--sv-gray-rgb),.05)", glow:"url(#glowDim)", core:"#8A93A1", label:"#8A93A1", ring:"rgba(75,85,99,.7)" },
-          peak: { tag:"PEAK · 지금 가장 밝은", color:"var(--sv-peak)", border:"rgba(var(--sv-peak-rgb),.45)", panelBorder:"rgba(26,135,254,.35)", panelBg:"rgba(26,135,254,.07)", glow:"url(#glowPeak)", core:"var(--sv-core-blue)", label:"#DCEBFF", ring:"rgba(26,135,254,.5)" },
-          forming: { tag:"FORMING · 새로 태어나는", color:"var(--sv-mint)", border:"rgba(var(--sv-mint-rgb),.45)", panelBorder:"rgba(var(--sv-mint-rgb),.3)", panelBg:"rgba(var(--sv-mint-rgb),.05)", glow:"url(#glowNew)", core:"var(--sv-core-mint)", label:"#BFF3E4", ring:"rgba(var(--sv-mint-rgb),.5)" }
+          fading: { tag:"FADING · 저물어 가는", color:"var(--sv-gray)", border:"rgba(var(--sv-gray-rgb),.45)", panelBorder:"rgba(var(--sv-gray-rgb),.28)", panelBg:"rgba(var(--sv-gray-rgb),.05)", glow:"url(#glowDim)", core:"#8A93A1", label:"var(--sv-label-fade)", ring:"rgba(75,85,99,.7)" },
+          peak: { tag:"PEAK · 지금 가장 밝은", color:"var(--sv-peak)", border:"rgba(var(--sv-peak-rgb),.45)", panelBorder:"rgba(26,135,254,.35)", panelBg:"rgba(26,135,254,.07)", glow:"url(#glowPeak)", core:"var(--sv-core-blue)", label:"var(--sv-label-peak)", ring:"rgba(26,135,254,.5)" },
+          forming: { tag:"FORMING · 새로 태어나는", color:"var(--sv-mint)", border:"rgba(var(--sv-mint-rgb),.45)", panelBorder:"rgba(var(--sv-mint-rgb),.3)", panelBg:"rgba(var(--sv-mint-rgb),.05)", glow:"url(#glowNew)", core:"var(--sv-core-mint)", label:"var(--sv-label-form)", ring:"rgba(var(--sv-mint-rgb),.5)" }
         };
 
         let active = 4;
