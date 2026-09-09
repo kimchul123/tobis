@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>코드를 버리기로 했습니다 — TOBIS</title>
+<meta name="description" content="2012년부터 보험 화면을 만들어 온 회사가, 왜 코드를 산출물의 자리에서 내렸는지에 대한 이야기.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOBIS — STORY EDITION
+   기존 index.html 과 의도적으로 다른 결:
+     · 다크 기반 → 라이트 기반, 전환점 한 장면만 다크로 눌러 대비를 만든다
+     · 격자 카드 → 메쉬 그라디언트 바탕 + 프로스티드 패널
+     · 전(全) 산세리프 → 내러티브는 세리프(Hahmlet), UI 는 산세리프
+   브랜드 색(#1a87fe · #17c3b2 · #7c5cfc)은 그대로 쓴다.
+   ============================================================ */
+
+:root{
+  /* 한랭 편향 종이 — 순백이 아니라 브랜드 블루 쪽으로 아주 살짝 기운 오프화이트 */
+  --paper:#F7F9FD;
+  --paper-2:#FFFFFF;
+  --ink:#0C1320;
+  --ink-2:#3A465A;
+  --ink-3:#6C7A90;
+  --hair:rgba(12,19,32,.10);
+  --hair-2:rgba(12,19,32,.06);
+
+  --blue:#1a87fe;
+  --blue-deep:#0F5FD6;
+  --teal:#17c3b2;
+  --violet:#7c5cfc;
+
+  /* 다크 장면 (전환점 · 마지막 장) */
+  --night:#080C15;
+  --night-2:#0E1524;
+  --night-ink:#EEF2F9;
+  --night-ink-2:rgba(238,242,249,.62);
+  --night-hair:rgba(238,242,249,.14);
+
+  --measure:60ch;
+  color-scheme:light;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans KR','Malgun Gothic',system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- 메쉬 그라디언트 바탕 — 고정, 아주 낮은 채도 ---------- */
+.mesh{
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(38vw 34vw at 8% 6%,   rgba(26,135,254,.16), transparent 62%),
+    radial-gradient(34vw 30vw at 92% 14%, rgba(124,92,252,.13), transparent 60%),
+    radial-gradient(42vw 36vw at 78% 82%, rgba(23,195,178,.14), transparent 62%),
+    radial-gradient(30vw 28vw at 18% 92%, rgba(26,135,254,.10), transparent 60%),
+    var(--paper);
+}
+/* 미세한 그레인 — 그라디언트가 띠(banding)로 보이는 걸 막는다 */
+.grain{
+  position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.035;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- 공통 레이아웃 ---------- */
+.wrap{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+.narrow{ max-width:var(--measure); }
+
+/* ---------- 상단 바 ---------- */
+.top{
+  position:sticky; top:0; z-index:40;
+  backdrop-filter:blur(14px) saturate(150%);
+  background:rgba(247,249,253,.72);
+  border-bottom:1px solid var(--hair-2);
+}
+.top-in{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 0; }
+.mark{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
+.mark b{ font-family:'IBM Plex Mono',monospace; font-size:17px; font-weight:600; letter-spacing:.18em; }
+.mark span{ font-size:11px; color:var(--ink-3); letter-spacing:.02em; }
+.top a.back{
+  font-size:13px; color:var(--ink-2); text-decoration:none;
+  border:1px solid var(--hair); border-radius:999px; padding:7px 15px;
+  transition:border-color .2s ease, color .2s ease, background .2s ease;
+}
+.top a.back:hover{ border-color:var(--blue); color:var(--blue-deep); background:rgba(26,135,254,.06); }
+
+/* ---------- 히어로 ---------- */
+.hero{ padding:clamp(72px,13vh,132px) 0 clamp(56px,9vh,104px); }
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--ink-3);
+}
+.hero h1{
+  font-family:'Hahmlet',serif; font-weight:600;
+  font-size:clamp(38px,7.4vw,86px); line-height:1.14; letter-spacing:-.03em;
+  margin:20px 0 0; text-wrap:balance;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(96deg,var(--blue) 0%,var(--violet) 52%,var(--teal) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero .lead{
+  margin:26px 0 0; max-width:52ch;
+  font-size:clamp(16px,1.6vw,18px); line-height:1.9; color:var(--ink-2);
+}
+.hero-meta{
+  margin-top:38px; display:flex; flex-wrap:wrap; gap:10px 26px;
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-3);
+}
+.hero-meta b{ color:var(--ink); font-weight:600; }
+.cue{
+  margin-top:56px; display:inline-flex; align-items:center; gap:10px;
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.16em;
+  color:var(--ink-3); text-decoration:none;
+}
+.cue i{
+  width:26px; height:26px; border-radius:50%; border:1px solid var(--hair);
+  display:inline-flex; align-items:center; justify-content:center; font-style:normal;
+  animation:bob 2.6s ease-in-out infinite;
+}
+@keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(4px);} }
+
+/* ---------- 챕터 ---------- */
+.chapter{ padding:clamp(64px,10vh,116px) 0; position:relative; }
+.ch-head{ display:flex; align-items:flex-start; gap:clamp(18px,4vw,52px); }
+.ch-year{
+  font-family:'IBM Plex Mono',monospace; font-weight:500;
+  font-size:clamp(30px,5.4vw,58px); line-height:1; letter-spacing:-.03em;
+  color:transparent; -webkit-text-stroke:1px rgba(12,19,32,.26);
+  flex-shrink:0; padding-top:6px;
+}
+.ch-no{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.24em;
+  color:var(--blue-deep); text-transform:uppercase;
+}
+.chapter h2{
+  font-family:'Hahmlet',serif; font-weight:600;
+  font-size:clamp(27px,4.1vw,46px); line-height:1.25; letter-spacing:-.022em;
+  margin:12px 0 0; text-wrap:balance;
+}
+.chapter .body{ margin-top:22px; max-width:var(--measure); }
+.chapter .body p{ margin:0 0 18px; color:var(--ink-2); }
+.chapter .body p:last-child{ margin-bottom:0; }
+.chapter .body b{ color:var(--ink); font-weight:600; }
+
+/* 인용 — 이야기의 목소리 */
+.say{
+  margin:36px 0 0; padding-left:clamp(18px,3vw,30px);
+  border-left:2px solid var(--blue);
+  font-family:'Hahmlet',serif; font-weight:400;
+  font-size:clamp(19px,2.5vw,27px); line-height:1.62; letter-spacing:-.015em;
+  color:var(--ink); max-width:34ch;
+}
+
+/* ---------- 프로스티드 패널 ---------- */
+.glass{
+  background:rgba(255,255,255,.62);
+  backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 1px 2px rgba(12,19,32,.03), 0 18px 46px rgba(12,19,32,.07);
+  border-radius:20px;
+}
+
+/* 숫자 타일 */
+.figs{ margin-top:44px; display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:14px; }
+.fig{ padding:24px 22px; }
+.fig b{
+  display:block; font-family:'Hahmlet',serif; font-weight:600;
+  font-size:clamp(30px,3.6vw,42px); line-height:1; letter-spacing:-.03em;
+  background:linear-gradient(120deg,var(--blue-deep),var(--teal));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.fig span{ display:block; margin-top:11px; font-size:13px; line-height:1.65; color:var(--ink-3); }
+
+/* ---------- 규칙 변화 스트립 ---------- */
+.rules{ margin-top:44px; padding:30px clamp(20px,3vw,34px); }
+.rules ol{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+.rules li{ position:relative; padding:0 16px 0 0; }
+.rules li + li{ padding-left:20px; border-left:1px solid var(--hair-2); }
+.rules .yr{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); letter-spacing:.08em; }
+.rules .nm{ margin-top:7px; font-size:16px; font-weight:600; letter-spacing:-.01em; }
+.rules .wd{
+  margin-top:5px; font-family:'Hahmlet',serif; font-size:14px; color:var(--ink-3);
+}
+.rules li:nth-child(3) .nm{ color:var(--blue-deep); }
+.rules li:nth-child(3) .wd{ color:var(--blue); }
+.rules .now{
+  display:inline-block; margin-top:9px; font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px; letter-spacing:.14em; padding:2px 7px; border-radius:3px;
+  color:var(--blue-deep); border:1px solid rgba(26,135,254,.4);
+}
+
+/* ---------- 전환점 — 유일한 다크 장면 ---------- */
+.turn{
+  position:relative; margin:clamp(56px,9vh,104px) 0;
+  padding:clamp(64px,11vh,124px) 0;
+  background:
+    radial-gradient(56vw 40vw at 16% 0%,   rgba(26,135,254,.24), transparent 62%),
+    radial-gradient(46vw 36vw at 88% 96%,  rgba(23,195,178,.19), transparent 60%),
+    radial-gradient(40vw 30vw at 62% 40%,  rgba(124,92,252,.16), transparent 62%),
+    var(--night);
+  color:var(--night-ink);
+}
+.turn .ch-no{ color:#7FBEFF; }
+.turn .ch-year{ -webkit-text-stroke-color:rgba(238,242,249,.30); }
+.turn h2{ color:var(--night-ink); }
+.turn .body p{ color:var(--night-ink-2); }
+.turn .body b{ color:var(--night-ink); }
+.turn .say{ border-left-color:#7FBEFF; color:var(--night-ink); }
+
+/* 원본 → 출력 */
+.flip{ margin-top:46px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(14px,2.6vw,28px); }
+.flip .box{
+  padding:26px 24px; border-radius:18px;
+  border:1px solid var(--night-hair); background:rgba(238,242,249,.05);
+}
+.flip .box.src{ border-color:rgba(127,190,255,.42); background:rgba(26,135,254,.10); }
+.flip .k{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:rgba(238,242,249,.45);
+}
+.flip .box.src .k{ color:#7FBEFF; }
+.flip .v{ margin-top:12px; font-family:'Hahmlet',serif; font-size:clamp(20px,2.6vw,28px); font-weight:600; letter-spacing:-.02em; }
+.flip .d{ margin-top:10px; font-size:13.5px; line-height:1.75; color:var(--night-ink-2); }
+.flip .ar{ font-family:'IBM Plex Mono',monospace; font-size:22px; color:#7FBEFF; }
+
+/* ---------- 증명 ---------- */
+.proof{ margin-top:42px; padding:32px clamp(22px,3.4vw,38px); display:grid; grid-template-columns:auto 1fr; gap:clamp(20px,3.4vw,40px); align-items:center; }
+.proof .date{
+  font-family:'IBM Plex Mono',monospace; font-size:clamp(22px,3vw,32px); font-weight:600;
+  letter-spacing:-.02em; color:var(--blue-deep); line-height:1.2;
+}
+.proof .date small{ display:block; font-size:11px; font-weight:500; letter-spacing:.18em; color:var(--ink-3); margin-top:8px; }
+.proof .what b{ font-size:18px; font-weight:600; letter-spacing:-.01em; }
+.proof .what p{ margin:9px 0 0; font-size:14.5px; line-height:1.8; color:var(--ink-2); }
+
+/* ---------- 제품 ---------- */
+.prods{ margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+.prod{ padding:24px 22px; display:flex; flex-direction:column; gap:8px; }
+.prod .n{ font-size:19px; font-weight:600; letter-spacing:-.015em; }
+.prod .n i{ font-style:normal; color:var(--ink-3); font-weight:400; }
+.prod .n b{ background:linear-gradient(120deg,var(--blue-deep),var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.prod .r{ font-size:12.5px; color:var(--ink-3); }
+.prod .s{
+  margin-top:auto; padding-top:12px;
+  font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em;
+}
+.prod .s.live{ color:var(--teal); }
+.prod .s.wip{ color:var(--blue-deep); }
+.prod .s.plan{ color:var(--ink-3); }
+.prod.wide{ grid-column:span 2; }
+
+/* ---------- 마지막 장 ---------- */
+.last{
+  padding:clamp(72px,12vh,132px) 0;
+  background:
+    radial-gradient(50vw 38vw at 80% 8%, rgba(124,92,252,.22), transparent 62%),
+    radial-gradient(44vw 34vw at 10% 92%, rgba(26,135,254,.20), transparent 60%),
+    var(--night);
+  color:var(--night-ink);
+}
+.last h2{
+  font-family:'Hahmlet',serif; font-weight:600;
+  font-size:clamp(28px,4.6vw,52px); line-height:1.24; letter-spacing:-.025em; margin:14px 0 0;
+  text-wrap:balance;
+}
+.last .eyebrow{ color:rgba(238,242,249,.5); }
+.last p{ margin:24px 0 0; max-width:48ch; color:var(--night-ink-2); }
+.cta{ margin-top:42px; display:flex; flex-wrap:wrap; gap:12px; }
+.cta a{
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  font-size:14.5px; font-weight:600; padding:14px 26px; border-radius:999px;
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+.cta .go{
+  color:#fff; background:linear-gradient(120deg,var(--blue) 0%,var(--violet) 58%,var(--teal) 100%);
+  box-shadow:0 12px 34px rgba(26,135,254,.32);
+}
+.cta .go:hover{ transform:translateY(-2px); box-shadow:0 16px 42px rgba(124,92,252,.4); }
+.cta .ghost{ color:var(--night-ink); border:1px solid var(--night-hair); }
+.cta .ghost:hover{ border-color:#7FBEFF; background:rgba(127,190,255,.08); }
+
+/* ---------- 꼬리말 ---------- */
+.foot{ padding:44px 0 56px; background:var(--night-2); color:rgba(238,242,249,.5); font-size:12.5px; }
+.foot-in{ display:flex; flex-wrap:wrap; gap:14px 32px; justify-content:space-between; align-items:flex-end; }
+.foot b{ color:rgba(238,242,249,.8); font-weight:600; }
+.foot .sig{ font-family:'IBM Plex Mono',monospace; letter-spacing:.16em; font-size:11px; }
+.foot a{ color:rgba(238,242,249,.72); }
+
+/* ---------- 등장 ---------- */
+/* 기본은 '보이는' 상태다. JS 가 첫 화면 아래에 있는 것에만 .pre 를 붙인다 —
+   스크립트가 죽어도 페이지는 그대로 읽힌다. */
+.pre{ opacity:0; transform:translateY(18px); }
+.pre.in{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+@media (prefers-reduced-motion:reduce){
+  .pre{ opacity:1; transform:none; }
+  .cue i{ animation:none; }
+}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:860px){
+  .rules ol{ grid-template-columns:repeat(2,1fr); gap:22px 0; }
+  .rules li:nth-child(3){ border-left:none; padding-left:0; }
+  .flip{ grid-template-columns:1fr; }
+  .flip .ar{ transform:rotate(90deg); justify-self:center; }
+  .proof{ grid-template-columns:1fr; gap:18px; }
+  .prod.wide{ grid-column:auto; }
+}
+@media (max-width:560px){
+  .ch-head{ flex-direction:column; gap:10px; }
+  .ch-year{ padding-top:0; }
+  .rules ol{ grid-template-columns:1fr; }
+  .rules li + li{ border-left:none; padding-left:0; padding-top:18px; border-top:1px solid var(--hair-2); }
+}
+</style>
+</head>
+<body>
+
+<div class="mesh" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="#top">
+      <b>TOBIS</b><span>TO BE INTELLIGENT SYSTEMS</span>
+    </a>
+    <a class="back" href="./">기존 사이트로 &rarr;</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ 여는 장 ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">A Story · 2012–2026</div>
+      <h1>우리는 <em>코드를 버리기로</em><br>했습니다</h1>
+      <p class="lead">
+        2012년부터 보험 화면을 만들어 온 회사가, 왜 코드를 산출물의 자리에서 내렸는지에 대한 이야기입니다.
+        결론부터 말하면 — 우리가 20년간 진짜로 만들어 온 건 코드가 아니었습니다.
+      </p>
+      <div class="hero-meta">
+        <span><b>2012</b> 설립</span>
+        <span><b>46</b>개 프로젝트</span>
+        <span><b>25</b>개 금융·기관 파트너</span>
+        <span><b>2026.02</b> 업계 최초 실서비스</span>
+      </div>
+      <a class="cue" href="#ch1"><i>&darr;</i>처음부터 읽기</a>
+    </div>
+  </section>
+
+  <!-- ============ 01 ============ -->
+  <section class="chapter" id="ch1">
+    <div class="wrap ch-head">
+      <div class="ch-year">2012</div>
+      <div>
+        <div class="ch-no">Chapter 01 · 시작</div>
+        <h2>우리는 화면을 만들었습니다</h2>
+        <div class="body">
+          <p>
+            설계사가 상품을 고르고, 보험료를 계산하고, 청약서를 넘기는 화면.
+            그 뒤에서 한도를 확인하고 특약 조합을 검증하는 규칙.
+            <b>투비아이에스컨설팅은 그런 걸 만드는 회사로 시작했습니다.</b>
+          </p>
+          <p>
+            화려한 일은 아니었습니다. 상품기획팀이 건네준 규정을 읽고, 현업에게 되묻고,
+            예외를 찾아내고, 다시 화면으로 옮기는 일. 한 프로젝트에 보통 1년이 걸렸습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 ============ -->
+  <section class="chapter" id="ch2">
+    <div class="wrap ch-head">
+      <div class="ch-year">×46</div>
+      <div>
+        <div class="ch-no">Chapter 02 · 축적</div>
+        <h2>같은 일을 46번 하면<br>알게 되는 것이 있습니다</h2>
+        <div class="body">
+          <p>
+            신한라이프, 동양생명, NH손해보험, 우체국금융, DB생명 —
+            회사가 달라도 가입설계는 가입설계였고, 언더라이팅은 언더라이팅이었습니다.
+            달라지는 건 <b>규칙</b>뿐이었습니다.
+          </p>
+          <p>
+            그리고 그 규칙은 어디에도 제대로 적혀 있지 않았습니다.
+            일부는 규정집에, 일부는 코드 주석에, 대부분은 <b>오래 일한 사람의 머릿속에</b> 있었습니다.
+            프로젝트가 끝나면 그 사람과 함께 사라졌습니다.
+          </p>
+        </div>
+        <blockquote class="say">
+          우리가 20년간 쌓은 건 코드가 아니라,<br>그 규칙을 알아듣는 능력이었습니다.
+        </blockquote>
+        <div class="figs">
+          <div class="fig glass"><b>46</b><span>2012년부터 수행한 프로젝트</span></div>
+          <div class="fig glass"><b>25</b><span>함께한 금융·기관 파트너</span></div>
+          <div class="fig glass"><b>20년</b><span>보험 도메인 — 영업채널·가입설계·청약·언더라이팅</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 ============ -->
+  <section class="chapter" id="ch3">
+    <div class="wrap ch-head">
+      <div class="ch-year">2022</div>
+      <div>
+        <div class="ch-no">Chapter 03 · 흔들림</div>
+        <h2>그런데 규칙이<br>계속 바뀌기 시작했습니다</h2>
+        <div class="body">
+          <p>
+            AI가 왔습니다. 처음엔 말을 잘 거는 법이 실력이었습니다.
+            얼마 뒤엔 무엇을 보여줄지 고르는 법이 실력이 됐습니다.
+            지금은 모델 주변을 어떻게 짜는가가 승부처입니다.
+          </p>
+          <p>
+            <b>2년마다 잘한다의 정의가 바뀌었습니다.</b>
+            모델을 쫓아가는 회사들은 그때마다 처음부터 다시 만들었습니다.
+            우리는 다른 질문을 했습니다 — 이 변화에서 <b>안 바뀌는 건 뭐지?</b>
+          </p>
+        </div>
+        <div class="rules glass">
+          <ol>
+            <li><div class="yr">2022–23</div><div class="nm">프롬프트</div><div class="wd">말</div></li>
+            <li><div class="yr">2024–25</div><div class="nm">컨텍스트</div><div class="wd">재료</div></li>
+            <li><div class="yr">2026</div><div class="nm">하네스</div><div class="wd">구조</div><span class="now">NOW</span></li>
+            <li><div class="yr">다음</div><div class="nm">(?)</div><div class="wd">아직 이름 없음</div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · 전환점 (유일한 다크 장면) ============ -->
+  <section class="turn" id="ch4">
+    <div class="wrap ch-head">
+      <div class="ch-year">2025</div>
+      <div>
+        <div class="ch-no">Chapter 04 · 전환점</div>
+        <h2>안 바뀌는 건 업무 규칙이었습니다.<br>그래서 순서를 뒤집었습니다</h2>
+        <div class="body">
+          <p>
+            모델은 반년마다 바뀝니다. 프레임워크는 더 자주 바뀝니다.
+            그런데 <b>“암보험 가입한도는 이렇게 계산한다”</b>는 20년째 그대로입니다.
+            바뀌는 걸 원본으로 두고 안 바뀌는 걸 베껴 쓰고 있었던 겁니다.
+          </p>
+          <p>
+            그래서 자리를 바꿨습니다. 업무 규칙을 위키에 적고,
+            <b>코드를 그 위키의 출력물로 내렸습니다.</b>
+            규칙을 고치면 구현이 따라옵니다. 모델이 바뀌어도 규칙은 남습니다.
+          </p>
+        </div>
+        <blockquote class="say">
+          코드는 산출물이 아니라 부산물입니다.
+        </blockquote>
+        <div class="flip">
+          <div class="box src">
+            <div class="k">Source of truth</div>
+            <div class="v">업무 위키</div>
+            <div class="d">도메인 전문가가 직접 씁니다. 마크다운 한 장, 그 위에 규칙과 예외.</div>
+          </div>
+          <div class="ar">&rarr;</div>
+          <div class="box">
+            <div class="k">Output</div>
+            <div class="v">코드 · 화면 · API</div>
+            <div class="d">언어에 관계없이 자사 메타에 맞춰 생성됩니다. 사람은 남은 상세만 손봅니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 ============ -->
+  <section class="chapter" id="ch5">
+    <div class="wrap ch-head">
+      <div class="ch-year">2026</div>
+      <div>
+        <div class="ch-no">Chapter 05 · 증명</div>
+        <h2>그리고 실제로 돌아갔습니다</h2>
+        <div class="body">
+          <p>
+            생각은 누구나 합니다. 문제는 그게 <b>보험사 전산 환경에서 진짜로 도는가</b>입니다.
+            승인 흐름이 있고, 증적이 남아야 하고, 망분리가 있고, 틀리면 사람이 책임지는 곳에서요.
+          </p>
+          <p>
+            2026년 2월, 신한라이프 LICO에서 생성형 AI 가입설계·청약이 열렸습니다.
+            <b>업계 최초의 실서비스</b>였습니다. 별도 챗봇을 띄운 게 아니라
+            설계사가 원래 쓰던 화면 <b>안에</b> 들어갔습니다.
+          </p>
+        </div>
+        <div class="proof glass">
+          <div class="date">2026.02<small>SERVICE OPEN</small></div>
+          <div class="what">
+            <b>신한라이프 LICO — 생성형 AI 가입설계 · 청약</b>
+            <p>
+              자연어로 설계를 요청하면 보장분석·특약·보험료를 추천하고, 한도와 심사기준을 함께 검증합니다.
+              최종 설계안은 사람이 검수하고 승인합니다 — AI는 추천하고, 결정은 사람이 합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 ============ -->
+  <section class="chapter" id="ch6">
+    <div class="wrap ch-head">
+      <div class="ch-year">NOW</div>
+      <div>
+        <div class="ch-no">Chapter 06 · 제품</div>
+        <h2>한 번 만든 방식을<br>다섯 개의 제품으로 옮겼습니다</h2>
+        <div class="body">
+          <p>
+            LICO에서 검증한 건 가입설계 하나였지만, 그걸 만든 <b>구조</b>는 업무를 가리지 않았습니다.
+            같은 위키, 같은 승인·검증 흐름 위에 다음 업무를 올리면 됩니다.
+            그래서 두 번째는 처음부터 다시 만들지 않습니다.
+          </p>
+        </div>
+        <div class="prods">
+          <div class="prod glass wide">
+            <div class="n"><i>Cover</i><b>Link</b></div>
+            <div class="r">AI 개발 플랫폼 — 위키가 원본, 코드는 출력</div>
+            <div class="s wip">FOUNDATION</div>
+          </div>
+          <div class="prod glass">
+            <div class="n"><i>Cover</i><b>Studio</b></div>
+            <div class="r">에이전트 제작 환경</div>
+            <div class="s wip">FOUNDATION</div>
+          </div>
+          <div class="prod glass">
+            <div class="n"><i>Cover</i><b>Plan</b></div>
+            <div class="r">가입설계 · 청약</div>
+            <div class="s live">실서비스</div>
+          </div>
+          <div class="prod glass">
+            <div class="n"><i>Cover</i><b>UW</b></div>
+            <div class="r">언더라이팅 · 심사</div>
+            <div class="s wip">고도화 중</div>
+          </div>
+          <div class="prod glass">
+            <div class="n"><i>Cover</i><b>Claim</b></div>
+            <div class="r">보험금 청구 · 지급</div>
+            <div class="s plan">준비 중</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 닫는 장 ============ -->
+  <section class="last" id="end">
+    <div class="wrap">
+      <div class="eyebrow">Chapter 07 · 다음</div>
+      <h2>다음 규칙은<br>아직 이름이 없습니다</h2>
+      <p>
+        반년 안에 이름이 붙을 겁니다. 그때 필요한 실력도 또 달라지겠지요.
+        다만 그때도 업무 규칙은 그대로일 것이고, 우리는 이미 그걸 적어 두는 쪽에 서 있습니다.
+      </p>
+      <p>
+        다음 노드가 켜지는 순간, 투비는 이미 그 안에 있습니다.
+      </p>
+      <div class="cta">
+        <a class="go" href="./#s6">프로젝트 문의하기 &rarr;</a>
+        <a class="ghost" href="./#s3p">제품과 구조 자세히 보기</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div><b>(주)투비아이에스컨설팅</b> · 대표 주상언 · 사업자번호 105-87-79763</div>
+      <div>서울특별시 영등포구 선유로 49길 23, 아이에스비즈타워 2차 401호</div>
+      <div>T. 02-717-2204 · <a href="mailto:contact@2bis-consulting.com">contact@2bis-consulting.com</a></div>
+    </div>
+    <div class="sig">TOBIS · STORY EDITION</div>
+  </div>
+</footer>
+
+<script>
+/* 첫 화면 아래에 있는 블록에만 등장 효과를 붙인다.
+   위쪽 콘텐츠는 손대지 않으므로, 스크립트가 없거나 실패해도 페이지는 처음부터 다 읽힌다. */
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var targets = [].slice.call(document.querySelectorAll('.chapter .ch-head > div, .turn .ch-head > div, .last .wrap'));
+  var below = targets.filter(function(el){
+    return el.getBoundingClientRect().top > window.innerHeight * 0.9;
+  });
+  below.forEach(function(el){ el.classList.add('pre'); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+  below.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
