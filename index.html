@@ -984,28 +984,26 @@
     position:fixed; right:clamp(16px,2.5vw,28px); bottom:clamp(16px,2.5vw,28px);
     z-index:52; width:58px; height:58px; padding:0; border:none; border-radius:50%;
     display:flex; align-items:center; justify-content:center; cursor:pointer;
-    color:#ffffff; background:linear-gradient(135deg,var(--blue) 0%,var(--teal) 100%);
+    color:#ffffff;
+    /* 런처는 브랜드 액센트라 테마와 무관하게 같은 색으로 둔다 — 변수를 쓰면 라이트에서 색이 죽는다 */
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 48%,#17c3b2 100%);
     box-shadow:0 10px 30px rgba(26,135,254,.35), 0 2px 8px rgba(0,0,0,.28);
     transition:transform .22s ease, box-shadow .22s ease, opacity .2s ease;
   }
-  .chat-fab:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 14px 38px rgba(26,135,254,.45); }
+  .chat-fab:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 14px 38px rgba(124,92,252,.45); }
   .chat-fab:focus-visible{ outline:2px solid var(--blue-soft); outline-offset:3px; }
-  .chat-fab svg{ display:block; }
+  .chat-fab svg{ display:block; position:relative; z-index:1; }
   .chat-fab .cf-close{ display:none; }
   .chat-fab.open .cf-open{ display:none; }
   .chat-fab.open .cf-close{ display:block; }
-  /* 처음 온 사람 눈에만 걸리면 충분하다 — 열거나 마우스를 올리면 멈춘다 */
+  /* 오로라 링 — 버튼 뒤에서 계속 돈다. 가만히 있는 화면에서 여기만 움직인다 */
   .chat-fab::after{
-    content:""; position:absolute; inset:-6px; border-radius:50%;
-    border:1px solid rgba(26,135,254,.55); opacity:0; pointer-events:none;
-    animation:chatPing 3.4s ease-out infinite;
+    content:""; position:absolute; inset:-3px; border-radius:50%; z-index:0; pointer-events:none;
+    background:conic-gradient(from 0deg,#4fa4ff,#7c5cfc,#22D3A5,#4fa4ff);
+    filter:blur(5px); opacity:.8;
+    animation:chatAurora 4.5s linear infinite;
   }
-  .chat-fab.open::after, .chat-fab:hover::after{ animation:none; }
-  @keyframes chatPing{
-    0%{ transform:scale(.86); opacity:.8; }
-    70%{ transform:scale(1.28); opacity:0; }
-    100%{ opacity:0; }
-  }
+  @keyframes chatAurora{ to{ transform:rotate(360deg); } }
 
   .chat-panel{
     position:fixed; z-index:53;
@@ -1027,7 +1025,7 @@
   .chat-avatar{
     width:38px; height:38px; flex-shrink:0; border-radius:12px;
     display:flex; align-items:center; justify-content:center; color:#ffffff;
-    background:linear-gradient(135deg,var(--blue),var(--teal));
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 48%,#17c3b2 100%);
   }
   .chat-id{ flex:1; min-width:0; }
   .chat-id b{ display:block; font-size:15px; font-weight:800; color:var(--white); letter-spacing:.01em; }
@@ -1105,7 +1103,7 @@
   .chat-send{
     width:42px; height:42px; flex-shrink:0; padding:0; border:none; border-radius:12px;
     display:flex; align-items:center; justify-content:center; cursor:pointer; color:#ffffff;
-    background:linear-gradient(135deg,var(--blue),var(--teal));
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 55%,#17c3b2 100%);
     transition:opacity .2s ease, transform .15s ease;
   }
   .chat-send:hover:not(:disabled){ transform:translateY(-1px); }
@@ -3157,9 +3155,10 @@
 <!-- ============ AI 어시스턴트 ============ -->
 <button class="chat-fab" id="chatFab" type="button"
         aria-label="TOBIS AI 어시스턴트 열기" aria-expanded="false" aria-controls="chatPanel">
-  <svg class="cf-open" viewBox="0 0 24 24" width="25" height="25" aria-hidden="true" fill="currentColor">
-    <path d="M11.6 2.2l1.75 4.65 4.65 1.75-4.65 1.75L11.6 15l-1.75-4.65L5.2 8.6l4.65-1.75L11.6 2.2Z"/>
-    <path d="M18.3 14.2l.85 2.25 2.25.85-2.25.85-.85 2.25-.85-2.25-2.25-.85 2.25-.85.85-2.25Z" opacity=".7"/>
+  <svg class="cf-open" viewBox="0 0 24 24" width="25" height="25" aria-hidden="true">
+    <path d="M12 2.4l1.85 4.9 4.9 1.85-4.9 1.85L12 15.9l-1.85-4.9L5.25 9.15l4.9-1.85L12 2.4Z" fill="#ffffff"/>
+    <circle cx="18.7" cy="18.1" r="2" fill="#EAFFF8"/>
+    <circle cx="6" cy="17.6" r="1.3" fill="#ffffff" opacity=".75"/>
   </svg>
   <svg class="cf-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
        fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -3168,9 +3167,10 @@
 <div class="chat-panel" id="chatPanel" role="dialog" aria-labelledby="chatTitle" inert>
   <div class="chat-head">
     <div class="chat-avatar" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-        <path d="M11.6 2.8l1.7 4.5 4.5 1.7-4.5 1.7-1.7 4.5-1.7-4.5-4.5-1.7 4.5-1.7 1.7-4.5Z"/>
-        <path d="M18.3 14.6l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8.8-2.1Z" opacity=".7"/>
+      <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+        <path d="M12 2.4l1.85 4.9 4.9 1.85-4.9 1.85L12 15.9l-1.85-4.9L5.25 9.15l4.9-1.85L12 2.4Z" fill="#ffffff"/>
+        <circle cx="18.7" cy="18.1" r="1.9" fill="#EAFFF8"/>
+        <circle cx="6" cy="17.6" r="1.2" fill="#ffffff" opacity=".75"/>
       </svg>
     </div>
     <div class="chat-id">
