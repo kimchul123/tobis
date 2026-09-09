@@ -413,6 +413,14 @@
 
   .trend-timeline{ margin-top:48px; }
   .trend-timeline svg{ width:100%; height:auto; display:block; }
+  /* 가로 타임라인은 1000 유닛을 360px 에 눌러 담아 글자가 5px 이 된다.
+     모바일은 세로로 세운 별도 SVG 로 바꿔, 글자를 실제 크기로 읽히게 한다. */
+  .trend-timeline .tl-mobile{ display:none; }
+  @media (max-width:640px){
+    .trend-timeline{ margin-top:34px; }
+    .trend-timeline .tl-desktop{ display:none; }
+    .trend-timeline .tl-mobile{ display:block; }
+  }
 
   .trend-split{ margin-top:32px; display:grid; grid-template-columns:1fr 1fr; background:rgba(var(--text-base),.04); border:1px solid rgba(var(--text-base),.14); border-radius:12px; overflow:hidden; }
   .trend-split > div{ padding:26px 28px; }
@@ -629,6 +637,9 @@
   :root{ --cl-mint:#34D399; --cl-amber:#F5A524; --cl-card:#121C30; --cl-card2:#0E1728; --cl-line:#24314D; --cl-line2:#1A2337; }
   .cl-hero{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
   .cl-brand{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.24em; color:var(--blue); font-weight:700; }
+  /* SOLUTION 01 의 아이브로는 나머지 다섯 장(.cv-sub)과 같은 규격으로 맞춘다.
+     .24em 트래킹은 'TOBIS SOLUTION' 같은 영문 전용 값이라 한글이 늘어져 보인다. */
+  #s3d1 .cl-brand{ font-size:13.5px; letter-spacing:.02em; color:var(--blue-soft); font-weight:600; }
   .cl-h1{ font-size:clamp(40px,6vw,60px); line-height:1.05; margin:14px 0 6px; font-weight:800; letter-spacing:-.02em; }
   .cl-brand-en{ font-family:'IBM Plex Mono',monospace; font-size:clamp(14px,1.8vw,18px); letter-spacing:.22em; color:var(--text-faint); margin-bottom:22px; }
   .cl-claim{ font-size:clamp(22px,3vw,32px); font-weight:800; color:var(--cl-mint); letter-spacing:-.02em; margin-bottom:18px; line-height:1.25; }
@@ -1606,9 +1617,7 @@
 
 <div class="scroller" id="scroller">
 
-  <!-- ============ 1. HERO ============ -->
-
-  <!-- ============ 1. HERO ============ -->
+  <!-- ============ HERO ============ -->
   <section id="s1">
     <div class="hero-bg">
       <div class="milky"></div>
@@ -1662,12 +1671,12 @@
     </div>
   </section>
 
-  <!-- ============ PERSPECTIVE 01 — AI는 반년마다 다시 태어납니다 ============ -->
+  <!-- ============ PERSPECTIVE 01 · 우리의 자리 — AI는 반년마다 다시 태어납니다 ============ -->
   <section id="s1c1">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="kicker">PERSPECTIVE - 01 · 우리의 자리</div>
+        <div class="kicker">PERSPECTIVE 01 · 우리의 자리</div>
         <h3 style="font-size:clamp(28px,4vw,40px); line-height:1.25;">도메인 20년과 AI가<br>만나는 자리입니다</h3>
         <p class="cv-lead" style="font-size:15px; margin-top:16px;">둘 중 하나만으로는 닿지 않습니다 — 투비는 그 교차점에 서 있습니다.</p>
 
@@ -1775,16 +1784,16 @@
     </div>
   </section>
 
-  <!-- ============ PERSPECTIVE 02 — 다음 규칙은 아직 이름이 없습니다 ============ -->
+  <!-- ============ PERSPECTIVE 02 · 규칙의 변화 — 다음 규칙은 아직 이름이 없습니다 ============ -->
   <section id="s1c2">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="kicker">PERSPECTIVE - 02 · 규칙의 변화</div>
+        <div class="kicker">PERSPECTIVE 02 · 규칙의 변화</div>
         <h3>다음 규칙은 아직 이름이 없습니다</h3>
 
         <div class="trend-timeline">
-          <svg viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg" id="tlSvg">
+          <svg class="tl-desktop" viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg" id="tlSvg">
             <line x1="115" y1="45" x2="945" y2="45" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.16)"/>
             <line x1="115" y1="45" x2="530" y2="45" stroke-width="2" style="stroke:var(--sv-blue-soft)"/>
 
@@ -1819,6 +1828,48 @@
               <text class="tl-word" x="945" y="100" text-anchor="middle" font-size="12" font-family="Noto Sans KR">미정</text>
             </g>
           </svg>
+
+          <!-- 모바일 — 같은 데이터를 세로로 세운다. data-idx 는 데스크톱과 짝을 맞춘다. -->
+          <svg class="tl-mobile" viewBox="0 0 360 296" xmlns="http://www.w3.org/2000/svg" id="tlSvgM">
+            <line x1="26" y1="24" x2="26" y2="272" stroke-width="1.5" style="stroke:rgba(var(--sv-ink),.16)"/>
+            <line x1="26" y1="24" x2="26" y2="148" stroke-width="2.5" style="stroke:var(--sv-blue-soft)"/>
+
+            <g class="tl-node" data-idx="0" style="cursor:pointer;">
+              <rect x="0" y="0" width="360" height="52" fill="transparent"/>
+              <circle class="tl-dot" cx="26" cy="24" r="6"/>
+              <text class="tl-era" x="50" y="17" font-size="12" font-family="IBM Plex Mono, monospace">2022–23</text>
+              <text class="tl-name" x="50" y="36" font-size="16" font-weight="700" font-family="Noto Sans KR">프롬프트</text>
+              <text class="tl-word" x="350" y="30" text-anchor="end" font-size="13" font-family="Noto Sans KR">말</text>
+            </g>
+            <g class="tl-node" data-idx="1" style="cursor:pointer;">
+              <rect x="0" y="56" width="360" height="52" fill="transparent"/>
+              <circle class="tl-dot" cx="26" cy="86" r="6"/>
+              <text class="tl-era" x="50" y="79" font-size="12" font-family="IBM Plex Mono, monospace">2024–25</text>
+              <text class="tl-name" x="50" y="98" font-size="16" font-weight="700" font-family="Noto Sans KR">컨텍스트</text>
+              <text class="tl-word" x="350" y="92" text-anchor="end" font-size="13" font-family="Noto Sans KR">재료</text>
+            </g>
+            <g class="tl-node" data-idx="2" style="cursor:pointer;">
+              <rect x="0" y="118" width="360" height="52" fill="transparent"/>
+              <circle class="tl-dot" cx="26" cy="148" r="9"/>
+              <text class="tl-era" x="50" y="141" font-size="12" font-family="IBM Plex Mono, monospace">2026</text>
+              <text class="tl-name" x="50" y="160" font-size="17" font-weight="700" font-family="Noto Sans KR">하네스</text>
+              <text class="tl-word" x="350" y="154" text-anchor="end" font-size="13" font-family="Noto Sans KR">구조</text>
+            </g>
+            <g class="tl-node" data-idx="3" style="cursor:pointer;">
+              <rect x="0" y="180" width="360" height="52" fill="transparent"/>
+              <circle class="tl-dot" cx="26" cy="210" r="6"/>
+              <text class="tl-era" x="50" y="203" font-size="12" font-family="IBM Plex Mono, monospace">2026 후반–</text>
+              <text class="tl-name" x="50" y="222" font-size="16" font-weight="700" font-family="Noto Sans KR">루프</text>
+              <text class="tl-word" x="350" y="216" text-anchor="end" font-size="13" font-family="Noto Sans KR">순환</text>
+            </g>
+            <g class="tl-node" data-idx="4" style="cursor:pointer;">
+              <rect x="0" y="242" width="360" height="52" fill="transparent"/>
+              <circle class="tl-dot" cx="26" cy="272" r="6" fill="none"/>
+              <text class="tl-era" x="50" y="265" font-size="12" font-family="IBM Plex Mono, monospace">NEXT</text>
+              <text class="tl-name" x="50" y="284" font-size="16" font-weight="700" font-family="Noto Sans KR">(?)</text>
+              <text class="tl-word" x="350" y="278" text-anchor="end" font-size="13" font-family="Noto Sans KR">미정</text>
+            </g>
+          </svg>
         </div>
 
         <div class="trend-split">
@@ -1851,7 +1902,8 @@
           { name:"루프", desc:"스스로 관찰하고 고치는 자기개선 에이전트. 사람은 승인 지점만 지킵니다.", tobis:"자체 개선 루프 실험 진행 중" },
           { name:"다섯 번째 규칙", desc:"반년 안에 이름이 붙습니다. 그때 필요한 실력이 또 달라집니다.", tobis:"다음 노드가 켜지는 순간, 투비는 이미 그 안에 있습니다" }
         ];
-        const nodes = document.querySelectorAll('#tlSvg .tl-node');
+        /* 데스크톱·모바일 두 SVG 를 함께 잡는다 — 한쪽만 보이지만 상태는 같이 움직인다 */
+        const nodes = document.querySelectorAll('#tlSvg .tl-node, #tlSvgM .tl-node');
         function render(active){
           nodes.forEach(g => {
             const idx = Number(g.getAttribute('data-idx'));
@@ -1884,12 +1936,12 @@
     </script>
   </section>
 
-  <!-- ============ PERSPECTIVE 03 — 코드는 부산물입니다 ============ -->
+  <!-- ============ PERSPECTIVE 03 · 개발의 변화 — 코드는 부산물입니다 ============ -->
   <section id="s1c4">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="kicker">PERSPECTIVE - 03 · 개발의 변화</div>
+        <div class="kicker">PERSPECTIVE 03 · 개발의 변화</div>
         <div class="ba-head">
           <h3>코드는 부산물입니다</h3>
           <button id="s4FlipBtn" class="badge-pill new">BEFORE · ~2025</button>
@@ -1954,12 +2006,12 @@
     </script>
   </section>
 
-  <!-- ============ PERSPECTIVE 04 — 모델은 3개월, 가장 밝은 별도 저뭅니다 ============ -->
+  <!-- ============ PERSPECTIVE 04 · 기술의 수명 — 모델은 3개월, 가장 밝은 별도 저뭅니다 ============ -->
   <section id="s1c7">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="kicker">PERSPECTIVE - 04 · 기술의 수명</div>
+        <div class="kicker">PERSPECTIVE 04 · 기술의 수명</div>
         <h3>모델은 3개월, 가장 밝은 별도 저뭅니다</h3>
         <p class="cv-lead">이번 달에만 신모델 6개. 기술은 은하의 별처럼 태어나고 저뭅니다. 그래서 투비는 모델을 고르지 않고 갈아끼웁니다.</p>
 
@@ -2237,13 +2289,13 @@
     </script>
   </section>
 
-  <!-- ============ PRODUCTS — Cover 시리즈 ============ -->
+  <!-- ============ PRODUCTS · 무엇을 파는가 (Cover 시리즈) ============ -->
   <section id="s3p">
     <canvas class="dust" aria-hidden="true"></canvas>
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">PRODUCTS — Cover 시리즈</div>
-        <h3>설계에서 심사, 지급까지 — 같은 구조 위에서</h3>
+        <div class="cv-sub">PRODUCTS · 무엇을 파는가</div>
+        <h3>설계에서 심사, 지급까지 한 구조 위에 올립니다</h3>
         <p class="cv-lead">
           업무마다 AI를 따로 만들지 않습니다. 규칙과 검증 흐름을 공유하는 한 구조 위에 올립니다 —
           기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
@@ -2259,14 +2311,14 @@
               <div class="prd-role">AI 개발 플랫폼</div>
               <p>위키가 원본이고 코드는 그 출력입니다. 규칙을 고치면 구현이 따라옵니다.
                  OKF 공용 포맷과 슬롯 구조라 모델은 갈아 끼울 수 있습니다.</p>
-              <div class="prd-more">SOLUTION 01 — 구조 보기 →</div>
+              <div class="prd-more">SOLUTION 01 · 구조 보기 →</div>
             </a>
             <a class="prd-card" href="#s3d2">
               <div class="prd-name"><i>Cover</i><b>Studio</b></div>
               <div class="prd-role">에이전트 제작 환경</div>
               <p>업무별 에이전트를 정의하고, 시험하고, 배포합니다.
                  사람이 지킬 승인 지점을 어디에 둘지도 여기서 정합니다.</p>
-              <div class="prd-more">SOLUTION 02 — 만드는 방식 보기 →</div>
+              <div class="prd-more">SOLUTION 02 · 만드는 방식 보기 →</div>
             </a>
           </div>
         </div>
@@ -2281,7 +2333,7 @@
               <div class="prd-role">가입설계 · 청약<span class="prd-stat live">실서비스</span></div>
               <p>신한라이프 LICO에서 생성형 AI 가입설계·청약을 업계 최초로 열었습니다. 2026.02.
                  별도 챗봇이 아니라 설계 화면 안에 인라인으로 들어갑니다.</p>
-              <div class="prd-more">SOLUTION 03 — 에이전트 구성 보기 →</div>
+              <div class="prd-more">SOLUTION 03 · 에이전트 구성 보기 →</div>
             </a>
             <div class="prd-card">
               <div class="prd-name"><i>Cover</i><b>UW</b></div>
@@ -2307,12 +2359,12 @@
     </div>
   </section>
 
-  <!-- ============ SOLUTION 01 — CoverLink: 위키가 원본, 코드는 출력 ============ -->
+  <!-- ============ SOLUTION 01 · 무엇으로 만드나 (CoverLink — 위키가 원본, 코드는 출력) ============ -->
   <section id="s3d1">
     <div class="cv-wrap">
       <div class="cl-hero">
         <div>
-          <div class="cl-brand">TOBIS SOLUTION</div>
+          <div class="cl-brand">SOLUTION 01 · 무엇으로 만드나</div>
           <div class="cl-name">
             <h1 class="cl-h1">커버링크</h1>
             <div class="cl-brand-en">CoverLink</div>
@@ -2383,7 +2435,7 @@
       </div>
 
       <div class="cv-block" style="margin-top:64px;">
-        <div class="cl-subh">위키 한 장에서 두 가지가 나옵니다</div>
+        <div class="cl-subh">한 장의 위키 — 두 갈래 산출물</div>
         <div class="okf-answers">
           <a class="okf-answer" href="#s3d2">
             <div class="oa-eyebrow">SOLUTION 02</div>
@@ -2413,11 +2465,11 @@
     </script>
   </section>
 
-  <!-- ============ SOLUTION 02 — 어떻게 만드나 (바이브코딩 80/20) ============ -->
+  <!-- ============ SOLUTION 02 · 어떻게 만드나 (바이브코딩 80/20) ============ -->
   <section id="s3d2">
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">SOLUTION 02 — 어떻게 만드나</div>
+        <div class="cv-sub">SOLUTION 02 · 어떻게 만드나</div>
         <h3>위키 작성만으로 <span style="color:var(--cl-mint);">80%</span>가 생성됩니다</h3>
         <p class="cv-lead">범용 코드 생성이 아닙니다. 도메인 업무 규칙 · 아키텍처 표준 · UI 컴포넌트 · 데이터 연동 규격을 자사 메타로 적재했기 때문에, 그 회사의 결과물이 나옵니다. 사람은 마지막 상세 보정에만 손을 얹습니다.</p>
 
@@ -2468,11 +2520,11 @@
     </div>
   </section>
 
-  <!-- ============ SOLUTION 03 — 무엇을 만드나 (AI 가입설계 · Multi-Agent · HITL) ============ -->
+  <!-- ============ SOLUTION 03 · 무엇을 만드나 (AI 가입설계 · Multi-Agent · HITL) ============ -->
   <section id="s3c4">
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">SOLUTION 03 — 무엇을 만드나</div>
+        <div class="cv-sub">SOLUTION 03 · 무엇을 만드나</div>
         <h3>가입설계부터, 새 업무는 '작성'으로 열립니다</h3>
         <p class="cv-lead">보험업계 최초로 생성형 AI 가입설계 모델을 적용한 경험이 그대로 CoverLink의 워크플로우가 되었습니다. 규칙과 승인은 코드가 아니라 흐름에 내장됩니다.</p>
 
@@ -2485,7 +2537,7 @@
           <div class="c last"><div class="t">사람 승인 (HITL)</div><div class="d">설계사 · 심사자 최종 확인</div></div>
         </div>
 
-        <div class="cl-subh" style="margin-top:44px;">Planner가 요청을 분석해 5개 Agent에 분담합니다</div>
+        <div class="cl-subh" style="margin-top:44px;">요청 분해 — Planner가 5개 Agent에 분담</div>
         <div class="concept-diagram" aria-hidden="true">
           <svg class="cd-desktop" viewBox="0 0 1000 476" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans KR', sans-serif">
             <rect x="388" y="6" width="224" height="34" rx="17" fill="none" stroke="currentColor" stroke-opacity=".28"/>
@@ -2624,12 +2676,12 @@
     </div>
   </section>
 
-  <!-- ============ SOLUTION 04 — 어떤 구조인가 (4-Layer + Component + Tech Stack) ============ -->
+  <!-- ============ SOLUTION 04 · 어떤 구조인가 (4-Layer + Component + Tech Stack) ============ -->
   <section id="s3c5">
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">SOLUTION 04 — 어떤 구조인가</div>
-        <h3>보험사 환경에 그대로 안착하는 4-Layer Architecture</h3>
+        <div class="cv-sub">SOLUTION 04 · 어떤 구조인가</div>
+        <h3>쓰던 스택 위에 그대로 얹힙니다</h3>
         <p class="cv-lead">Java 네이티브로 만들어 MCP 표준으로 연결합니다. 기존 금융 SI 환경에 API 기반으로 접목되며, 별도 인프라·인력이 필요 없습니다.</p>
 
         <div class="cv-val-row">
@@ -2692,11 +2744,11 @@
     </div>
   </section>
 
-  <!-- ============ SOLUTION 05 — 무엇이 달라지나 (Expected Value) ============ -->
+  <!-- ============ SOLUTION 05 · 무엇이 달라지나 (Expected Value) ============ -->
   <section id="s3c8">
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">SOLUTION 05 — 무엇이 달라지나</div>
+        <div class="cv-sub">SOLUTION 05 · 무엇이 달라지나</div>
         <h3>가입설계의 속도·품질·비용, 구조 자체가 바뀝니다</h3>
         <p class="cv-lead">변동성 큰 인력 의존 구조에서, 안정적이고 예측 가능한 AI 운영 구조로 전환됩니다.</p>
 
@@ -2724,11 +2776,11 @@
     </div>
   </section>
 
-  <!-- ============ REFERENCE — AI Track Record ============ -->
+  <!-- ============ REFERENCE · AI Track Record ============ -->
   <section id="s2">
     <div class="cv-wrap">
       <div class="cv-block">
-        <div class="cv-sub">REFERENCE — AI Track Record</div>
+        <div class="cv-sub">REFERENCE · AI Track Record</div>
         <h3>현장에서 구축한 결과로 증명합니다</h3>
         <p class="cv-lead">신한라이프, 동양생명·ABL생명, 현대모비스까지 — 앞의 변화가 실제 시스템으로 내려앉은 자리입니다.</p>
 
@@ -2790,7 +2842,7 @@
           <span>2026.02.09 · SERVICE OPEN</span>
         </div>
 
-        <div class="cl-subh">LICO에서 실증된 4개 영역 — 그대로 CoverLink에 담겨 있습니다</div>
+        <div class="cl-subh">LICO에서 실증된 4개 영역 — 그대로 CoverLink에</div>
         <div class="cv-prob-row">
           <div class="cv-prob">
             <div class="n">01 · 도메인 지식 구조화</div>
