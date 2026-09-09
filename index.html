@@ -461,6 +461,20 @@
     border-radius:10px; padding:22px 20px;
     display:flex; flex-direction:column; gap:9px;
   }
+  /* 링크가 걸린 카드 — 라인업이 뒤따르는 솔루션 섹션의 목차 역할을 한다 */
+  a.prd-card{
+    text-decoration:none; color:inherit;
+    transition:border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  a.prd-card:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); transform:translateY(-2px); }
+  a.prd-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+  .prd-more{
+    margin-top:auto; padding-top:4px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
+    letter-spacing:.06em; color:var(--blue-soft); opacity:0; transition:opacity .2s ease;
+  }
+  a.prd-card:hover .prd-more, a.prd-card:focus-visible .prd-more{ opacity:1; }
+  @media (hover:none){ .prd-more{ opacity:1; } }
   /* 접두어는 눌러 두고 뒷말만 살린다 — 시리즈라는 게 이름에서 바로 보이게 */
   .prd-name{ font-size:21px; font-weight:800; letter-spacing:-.01em; line-height:1.25; }
   .prd-name i{ font-style:normal; color:rgba(var(--text-base),.42); }
@@ -1518,8 +1532,7 @@
   <div class="header-right">
 <nav class="topmenu" id="topmenu">
   <a href="#s1c1">Perspective</a>
-  <a href="#s3d1">Solutions</a>
-  <a href="#s3p">Products</a>
+  <a href="#s3p">Solutions</a>
   <a href="#s2">Reference</a>
   <a href="#s4">Archive</a>
   <a href="#s5">Team</a>
@@ -1552,8 +1565,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
   <a href="#s1c1">Perspective</a>
-  <a href="#s3d1">Solutions</a>
-  <a href="#s3p">Products</a>
+  <a href="#s3p">Solutions</a>
   <a href="#s2">Reference</a>
   <a href="#s4">Archive</a>
   <a href="#s5">Team</a>
@@ -2193,6 +2205,77 @@
     </script>
   </section>
 
+  <!-- ============ PRODUCTS — Cover 시리즈 ============ -->
+  <section id="s3p">
+    <canvas class="dust" aria-hidden="true"></canvas>
+    <div class="cv-wrap">
+      <div class="cv-block">
+        <div class="cv-sub">PRODUCTS — Cover 시리즈</div>
+        <h3>위키 하나에서 다섯 개의 제품이 나옵니다</h3>
+        <p class="cv-lead">
+          제품마다 모델을 따로 붙이지 않습니다. 업무 규칙을 위키에 적으면 그것이 곧 제품이 됩니다 —
+          기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
+        </p>
+
+        <div class="prd-layer">
+          <div class="prd-layer-head">
+            <b>FOUNDATION</b><span>플랫폼과 제작 도구 — 나머지 전부가 이 위에서 돕니다</span>
+          </div>
+          <div class="prd-grid two">
+            <a class="prd-card" href="#s3d1">
+              <div class="prd-name"><i>Cover</i><b>Link</b></div>
+              <div class="prd-role">AI 개발 플랫폼</div>
+              <p>위키가 원본이고 코드는 그 출력입니다. 규칙을 고치면 구현이 따라옵니다.
+                 OKF 공용 포맷과 슬롯 구조라 모델은 갈아 끼울 수 있습니다.</p>
+              <div class="prd-more">SOLUTION 01 — 구조 보기 →</div>
+            </a>
+            <a class="prd-card" href="#s3d2">
+              <div class="prd-name"><i>Cover</i><b>Studio</b></div>
+              <div class="prd-role">에이전트 제작 환경</div>
+              <p>업무별 에이전트를 정의하고, 시험하고, 배포합니다.
+                 사람이 지킬 승인 지점을 어디에 둘지도 여기서 정합니다.</p>
+              <div class="prd-more">SOLUTION 02 — 만드는 방식 보기 →</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="prd-layer">
+          <div class="prd-layer-head">
+            <b>BUSINESS</b><span>보험 핵심 업무 — 20년치 도메인이 그대로 들어간 자리</span>
+          </div>
+          <div class="prd-grid three">
+            <a class="prd-card" href="#s3c4">
+              <div class="prd-name"><i>Cover</i><b>Plan</b></div>
+              <div class="prd-role">가입설계 · 청약<span class="prd-stat live">실서비스</span></div>
+              <p>신한라이프 LICO에서 생성형 AI 가입설계·청약을 업계 최초로 열었습니다. 2026.02.
+                 별도 챗봇이 아니라 설계 화면 안에 인라인으로 들어갑니다.</p>
+              <div class="prd-more">SOLUTION 03 — 에이전트 구성 보기 →</div>
+            </a>
+            <a class="prd-card" href="#s3c5">
+              <div class="prd-name"><i>Cover</i><b>UW</b></div>
+              <div class="prd-role">언더라이팅 · 심사<span class="prd-stat wip">고도화 중</span></div>
+              <p>설계와 동시에 심사를 돌리는 One-stop 흐름입니다.
+                 한도·특약·심사기준을 함께 검증해 재설계를 줄입니다.</p>
+              <div class="prd-more">SOLUTION 04 — 통합 아키텍처 보기 →</div>
+            </a>
+            <div class="prd-card">
+              <div class="prd-name"><i>Cover</i><b>Claim</b></div>
+              <div class="prd-role">보험금 청구 · 지급<span class="prd-stat plan">준비 중</span></div>
+              <p>청구 접수부터 지급 심사까지, 같은 위키 위에서 준비하고 있습니다.
+                 앞의 둘과 규칙을 공유하기 때문에 처음부터 다시 만들지 않습니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="prd-foot">
+          다섯 제품이 <b>같은 위키, 같은 하네스</b>를 씁니다. 한 업무에서 검증한 승인·검증 흐름이
+          다음 업무로 그대로 넘어가고, 모델이 바뀌어도 규칙은 남습니다.
+          아래에서 그 구조를 하나씩 봅니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ SOLUTION 01 — CoverLink: 위키가 원본, 코드는 출력 ============ -->
   <section id="s3d1">
     <div class="cv-wrap">
@@ -2606,73 +2689,6 @@
 
         <p class="cv-lead" style="margin-top:40px; max-width:700px;">정확한 정량 효과는 프로젝트 KPI로 측정되며, 산업 벤치마크와 실 도입 사례를 기준으로 산정됩니다.</p>
         <div style="margin-top:32px;"><a href="#s6" class="btn btn-primary">프로젝트 문의하기</a></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PRODUCTS — Cover 시리즈 ============ -->
-  <section id="s3p">
-    <canvas class="dust" aria-hidden="true"></canvas>
-    <div class="cv-wrap">
-      <div class="cv-block">
-        <div class="cv-sub">PRODUCTS — Cover 시리즈</div>
-        <h3>위키 하나에서 다섯 개의 제품이 나옵니다</h3>
-        <p class="cv-lead">
-          제품마다 모델을 따로 붙이지 않습니다. 업무 규칙을 위키에 적으면 그것이 곧 제품이 됩니다 —
-          기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
-        </p>
-
-        <div class="prd-layer">
-          <div class="prd-layer-head">
-            <b>FOUNDATION</b><span>플랫폼과 제작 도구 — 나머지 전부가 이 위에서 돕니다</span>
-          </div>
-          <div class="prd-grid two">
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>Link</b></div>
-              <div class="prd-role">AI 개발 플랫폼</div>
-              <p>위키가 원본이고 코드는 그 출력입니다. 규칙을 고치면 구현이 따라옵니다.
-                 OKF 공용 포맷과 슬롯 구조라 모델은 갈아 끼울 수 있습니다.</p>
-            </div>
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>Studio</b></div>
-              <div class="prd-role">에이전트 제작 환경</div>
-              <p>업무별 에이전트를 정의하고, 시험하고, 배포합니다.
-                 사람이 지킬 승인 지점을 어디에 둘지도 여기서 정합니다.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="prd-layer">
-          <div class="prd-layer-head">
-            <b>BUSINESS</b><span>보험 핵심 업무 — 20년치 도메인이 그대로 들어간 자리</span>
-          </div>
-          <div class="prd-grid three">
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>Plan</b></div>
-              <div class="prd-role">가입설계 · 청약<span class="prd-stat live">실서비스</span></div>
-              <p>신한라이프 LICO에서 생성형 AI 가입설계·청약을 업계 최초로 열었습니다. 2026.02.
-                 별도 챗봇이 아니라 설계 화면 안에 인라인으로 들어갑니다.</p>
-            </div>
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>UW</b></div>
-              <div class="prd-role">언더라이팅 · 심사<span class="prd-stat wip">고도화 중</span></div>
-              <p>설계와 동시에 심사를 돌리는 One-stop 흐름입니다.
-                 한도·특약·심사기준을 함께 검증해 재설계를 줄입니다.</p>
-            </div>
-            <div class="prd-card">
-              <div class="prd-name"><i>Cover</i><b>Claim</b></div>
-              <div class="prd-role">보험금 청구 · 지급<span class="prd-stat plan">준비 중</span></div>
-              <p>청구 접수부터 지급 심사까지, 같은 위키 위에서 준비하고 있습니다.
-                 앞의 둘과 규칙을 공유하기 때문에 처음부터 다시 만들지 않습니다.</p>
-            </div>
-          </div>
-        </div>
-
-        <p class="prd-foot">
-          다섯 제품이 <b>같은 위키, 같은 하네스</b>를 씁니다. 한 업무에서 검증한 승인·검증 흐름이
-          다음 업무로 그대로 넘어가고, 모델이 바뀌어도 규칙은 남습니다.
-          <a href="#s3d1" style="color:var(--blue-soft);">CoverLink 구조 보기 →</a>
-        </p>
       </div>
     </div>
   </section>
