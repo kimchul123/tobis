@@ -524,16 +524,22 @@
   .ba-mini-wrap .ba-arrow{ align-self:center; }
   .ba-arrow{ text-align:center; color:var(--blue-soft); font-size:22px; }
 
-  .trend-track-grid{ margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  .trend-track-card{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:12px; padding:22px 24px; }
-  .trend-track-card .tt-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-  .trend-track-card .tt-client{ font-size:12.5px; color:rgba(var(--text-base),.5); margin-bottom:4px; }
-  .trend-track-card .tt-name{ font-size:19px; font-weight:700; margin-bottom:16px; }
-  .trend-track-card .tt-block{ background:rgba(var(--text-base),.04); border-radius:8px; padding:14px 16px; margin-bottom:12px; }
-  .trend-track-card .tt-label{ font-size:11px; color:var(--text-faint); margin-bottom:6px; }
-  .trend-track-card .tt-value{ font-size:13.5px; font-weight:700; }
-  .trend-track-card .tt-arrow{ text-align:center; color:var(--text-faint); font-size:14px; margin:2px 0; }
-  .trend-track-card p{ font-size:12.5px; color:rgba(var(--text-base),.55); line-height:1.6; margin-top:4px; }
+  .trend-track-grid{ margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .trend-track-card{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:12px; padding:20px 22px; }
+  .trend-track-card .tt-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .trend-track-card .tt-name{ font-size:18px; font-weight:700; }
+  .trend-track-card .tt-name span{ font-size:12.5px; font-weight:400; color:rgba(var(--text-base),.5); margin-left:9px; }
+  /* '세상의 변화 → 투비가 한 일'을 한 줄로 눕힌다 — 상자 둘을 겹쳐 쌓던 자리 */
+  .trend-track-card .tt-flow{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    margin:14px 0 12px; padding:11px 0; font-size:13px;
+    border-top:1px solid rgba(var(--text-base),.10);
+    border-bottom:1px solid rgba(var(--text-base),.10);
+  }
+  .trend-track-card .tt-flow .from{ color:rgba(var(--text-base),.55); }
+  .trend-track-card .tt-flow .ar{ color:var(--blue-soft); font-family:'IBM Plex Mono', monospace; }
+  .trend-track-card .tt-flow .to{ font-weight:700; color:var(--white); }
+  .trend-track-card p{ font-size:12.5px; color:rgba(var(--text-base),.55); line-height:1.6; }
 
   .okf-pipeline{ margin-top:40px; max-width:640px; margin-left:auto; margin-right:auto; }
   /* s3d1 — 1단 · 파이프라인 가로 한 줄 · 세로 리듬 */
@@ -994,7 +1000,16 @@
      성과·사람이 나오는 두 장만 강조 톤으로 눌러 준다. */
 
   /* SOLUTION 01–04 · ARCHIVE — 한 단계 올린 바닥 */
-  #s3d1, #s3d2, #s3c4, #s3c5, #s4, #s3p{ background:var(--panel-deep); }
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:var(--panel-deep); }
+
+  /* 강조 ③ PRODUCTS — 제품이 처음 나오는 장.
+     s3c8 의 다크 밴드를 되풀이하지 않고, 패널 톤 위에 브랜드 틴트만 얹어 장을 연다. */
+  #s3p{
+    background:
+      radial-gradient(1100px 520px at 12% -10%, rgba(26,135,254,.17), transparent 62%),
+      radial-gradient(860px 440px at 92% 104%,  rgba(23,195,178,.12), transparent 60%),
+      var(--panel-deep);
+  }
 
   /* 강조 ① SOLUTION 05 — 성과가 나오는 장 */
   #s3c8{
@@ -1282,7 +1297,7 @@
     border-color:rgba(14,20,32,.10);
     box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04);
   }
-  .trend-track-card .tt-block{ background:#F3F7FC; border-color:rgba(14,20,32,.08); box-shadow:none; }
+  .trend-track-card .tt-flow{ border-top-color:rgba(14,20,32,.10); border-bottom-color:rgba(14,20,32,.10); }
   .okf-box{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 1px 2px rgba(15,95,214,.06), 0 10px 30px rgba(15,95,214,.07); }
   .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
   .okf-output-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
@@ -1320,7 +1335,7 @@
   /* ---------- 밝은 배경에서 흐려지는 보조 텍스트 보정 ---------- */
   .cl-desc, .close-sub, .cv-lead, .okf-caption, .cl-wf .d,
   .trend-track-card p, .pa-lead, .sec-desc, .team-statement{ color:rgba(14,20,32,.62); }
-  .cl-brand-en, .cl-meta, .tt-label, .mc-date, .pa-entry-date{ color:rgba(14,20,32,.45); }
+  .cl-brand-en, .cl-meta, .mc-date, .pa-entry-date{ color:rgba(14,20,32,.45); }
 
   /* 카드가 아닌 것들 — 배경 없이 색만 */
   .pa-stat span{ color:rgba(14,20,32,.5); }
@@ -1411,7 +1426,16 @@
      성과(#s3c8)와 사람(#s5) 두 장은 임팩트 ②의 다크 밴드로 눌러 준다. */
 
   /* SOLUTION 01–04 · ARCHIVE — 한 단계 내린 바닥 (카드가 흰색이므로 바닥을 낮춰야 카드가 산다) */
-  #s3d1, #s3d2, #s3c4, #s3c5, #s4, #s3p{ background:#EBF1F9; }
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:#EBF1F9; }
+
+  /* 강조 ③ PRODUCTS — 다크 밴드는 s3c8 하나로 남기고, 여기는 밝은 브랜드 틴트로 포인트를 준다.
+     솔루션 다섯 장이 같은 #EBF1F9 로 이어지던 자리라, 장이 열리는 지점이 보이지 않았다. */
+  #s3p{
+    background:
+      radial-gradient(1100px 520px at 12% -10%, rgba(15,95,214,.14), transparent 62%),
+      radial-gradient(860px 440px at 92% 104%,  rgba(11,122,109,.10), transparent 60%),
+      linear-gradient(170deg,#FFFFFF 0%,#E9F1FB 58%,#F3F8FD 100%);
+  }
 
   /* 강조 ② TEAM — 결론 장과 같은 다크 밴드 (CI 의 다크 배경 활용안 범위) */
   #s5{
@@ -2211,9 +2235,9 @@
     <div class="cv-wrap">
       <div class="cv-block">
         <div class="cv-sub">PRODUCTS — Cover 시리즈</div>
-        <h3>위키 하나에서 다섯 개의 제품이 나옵니다</h3>
+        <h3>설계에서 심사, 지급까지 — 같은 구조 위에서</h3>
         <p class="cv-lead">
-          제품마다 모델을 따로 붙이지 않습니다. 업무 규칙을 위키에 적으면 그것이 곧 제품이 됩니다 —
+          업무마다 AI를 따로 만들지 않습니다. 규칙과 검증 흐름을 공유하는 한 구조 위에 올립니다 —
           기반 하나, 만드는 도구 하나, 그리고 보험의 핵심 업무 셋.
         </p>
 
@@ -2241,7 +2265,7 @@
 
         <div class="prd-layer">
           <div class="prd-layer-head">
-            <b>BUSINESS</b><span>보험 핵심 업무 — 20년치 도메인이 그대로 들어간 자리</span>
+            <b>BUSINESS</b><span>보험 핵심 업무 — 현장 규칙이 그대로 들어간 자리</span>
           </div>
           <div class="prd-grid three">
             <a class="prd-card" href="#s3c4">
@@ -2711,16 +2735,9 @@
               <span class="badge-pill new">오픈</span>
               <span class="mc-date" style="margin:0;">2025.05 ~ 2026.02</span>
             </div>
-            <div class="tt-client">신한라이프</div>
-            <div class="tt-name">LICO 구축</div>
-            <div class="tt-block">
-              <div class="tt-label">세상의 변화</div>
-              <div class="tt-value">컨텍스트 → 하네스</div>
-            </div>
-            <div class="tt-arrow">↓</div>
-            <div class="tt-block">
-              <div class="tt-label">투비가 한 일</div>
-              <div class="tt-value">영업 현장 AI, 도메인 지식 내장</div>
+            <div class="tt-name">LICO 구축 <span>신한라이프</span></div>
+            <div class="tt-flow">
+              <span class="from">컨텍스트 → 하네스</span><span class="ar">⟶</span><span class="to">영업 현장 AI, 도메인 지식 내장</span>
             </div>
             <p>업계 최초 자연어 기반 가입설계 AI 에이전트 시스템 도입 및 실 서비스 가동.</p>
           </div>
@@ -2729,16 +2746,9 @@
               <span class="badge-pill prog">진행 중</span>
               <span class="mc-date" style="margin:0;">2026.06 ~ 2027.03</span>
             </div>
-            <div class="tt-client">신한라이프</div>
-            <div class="tt-name">AX HUB</div>
-            <div class="tt-block">
-              <div class="tt-label">세상의 변화</div>
-              <div class="tt-value">하네스</div>
-            </div>
-            <div class="tt-arrow">↓</div>
-            <div class="tt-block">
-              <div class="tt-label">투비가 한 일</div>
-              <div class="tt-value">사내 AI 허브, 승인 · 거버넌스 흐름</div>
+            <div class="tt-name">AX HUB <span>신한라이프</span></div>
+            <div class="tt-flow">
+              <span class="from">하네스</span><span class="ar">⟶</span><span class="to">사내 AI 허브, 승인 · 거버넌스 흐름</span>
             </div>
             <p>다양한 영업 채널의 AI 활용을 단일화하고 지능화하는 채널 허브 시스템 구축.</p>
           </div>
@@ -2747,16 +2757,9 @@
               <span class="badge-pill prog">진행 중</span>
               <span class="mc-date" style="margin:0;">2026.09 ~ 2027.10</span>
             </div>
-            <div class="tt-client">동양생명 / ABL생명</div>
-            <div class="tt-name">AI 통합 추진</div>
-            <div class="tt-block">
-              <div class="tt-label">세상의 변화</div>
-              <div class="tt-value">하네스 + 규제 HITL</div>
-            </div>
-            <div class="tt-arrow">↓</div>
-            <div class="tt-block">
-              <div class="tt-label">투비가 한 일</div>
-              <div class="tt-value">양사 인프라 · 금융 프로세스 AI 통합</div>
+            <div class="tt-name">AI 통합 추진 <span>동양생명 / ABL생명</span></div>
+            <div class="tt-flow">
+              <span class="from">하네스 + 규제 HITL</span><span class="ar">⟶</span><span class="to">양사 인프라 · 금융 프로세스 AI 통합</span>
             </div>
             <p>양사의 인프라 및 금융 프로세스를 아우르는 선도적 AI 통합 프로젝트 진행 중.</p>
           </div>
@@ -2765,16 +2768,9 @@
               <span class="badge-pill new">오픈</span>
               <span class="mc-date" style="margin:0;">2025.06 ~ 2026.02</span>
             </div>
-            <div class="tt-client">현대모비스</div>
-            <div class="tt-name">견적시스템 AI</div>
-            <div class="tt-block">
-              <div class="tt-label">세상의 변화</div>
-              <div class="tt-value">스펙 주도</div>
-            </div>
-            <div class="tt-arrow">↓</div>
-            <div class="tt-block">
-              <div class="tt-label">투비가 한 일</div>
-              <div class="tt-value">제조 견적, 도메인 룰 → AI</div>
+            <div class="tt-name">견적시스템 AI <span>현대모비스</span></div>
+            <div class="tt-flow">
+              <span class="from">스펙 주도</span><span class="ar">⟶</span><span class="to">제조 견적, 도메인 룰 → AI</span>
             </div>
             <p>복잡한 부품 및 공정 견적 산출 프로세스를 혁신하는 AI 기반 자동화 시스템 구축.</p>
           </div>
