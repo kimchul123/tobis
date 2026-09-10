@@ -454,7 +454,15 @@
 
   /* ---------- PRODUCTS — Cover 시리즈 ---------- */
   .prd-layer{ margin-top:34px; }
-  .prd-layer + .prd-layer{ margin-top:30px; }
+  .prd-layer + .prd-layer{ margin-top:22px; }
+  /* 기반 둘은 판 위에 얹는다 — '이 위에 나머지가 올라간다'가 배경으로 보이게.
+     업무 셋은 바닥에 그대로 두어 두 층이 갈린다. */
+  .prd-layer.base{
+    padding:20px 20px 22px; border-radius:14px;
+    background:rgba(26,135,254,.06); border:1px solid rgba(26,135,254,.20);
+  }
+  .prd-layer.base .prd-layer-head{ border-bottom-color:rgba(26,135,254,.24); }
+  .prd-layer.base .prd-card{ background:rgba(var(--text-base),.07); }
   .prd-layer-head{
     display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
     padding-bottom:10px; margin-bottom:16px; border-bottom:1px solid var(--line-deep);
@@ -1331,6 +1339,9 @@
   #s2 .proof-open{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 8px 24px rgba(15,95,214,.06); }
   .tag-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
   .prd-card{ background:#FFFFFF; border-color:rgba(14,20,32,.10); box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04); }
+  .prd-layer.base{ background:rgba(15,95,214,.05); border-color:rgba(15,95,214,.16); }
+  .prd-layer.base .prd-layer-head{ border-bottom-color:rgba(15,95,214,.20); }
+  .prd-layer.base .prd-card{ background:#FFFFFF; }
   .badge-pill{ background:#FFFFFF; }
   .galaxy-detail{ background:#FFFFFF; box-shadow:0 8px 24px rgba(15,95,214,.06); }
   .cl-wf .c.last{ background:#FFF8EC; border-color:#E3C489; }
@@ -1951,7 +1962,7 @@
         </div>
       </div>
 
-        <div class="prd-layer">
+        <div class="prd-layer base">
           <div class="prd-layer-head">
             <b>제품 다섯</b><span>기반 둘, 보험 핵심 업무 셋</span>
           </div>
