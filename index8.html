@@ -83,7 +83,7 @@ body{
 /* 로고 | 가운데 메뉴 | 문의 버튼 — 양끝을 잡고 메뉴를 가운데 둔다 */
 .nav-in{ display:flex; align-items:center; gap:28px; }
 .nav .mark{ display:block; height:30px; flex:none;
-  /* 상단바는 position:absolute 로 다크 히어로 위에만 얹히므로 색은 한 벌이면 된다 */
+  /* 기본은 다크 히어로 위. 흰 본문으로 올라오면 .nav.solid 가 색을 뒤집는다 */
   --lg-t:#4FA4FF; --lg-ink:#FFFFFF; --lg-ax:#4FA4FF; --lg-tag:rgba(255,255,255,.72); }
 .nav .mark svg{ height:100%; width:auto; display:block; overflow:visible; }
 .nav-links{ display:flex; gap:30px; margin-left:auto; }
@@ -279,6 +279,71 @@ body{
   .mk-steps{ grid-template-columns:1fr; }
 }
 
+/* ================= 4-Layer · 기술 스택 ================= */
+.lyr{ margin-top:22px; border:1px solid var(--rule); border-radius:14px; overflow:hidden; }
+.lyr > div{ display:grid; grid-template-columns:210px 1fr; gap:18px; padding:15px 20px; border-bottom:1px solid var(--rule-2); }
+.lyr > div:last-child{ border-bottom:none; }
+.lyr > div:nth-child(odd){ background:var(--paper-2); }
+.lyr .n{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; color:var(--blue-ink); letter-spacing:.01em; }
+.lyr .v{ font-size:13.5px; line-height:1.7; color:var(--ink-2); }
+
+.stack{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+.stk{ border:1px solid var(--rule); border-radius:14px; padding:18px 18px 14px; background:var(--paper); }
+.stk .k{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3); padding-bottom:11px; border-bottom:1px solid var(--rule-2); }
+.stk .r{ display:grid; grid-template-columns:118px 1fr; gap:12px; padding:9px 0; font-size:12.5px; line-height:1.6; border-bottom:1px solid var(--rule-2); }
+.stk .r:last-child{ border-bottom:none; padding-bottom:0; }
+.stk .r b{ font-weight:700; color:var(--ink); }
+.stk .r span{ color:var(--ink-3); }
+
+/* ================= 에이전트 카드 ================= */
+.agents{ display:grid; grid-template-columns:repeat(5,1fr); gap:11px; margin-top:20px; }
+.agt{ border:1px solid var(--rule); border-radius:13px; padding:17px 15px; background:var(--paper); }
+.agt .n{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.07em; color:var(--blue-ink); }
+.agt .t{ margin-top:11px; font-size:14px; font-weight:700; letter-spacing:-.02em; }
+.agt .d{ margin-top:6px; font-size:12.5px; line-height:1.65; color:var(--ink-3); }
+
+/* Planner 가 위에서 5갈래로 분담하는 그림 */
+.planner{ margin-top:22px; border:1px solid rgba(26,135,254,.30); background:#EEF5FF; border-radius:14px; padding:18px 20px; }
+.planner .k{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink); }
+.planner .t{ margin-top:8px; font-size:15.5px; font-weight:800; letter-spacing:-.022em; }
+.planner .d{ margin-top:6px; font-size:13px; line-height:1.7; color:var(--ink-2); max-width:62ch; }
+.fan{ display:block; margin:14px auto 0; width:100%; max-width:520px; height:26px; }
+
+/* ================= 3단 통제 (Pre / During / Post) ================= */
+.ctrl{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px; }
+.ct{ border:1px solid var(--rule); border-radius:14px; padding:19px 18px; background:var(--paper-2); }
+.ct.mid{ border-color:rgba(245,165,36,.42); background:#FEF8EC; }
+.ct .n{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.13em; color:var(--ink-3); }
+.ct.mid .n{ color:#A8570A; }
+.ct .t{ margin-top:10px; font-size:14.5px; font-weight:800; letter-spacing:-.022em; }
+.ct .d{ margin-top:8px; font-size:12.8px; line-height:1.7; color:var(--ink-3); }
+
+/* ================= Before / After ================= */
+.ba{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:22px; }
+.bax{ border:1px solid var(--rule); border-radius:14px; overflow:hidden; background:var(--paper); }
+.bax .k{ padding:13px 18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--blue-ink); background:var(--paper-2); border-bottom:1px solid var(--rule-2); }
+.bax .r{ padding:14px 18px; border-bottom:1px solid var(--rule-2); }
+.bax .r:last-child{ border-bottom:none; }
+.bax .r .w{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:.1em; color:var(--ink-3); }
+.bax .r.aft .w{ color:var(--teal-ink); }
+.bax .r .v{ margin-top:6px; font-size:13.5px; line-height:1.7; color:var(--ink-2); }
+.bax .r.aft{ background:#F1FBF9; }
+.bax .r.aft .v{ color:var(--ink); font-weight:600; }
+
+@media (max-width:960px){
+  .agents{ grid-template-columns:repeat(3,1fr); }
+  .stack{ grid-template-columns:1fr; }
+  .lyr > div{ grid-template-columns:1fr; gap:5px; }
+}
+@media (max-width:680px){
+  .agents{ grid-template-columns:1fr; }
+  .ctrl{ grid-template-columns:1fr; }
+  .ba{ grid-template-columns:1fr; }
+  .stk .r{ grid-template-columns:1fr; gap:2px; }
+}
+
 /* ================= 실적 — 에디토리얼 그리드 ================= */
 .feat{ padding-bottom:26px; border-bottom:1px solid var(--rule); }
 .feat .when{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--blue-ink); font-weight:600; }
@@ -470,6 +535,7 @@ body{
       <div class="nav-links">
         <a href="#products">제품</a>
         <a href="#how">구조</a>
+        <a href="#build">업무</a>
         <a href="#proof">성과</a>
         <a href="#archive">프로젝트</a>
         <a href="#people">사람</a>
@@ -632,20 +698,168 @@ body{
             <div class="slots"><span>Java</span><span>C#</span><span>.NET</span><span>Python</span><span>JS/TS</span></div>
           </div>
         </div>
+
+        <!-- 어떤 구조인가 — 쓰던 스택 위에 얹힌다 -->
+        <div class="mk">
+          <div class="mk-h">그리고 <em>쓰던 스택 위에 그대로 얹힙니다.</em></div>
+          <p class="mk-d">
+            Java 네이티브로 만들어 MCP 표준으로 연결합니다. 기존 금융 SI 환경에 API로 접목되기 때문에
+            <b>별도 인프라도, 파이썬 인력도 필요하지 않습니다.</b> 지금 운영팀이 그대로 운영합니다.
+          </p>
+
+          <div class="lyr">
+            <div><div class="n">L1 · User Interface</div><div class="v">자연어 채팅 · 결과 시각화 · 상품·특약 정보 조회</div></div>
+            <div><div class="n">L2 · AI Agent Layer</div><div class="v">Planner + 5 Specialist Agents · Multi-Agent Orchestration</div></div>
+            <div><div class="n">L3 · Domain Knowledge</div><div class="v">Knowledge Base · Guardrails · 언더라이팅·선심사 체크. 업무 위키가 여기에 적재됩니다</div></div>
+            <div><div class="n">L4 · MCP Integration</div><div class="v">Gateway · Tool · Skill · 표준 프로토콜로 기간계·CRM 등 기존 시스템과 연결</div></div>
+          </div>
+
+          <div class="stack">
+            <div class="stk">
+              <div class="k">AI Orchestrator · Spring Boot</div>
+              <div class="r"><b>Controller</b><span>Entry Point · Auth · WebSocket/SSE</span></div>
+              <div class="r"><b>Orchestrator</b><span>Routing · Context · MCP Client</span></div>
+              <div class="r"><b>Cache</b><span>세션·설정 캐시 (Redis)</span></div>
+              <div class="r"><b>Intent Agent</b><span>1·2차 의도분류 · Few-shot</span></div>
+            </div>
+            <div class="stk">
+              <div class="k">Domain Agents · MCP Server</div>
+              <div class="r"><b>Agent A</b><span>Single Instance · 단순 조회</span></div>
+              <div class="r"><b>Agent B</b><span>Dual Instance · 기본 업무</span></div>
+              <div class="r"><b>Agent C</b><span>Multi Instance · 복잡 연산</span></div>
+              <div class="r"><b>ACC</b><span>LLM 설정 · 프롬프트 버전 관리</span></div>
+            </div>
+            <div class="stk">
+              <div class="k">Tech Stack</div>
+              <div class="r"><b>Language</b><span>Java 25 LTS</span></div>
+              <div class="r"><b>Framework</b><span>Spring Boot 4.x · Spring AI 2.x</span></div>
+              <div class="r"><b>LLM</b><span>오픈소스 LLM</span></div>
+              <div class="r"><b>DB / Cache</b><span>PostgreSQL+pgVector · Redis</span></div>
+              <div class="r"><b>Deploy</b><span>On-Prem / VPC 자체 호스팅</span></div>
+            </div>
+          </div>
+
+          <p class="tile-note">모델은 슬롯입니다. 세대교체는 교체 작업일 뿐, 재구축이 아닙니다.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 실적 ============ -->
+  <!-- ============ 무엇을 만드나 ============ -->
+  <section class="chap" id="build">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">Agents</div>
+        <h2>AI가 혼자 결정하지 않습니다</h2>
+        <p>보험은 틀리면 사람의 계약이 틀어집니다. 그래서 승인은 끝까지 사람이 합니다.</p>
+      </aside>
+      <div>
+        <div class="lede">업무는 코드가 아니라<br>흐름으로 짜입니다.</div>
+        <p class="body-t">
+          업계 최초로 생성형 AI 가입설계를 적용하며 만든 흐름이 그대로 제품이 되었습니다.
+          규칙과 승인이 코드 안에 흩어져 있지 않고 <b>흐름 자체에 박혀 있습니다.</b>
+          그래서 새 업무를 열 때 개발이 아니라 작성으로 시작합니다.
+        </p>
+
+        <div class="mk-steps" style="margin-top:26px;">
+          <div class="mk-step"><span class="n">01</span><div class="t">고객 정보 · 니즈</div><div class="d">상담 입력 · 보유계약</div></div>
+          <div class="mk-step"><span class="n">02</span><div class="t">설계 초안 생성</div><div class="d">상품 · 특약 조합 산출</div></div>
+          <div class="mk-step"><span class="n">03</span><div class="t">심사 규칙 검증</div><div class="d">인수 기준 · 한도 자동 점검</div></div>
+          <div class="mk-step"><span class="n">04</span><div class="t">근거 제시</div><div class="d">규정 근거를 함께 표시</div></div>
+          <div class="mk-step hl"><span class="n">05</span><span class="who man">사람</span><div class="t">최종 승인 (HITL)</div><div class="d">설계사 · 심사자가 확인</div></div>
+        </div>
+
+        <!-- Planner + 5 Agents -->
+        <div class="planner">
+          <div class="k">Planner · 오케스트레이터</div>
+          <div class="t">한 문장으로 들어온 요청을 다섯으로 쪼갭니다</div>
+          <div class="d">
+            설계사가 평소 쓰는 말로 요청하면 Planner가 워크플로우를 짜서 다섯 개의 전문 에이전트에 나눠 맡기고,
+            결과를 다시 하나로 모읍니다. 병렬로 돌기 때문에 검증이 늘어도 대기 시간이 늘지 않습니다.
+          </div>
+          <svg class="fan" viewBox="0 0 520 26" aria-hidden="true">
+            <g fill="none" stroke="#1A87FE" stroke-opacity=".38" stroke-width="1.4">
+              <path d="M260,0 C260,14 40,10 40,26"/>
+              <path d="M260,0 C260,14 150,12 150,26"/>
+              <path d="M260,0 L260,26"/>
+              <path d="M260,0 C260,14 370,12 370,26"/>
+              <path d="M260,0 C260,14 480,10 480,26"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="agents">
+          <div class="agt"><div class="n">01 · NLU</div><div class="t">자연어 이해</div><div class="d">고객정보·질병·담보를 확인하고 요청 의도를 파악합니다.</div></div>
+          <div class="agt"><div class="n">02 · PRODUCT</div><div class="t">상품 추천</div><div class="d">성별·연령 패턴에 채널 영업전략과 질병심사 결과를 반영합니다.</div></div>
+          <div class="agt"><div class="n">03 · PLAN</div><div class="t">설계 추천·수정</div><div class="d">보장분석 기반 추천, 특약 추가·삭제와 보험료 수정을 처리합니다.</div></div>
+          <div class="agt"><div class="n">04 · RULE</div><div class="t">룰 체크</div><div class="d">관계규칙·가입한도·보험료 정합성을 동시에 검증합니다.</div></div>
+          <div class="agt"><div class="n">05 · MGMT</div><div class="t">에이전트 관리</div><div class="d">모델·프롬프트·모니터링 등 운영 전반을 통제합니다.</div></div>
+        </div>
+
+        <!-- 3단 통제 -->
+        <div class="mk">
+          <div class="mk-h">통제는 <em>세 지점에서 걸립니다.</em></div>
+          <p class="mk-d">
+            AI가 자율로 판단하는 구간을 남겨두지 않았습니다. 들어올 때 막고, 도중에 사람이 끊고, 끝나면 남깁니다.
+          </p>
+          <div class="ctrl">
+            <div class="ct">
+              <div class="n">PRE</div>
+              <div class="t">Built-in Guardrails</div>
+              <div class="d">금칙어 · 개인정보 · 프롬프트 인젝션을 입력 단계에서 강제 차단합니다.</div>
+            </div>
+            <div class="ct mid">
+              <div class="n">DURING</div>
+              <div class="t">Custom HITL Checkpoints</div>
+              <div class="d">보험사가 직접 정한 검수 지점에서 고위험 행위는 반드시 사람이 승인합니다. 최종 판단은 언제나 사람의 몫입니다.</div>
+            </div>
+            <div class="ct">
+              <div class="n">POST</div>
+              <div class="t">Audit Trail</div>
+              <div class="d">모든 판단의 근거를 단계별로 남깁니다. 사후 감사와 규제 대응에 그대로 씁니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 무엇이 달라지나 + 실적 ============ -->
   <section class="chap" id="proof">
     <div class="wrap chap-in">
       <aside class="chap-label">
         <div class="kick">In service</div>
         <h2>실서비스에 성공했습니다</h2>
-        <p>많은 AI 과제가 시연에서 멈춥니다. 여기 있는 것들은 실제 고객이 매일 씁니다.</p>
+        <p>속도·품질·비용이 어떻게 달라지는지, 그리고 그게 실제로 돌아가고 있다는 증거입니다.</p>
       </aside>
       <div>
-        <div class="feat">
+        <div class="lede">달라지는 건 속도만이<br>아닙니다.</div>
+        <p class="body-t">
+          변동성 큰 인력 의존 구조에서 <b>예측 가능한 운영 구조로</b> 넘어갑니다.
+          건수가 늘어도 비용이 따라 늘지 않고, 사람이 바뀌어도 품질이 흔들리지 않습니다.
+        </p>
+
+        <div class="ba">
+          <div class="bax">
+            <div class="k">Speed</div>
+            <div class="r"><div class="w">Before</div><div class="v">시·일 단위 처리, 매니저 응답 대기</div></div>
+            <div class="r aft"><div class="w">After</div><div class="v">분 단위 즉시 산출, 24/7 무제한 처리</div></div>
+          </div>
+          <div class="bax">
+            <div class="k">Quality</div>
+            <div class="r"><div class="w">Before</div><div class="v">설계사·매니저 역량 편차, 사후 적발형 검증</div></div>
+            <div class="r aft"><div class="w">After</div><div class="v">보장분석 기반 일관된 품질, 재설계율 감소</div></div>
+          </div>
+          <div class="bax">
+            <div class="k">Cost</div>
+            <div class="r"><div class="w">Before</div><div class="v">변동비 · 가입설계 건수에 비례해 증가</div></div>
+            <div class="r aft"><div class="w">After</div><div class="v">고정비 · 처리량이 늘어도 비용은 안정</div></div>
+          </div>
+        </div>
+
+        <p class="tile-note">정량 효과는 프로젝트 KPI로 측정합니다. 위 표는 방향이지 수치 약속이 아닙니다.</p>
+
+        <div class="feat" style="margin-top:clamp(46px,6vw,68px); padding-top:clamp(38px,5vw,54px); border-top:1px solid var(--rule-2);">
           <div class="when">2026.02 · SERVICE OPEN</div>
           <h3>신한라이프 LICO —<br>생성형 AI 가입설계 · 청약</h3>
           <p>
