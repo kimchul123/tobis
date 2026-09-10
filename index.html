@@ -3155,6 +3155,21 @@
     });
   })();
 
+  // 첫 로드 시 URL 해시로 이동
+  // scroller 가 별도 스크롤 컨테이너라 브라우저 기본 해시 이동이 먹지 않는다.
+  // 외부 페이지(newlogo.html)의 메뉴가 index.html#s5 같은 딥링크를 걸기 때문에 필요.
+  (function(){
+    const id = (location.hash || '').slice(1);
+    if(!id) return;
+    window.addEventListener('load', function(){
+      const scroller = document.getElementById('scroller');
+      const target = document.getElementById(id);
+      if(!scroller || !target || !scroller.contains(target)) return;
+      const top = scroller.scrollTop + target.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      scroller.scrollTo({ top, behavior:'auto' });
+    });
+  })();
+
   // mobile hamburger menu
   (function(){
     const hamburger = document.getElementById('hamburger');

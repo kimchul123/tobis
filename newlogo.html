@@ -43,15 +43,41 @@ body{
 
 /* ---------- 좌측 라벨 + 우측 본문 ---------- */
 .sheet{ display:grid; grid-template-columns:270px 1fr; gap:clamp(28px,5vw,64px); padding:72px 0 96px; align-items:start; }
-.side{ position:sticky; top:44px; }
+.side{ position:sticky; top:86px; }
 .side .k{ font-size:19px; font-weight:800; letter-spacing:-.03em; }
 .side .n{ margin-top:10px; font-size:clamp(26px,3vw,34px); font-weight:800; line-height:1.22; letter-spacing:-.035em; color:var(--blue); }
 .side .sub{ margin-top:14px; font-size:13px; line-height:1.75; color:var(--ink-3); }
-.side .back{ display:inline-flex; align-items:center; gap:7px; margin-top:20px; font-size:13px; font-weight:600;
-  color:var(--blue-ink); text-decoration:none; border:1px solid var(--rule); border-radius:999px; padding:7px 15px 7px 12px;
-  transition:border-color .18s ease, background .18s ease; }
-.side .back:hover{ border-color:var(--blue); background:#F4F9FF; }
-.side .back:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+/* ---------- 상단 헤더 — 본 사이트와 같은 구조 ---------- */
+.site-head{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.head-in{ display:flex; align-items:center; gap:20px; height:62px; }
+.head-mark{ display:block; height:30px; flex:none;
+  --w-t:#1A87FE; --w-ink:#2B2B2B; --w-ax:#1A87FE; --w-tag:rgba(43,43,43,.72); }
+.head-mark svg{ height:100%; width:auto; display:block; overflow:visible; }
+.head-nav{ margin-left:auto; display:flex; align-items:center; gap:22px; }
+.head-nav a{
+  font-size:13.5px; font-weight:600; color:var(--ink-2); text-decoration:none;
+  letter-spacing:-.01em; transition:color .16s ease;
+}
+.head-nav a:hover{ color:var(--ink); }
+.head-nav a[aria-current="page"]{ color:var(--blue-ink); }
+.head-nav a:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:3px; }
+.head-home{
+  display:inline-flex; align-items:center; gap:6px;
+  border:1px solid var(--rule); border-radius:999px; padding:7px 14px 7px 11px;
+  font-size:13px; font-weight:600; color:var(--blue-ink); text-decoration:none;
+  transition:border-color .16s ease, background .16s ease;
+}
+.head-home:hover{ border-color:var(--blue); background:#F4F9FF; }
+.head-home:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+@media (max-width:860px){
+  .head-nav{ display:none; }
+  .head-in{ height:56px; }
+}
 
 .blk + .blk{ margin-top:64px; padding-top:56px; border-top:1px solid var(--rule-2); }
 h2{ margin:0; font-size:19px; font-weight:800; letter-spacing:-.028em; }
@@ -165,6 +191,24 @@ footer b{ color:var(--ink-2); }
   </symbol>
 </defs></svg>
 
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="head-mark" href="index.html" aria-label="TOBE AX 홈으로">
+      <svg viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+    </a>
+    <nav class="head-nav">
+      <a href="newlogo.html" aria-current="page">Identity</a>
+      <a href="index.html#s1c1">Perspective</a>
+      <a href="index.html#s3p">Solutions</a>
+      <a href="index.html#s2">Reference</a>
+      <a href="index.html#s4">Archive</a>
+      <a href="index.html#s5">Team</a>
+      <a href="index.html#s6">Contact</a>
+    </nav>
+    <a class="head-home" href="index.html">&larr; 홈으로</a>
+  </div>
+</header>
+
 <div class="wrap">
 <div class="sheet">
 
@@ -172,7 +216,6 @@ footer b{ color:var(--ink-2); }
     <div class="k">CI 소개</div>
     <div class="n">To Be<br>AI Transformation</div>
     <p class="sub">투비AX · TOBE AX<br>(구 (주)투비아이에스컨설팅)</p>
-    <a class="back" href="index.html">&larr; 홈으로</a>
   </aside>
 
   <main>
