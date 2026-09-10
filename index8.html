@@ -58,11 +58,28 @@ body{
 .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; }
 .wrap{ width:min(1240px, calc(100% - 48px)); margin:0 auto; }
 
-/* ================= 상단 바 ================= */
+/* ================= 상단 바 — 화면에 고정 ================= */
 .nav{
-  position:absolute; top:0; left:0; right:0; z-index:20;
-  padding:26px 0;
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  padding:22px 0;
+  border-bottom:1px solid transparent;
+  transition:background .25s ease, padding .25s ease,
+             border-color .25s ease, box-shadow .25s ease;
 }
+/* 흰 본문 위로 올라오면 배경과 글자색을 뒤집는다.
+   히어로를 벗어났는지는 하단 스크립트에서 .solid 로 표시한다. */
+.nav.solid{
+  padding:12px 0;
+  background:rgba(255,255,255,.90);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  border-bottom-color:var(--rule);
+  box-shadow:0 8px 24px rgba(17,20,24,.05);
+}
+.nav.solid .mark{ --lg-t:#1A87FE; --lg-ink:#2B2B2B; --lg-ax:#1A87FE; --lg-tag:rgba(43,43,43,.72); }
+.nav.solid .nav-links a{ color:var(--ink-2); }
+.nav.solid .nav-links a:hover{ color:var(--ink); }
+.nav.solid .nav-cta{ color:var(--ink); border-color:var(--rule); }
+.nav.solid .nav-cta:hover{ background:rgba(17,20,24,.05); border-color:var(--ink-3); }
 /* 로고 | 가운데 메뉴 | 문의 버튼 — 양끝을 잡고 메뉴를 가운데 둔다 */
 .nav-in{ display:flex; align-items:center; gap:28px; }
 .nav .mark{ display:block; height:30px; flex:none;
@@ -120,7 +137,7 @@ body{
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .hero p{
-  margin:30px 0 0; max-width:46ch;
+  margin:30px 0 0; max-width:58ch;   /* 46ch 이면 PC 에서 두 줄로 접힌다(한 줄에 612px 필요) */
   font-size:clamp(16px,1.5vw,19px); line-height:1.75; color:var(--night-ink-2);
 }
 .hero-cta{ margin-top:44px; display:flex; flex-wrap:wrap; gap:12px; }
@@ -140,12 +157,17 @@ body{
   display:grid; grid-template-columns:repeat(4,1fr); gap:0;
   border-top:1px solid var(--night-rule);
 }
-.stats div{ padding:22px 20px 0 0; }
+.stats a{ display:block; padding:22px 20px 0 0; text-decoration:none; color:inherit;
+  border-top:2px solid transparent; margin-top:-1px;
+  transition:border-color .2s ease, background .2s ease; }
+.stats a:hover{ border-top-color:#4FA4FF; background:linear-gradient(180deg,rgba(79,164,255,.10),transparent 70%); }
+.stats a:hover span{ color:rgba(242,245,250,.85); }
+.stats a:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; border-radius:4px; }
 .stats b{ display:block; font-size:clamp(26px,3vw,36px); font-weight:800; letter-spacing:-.03em; }
 .stats span{ display:block; margin-top:6px; font-size:13px; color:rgba(242,245,250,.55); }
 
 /* ================= 장(章) — 왼쪽 고정 라벨 ================= */
-.chap{ padding:clamp(78px,11vh,132px) 0; }
+.chap{ padding:clamp(78px,11vh,132px) 0; scroll-margin-top:72px; }  /* 고정 상단바에 제목이 가리지 않게 */
 .chap + .chap{ border-top:1px solid var(--rule-2); }
 .chap-in{ display:grid; grid-template-columns:270px 1fr; gap:clamp(28px,5vw,72px); align-items:start; }
 .chap-label{ position:sticky; top:48px; }
@@ -469,10 +491,10 @@ body{
     </div>
 
     <div class="stats">
-      <div><b>47</b><span>수행 프로젝트</span></div>
-      <div><b>25</b><span>금융·기관 파트너</span></div>
-      <div><b>2012</b><span>법인 설립</span></div>
-      <div><b>2026.02</b><span>업계 최초 실서비스</span></div>
+      <a href="#archive"><b>47</b><span>수행 프로젝트</span></a>
+      <a href="#archive"><b>25</b><span>금융·기관 파트너</span></a>
+      <a href="#archive"><b>2012</b><span>법인 설립</span></a>
+      <a href="#proof"><b>2026.02</b><span>업계 최초 실서비스</span></a>
     </div>
   </div>
 </header>
@@ -669,8 +691,8 @@ body{
       </aside>
       <div>
         <div class="filters" id="afilters">
-          <button class="on" data-r="all" type="button">전체</button>
-          <button data-r="2026" type="button">2026</button>
+          <button data-r="all" type="button">전체</button>
+          <button class="on" data-r="2026" type="button">2026</button>
           <button data-r="2025-2022" type="button">2025–2022</button>
           <button data-r="2021-2016" type="button">2021–2016</button>
           <button data-r="2015-2012" type="button">2015–2012</button>
@@ -1040,8 +1062,33 @@ body{
     [].forEach.call(f.querySelectorAll('button'),function(x){ x.classList.remove('on'); });
     b.classList.add('on'); apply(b.dataset.r);
   });
-  apply('all');
+  apply('2026');   /* 기본 선택은 최신 연도 */
 })();
 </script>
+
+<script>
+/* 상단바: 히어로를 벗어나면 흰 배경으로 뒤집는다.
+   .nav 이 position:fixed 라 다크 히어로를 지나면 흰 본문 위에 얹히기 때문. */
+(function(){
+  var nav = document.querySelector('.nav');
+  var hero = document.querySelector('.hero');
+  if(!nav || !hero) return;
+  var ticking = false;
+  function apply(){
+    ticking = false;
+    var past = window.scrollY > (hero.offsetHeight - nav.offsetHeight - 8);
+    nav.classList.toggle('solid', past);
+  }
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(apply);
+  }
+  apply();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+})();
+</script>
+
 </body>
 </html>
