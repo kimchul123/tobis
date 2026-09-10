@@ -1,4 +1,4 @@
-# 투비(TOBIS) 홈페이지 구조 v3 — as-built
+# 투비AX(TOBE AX) 홈페이지 구조 v3 — as-built
 > `index.html` 실제 구현 기준 · 2026.09.09
 > 배포: https://kimchul123.github.io/tobis/ · 저장소 `kimchul123/tobis`
 >
@@ -130,11 +130,11 @@ REFERENCE      · AI Track Record    SOLUTION 04 · 어떤 구조인가
 
 우하단 런처(Aurora Spark — 3색 그라디언트 + 회전하는 오로라 링) → 대화 패널.
 
-**백엔드 연결 지점은 `window.TobisChat` 하나다.**
+**백엔드 연결 지점은 `window.TobeChat` 하나다.**
 
 ```javascript
-window.TobisChat.endpoint = 'https://api.2bis-consulting.com/rag/chat';
-window.TobisChat.headers  = { 'X-Api-Key': '...' };
+window.TobeChat.endpoint = 'https://api.2bis-consulting.com/rag/chat';
+window.TobeChat.headers  = { 'X-Api-Key': '...' };
 ```
 
 | 방향 | 형식 |
@@ -235,3 +235,32 @@ URL      https://kimchul123.github.io/tobis/
 ---
 
 *Last updated 2026.09.09 · index.html 기준*
+
+---
+
+## 사명 변경 — TOBE AX (2026-09-10 확정)
+
+| 항목 | 값 |
+|---|---|
+| 국문 | 투비AX |
+| 영문 | TOBE AX |
+| 법인 등기명 | (주)투비AX (구 (주)투비아이에스컨설팅) |
+| 도메인 | tobeax.io — **구입 예정, 아직 미확보** |
+| 로고 | **별도 제작 예정** — 현재 base64 로고는 구 TOBIS 마크 |
+
+기존 TOBIS는 *TO Be Intelligent Systems*의 약자였으므로,
+TOBE AX는 어근 "TO BE"를 그대로 승계한다. 새 로고 브리프에 사용 가능.
+
+### 적용 완료
+- 전 파일 `TOBIS` → `TOBE AX` (문구·타이틀·카피라이트·로고 alt)
+- 챗봇 명칭 전 파일 `Cover 어시스턴트`로 통일
+  — `TOBE AI` / `TOBE AX`가 한 글자 차이라 충돌하기 때문
+- RAG 연결 지점 `window.TobisChat` → `window.TobeChat`
+- 테마 저장 키 `tobis-theme` → `tobeax-theme`
+- 구 사명은 푸터·챗봇 회사소개의 `(구 …)` 병기로만 잔존
+
+### 미적용 (대기)
+- **이메일**: `@2bis-consulting.com` 28곳 유지.
+  tobeax.io 미구입 상태라 지금 바꾸면 열리지 않는 주소가 노출됨.
+  도메인 확보 즉시 일괄 교체.
+- **로고 이미지**: 신규 CI 제작물 수령 후 교체 (1안 2개 · 2안 1개).

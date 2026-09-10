@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToBIS Consulting — AI Native Finance</title>
+<title>투비AX (TOBE AX) — 보험·금융 AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -638,7 +638,7 @@
   .cl-hero{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
   .cl-brand{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.24em; color:var(--blue); font-weight:700; }
   /* SOLUTION 01 의 아이브로는 나머지 다섯 장(.cv-sub)과 같은 규격으로 맞춘다.
-     .24em 트래킹은 'TOBIS SOLUTION' 같은 영문 전용 값이라 한글이 늘어져 보인다. */
+     .24em 트래킹은 'TOBE AX SOLUTION' 같은 영문 전용 값이라 한글이 늘어져 보인다. */
   #s3d1 .cl-brand{ font-size:13.5px; letter-spacing:.02em; color:var(--blue-soft); font-weight:600; }
   .cl-h1{ font-size:clamp(40px,6vw,60px); line-height:1.05; margin:14px 0 6px; font-weight:800; letter-spacing:-.02em; }
   .cl-brand-en{ font-family:'IBM Plex Mono',monospace; font-size:clamp(14px,1.8vw,18px); letter-spacing:.22em; color:var(--text-faint); margin-bottom:22px; }
@@ -1077,7 +1077,7 @@
 
   /* ================================================================
      AI 어시스턴트 — 우하단 런처 + 대화 패널
-     답변을 만드는 쪽은 window.TobisChat 어댑터 하나로 모아 뒀다(하단 스크립트 주석).
+     답변을 만드는 쪽은 window.TobeChat 어댑터 하나로 모아 뒀다(하단 스크립트 주석).
      ================================================================ */
   .sr-only{
     position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -1569,7 +1569,7 @@
   /* 페인트 전에 저장된 테마를 복원한다 — 깜빡임 방지 */
   (function(){
     try{
-      if(localStorage.getItem('tobis-theme') === 'light'){
+      if(localStorage.getItem('tobeax-theme') === 'light'){
         document.documentElement.setAttribute('data-theme','light');
         document.getElementById('themeLight').media = 'all';
       }
@@ -1581,7 +1581,7 @@
 
 <div class="header-bar">
   <div class="header-inner">
-<a class="brandmark" id="brandmark" href="#s1" aria-label="홈으로 이동"><img class="logo-white" src="data:image/png;base64,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" alt="TOBIS"><img class="logo-dark" src="data:image/png;base64,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" alt="TOBIS"></a>
+<a class="brandmark" id="brandmark" href="#s1" aria-label="홈으로 이동"><img class="logo-white" src="data:image/png;base64,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" alt="TOBE AX"><img class="logo-dark" src="data:image/png;base64,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" alt="TOBE AX"></a>
   <div class="header-right">
 <nav class="topmenu" id="topmenu">
   <a href="#s1c1">Perspective</a>
@@ -1664,16 +1664,16 @@
     </div>
     <div class="hero-content">
       <div class="kicker"><i></i>AI CONSULTING FOR INSURANCE & FINANCE</div>
-      <h1 class="hero-h">금융의 새로운 표준<br><em>AI Native로 완성하다</em></h1>
-      <p class="hero-sub">보험·금융 업무를 20년간 설계해 온 사람들이 AI의 가장 안쪽에 있습니다 — 투비아이에스컨설팅.</p>
+      <h1 class="hero-h">업무를 아는 사람이 만드는<br><em>AI는 다릅니다</em></h1>
+      <p class="hero-sub">보험·금융 업무를 20년간 설계해 온 사람들이 AI의 가장 안쪽에 있습니다 — 투비AX.</p>
       <div class="pillars">
-        <a href="#s1c1"><b>보험 도메인 20년</b><small>영업채널 · 가입설계<br>2012년부터 46개 프로젝트</small></a>
+        <a href="#s1c1"><b>보험 도메인 20년</b><small>영업채널 · 가입설계<br>2012년부터 47개 프로젝트</small></a>
         <a href="#s2"><b>업계 최초 레퍼런스</b><small>생성형 AI 가입설계<br>신한라이프 LICO 실서비스</small></a>
         <a href="#s3d1"><b>자사 AI 플랫폼</b><small>CoverLink<br>위키가 원본, 코드는 출력</small></a>
         <a href="#s3d1"><b>모델 비종속 구조</b><small>OKF 공용 포맷 · 슬롯 구조<br>플랫폼 그대로, 모델만 교체</small></a>
       </div>
       <div class="hero-stats">
-        <a href="#s4" style="text-decoration:none; color:inherit; display:block;"><b>46+</b><small>누적 프로젝트 수행</small></a>
+        <a href="#s4" style="text-decoration:none; color:inherit; display:block;"><b>47+</b><small>누적 프로젝트 수행</small></a>
         <a href="#s2" style="text-decoration:none; color:inherit; display:block;"><b>4+</b><small>AI프로젝트 수행</small></a>
         <a href="#s4" style="text-decoration:none; color:inherit; display:block;"><b>25+</b><small>함께한 금융·기관 파트너</small></a>
         <a href="#s2" style="text-decoration:none; color:inherit; display:block;"><b>2026.02</b><small>신한라이프 LICO 실서비스</small></a>
@@ -2888,10 +2888,10 @@
     <div class="pa-wrap">
       <div class="sol-tag">Project Archive</div>
       <h2 class="sec-title light">우리가 걸어온 모든 프로젝트</h2>
-      <p class="pa-lead">2012년 법인 설립 이후 지금까지, 금융권 영업 시스템 구축부터 최근의 생성형 AI 프로젝트까지 — 투비아이에스컨설팅이 수행해 온 프로젝트의 발자취입니다.</p>
+      <p class="pa-lead">2012년 법인 설립 이후 지금까지, 금융권 영업 시스템 구축부터 최근의 생성형 AI 프로젝트까지 — 투비AX가 수행해 온 프로젝트의 발자취입니다.</p>
 
       <div class="pa-stat-row">
-        <div class="pa-stat"><b>46+</b><span>프로젝트 수행</span></div>
+        <div class="pa-stat"><b>47+</b><span>프로젝트 수행</span></div>
         <div class="pa-stat"><b>25+</b><span>함께한 금융·기관 파트너</span></div>
         <div class="pa-stat"><b>2012</b><span>법인 설립</span></div>
       </div>
@@ -3097,8 +3097,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <div>회사명 (주)투비아이에스컨설팅 · 대표 주상언 · 사업자번호 105-87-79763 · 주소 서울특별시 영등포구 선유로 49길 23, 401호</div>
-        <div class="copy">COPYRIGHT © 2026 TOBIS. ALL RIGHT RESERVED.</div>
+        <div>회사명 (주)투비AX (구 (주)투비아이에스컨설팅) · 대표 주상언 · 사업자번호 105-87-79763 · 주소 서울특별시 영등포구 선유로 49길 23, 401호</div>
+        <div class="copy">COPYRIGHT © 2026 TOBE AX. ALL RIGHT RESERVED.</div>
       </div>
     </div>
   </div>
@@ -3358,14 +3358,14 @@
     btn.addEventListener('click', function(){
       var light = root.getAttribute('data-theme') !== 'light';
       paint(light);
-      try{ localStorage.setItem('tobis-theme', light ? 'light' : 'dark'); }catch(e){}
+      try{ localStorage.setItem('tobeax-theme', light ? 'light' : 'dark'); }catch(e){}
     });
   })();
 </script>
 
 <!-- ============ AI 어시스턴트 ============ -->
 <button class="chat-fab" id="chatFab" type="button"
-        aria-label="TOBIS AI 어시스턴트 열기" aria-expanded="false" aria-controls="chatPanel">
+        aria-label="Cover 어시스턴트 열기" aria-expanded="false" aria-controls="chatPanel">
   <svg class="cf-open" viewBox="0 0 24 24" width="25" height="25" aria-hidden="true">
     <path d="M12 2.4l1.85 4.9 4.9 1.85-4.9 1.85L12 15.9l-1.85-4.9L5.25 9.15l4.9-1.85L12 2.4Z" fill="#ffffff"/>
     <circle cx="18.7" cy="18.1" r="2" fill="#EAFFF8"/>
@@ -3385,7 +3385,7 @@
       </svg>
     </div>
     <div class="chat-id">
-      <b id="chatTitle">TOBIS AI</b>
+      <b id="chatTitle">Cover 어시스턴트</b>
       <span class="chat-status"><i aria-hidden="true"></i>온라인 · 보통 1분 내 응답</span>
     </div>
     <button class="chat-close" id="chatClose" type="button" aria-label="대화창 닫기">
@@ -3416,14 +3416,14 @@
 
 <script>
 /* ================================================================
-   TOBIS AI 어시스턴트
+   Cover 어시스턴트
 
-   백엔드(RAG)를 붙이는 지점은 window.TobisChat 하나뿐이다.
+   백엔드(RAG)를 붙이는 지점은 window.TobeChat 하나뿐이다.
    이 스크립트보다 먼저든 나중이든, 아래 중 하나만 채우면 바로 연결된다.
 
    1) 엔드포인트만 지정 — 가장 간단한 길
-        window.TobisChat.endpoint = 'https://api.example.com/rag/chat';
-        window.TobisChat.headers  = { 'X-Api-Key': '...' };   // 선택
+        window.TobeChat.endpoint = 'https://api.example.com/rag/chat';
+        window.TobeChat.headers  = { 'X-Api-Key': '...' };   // 선택
 
       보내는 것 (POST, application/json)
         { message: "질문",
@@ -3438,7 +3438,7 @@
                              data: [DONE]
 
    2) 호출 자체를 갈아끼우기 — 인증·스트리밍을 직접 다루고 싶을 때
-        window.TobisChat.send = async (message, history, ctx) => {
+        window.TobeChat.send = async (message, history, ctx) => {
           ctx.onDelta('부분 응답');            // 스트리밍이면 조각마다 호출
           return { answer:'최종 답변', sources:[{title:'출처', url:'#s2'}] };
         };
@@ -3456,7 +3456,7 @@
   var sendB  = document.getElementById('chatSend');
   if(!fab || !panel) return;
 
-  var CFG = window.TobisChat = window.TobisChat || {};
+  var CFG = window.TobeChat = window.TobeChat || {};
   if(CFG.endpoint     === undefined) CFG.endpoint = null;
   if(CFG.headers      === undefined) CFG.headers = {};
   if(CFG.timeout      === undefined) CFG.timeout = 25000;
@@ -3465,12 +3465,12 @@
   var history = [];      /* 대화는 메모리에만 둔다 — 저장하지 않는다 */
   var busy = false;
 
-  var GREETING = '안녕하세요, TOBIS AI 어시스턴트입니다.\n보험·금융 AI 도입과 저희 솔루션에 대해 무엇이든 물어보세요.';
+  var GREETING = '안녕하세요, Cover 어시스턴트입니다.\n보험·금융 AI 도입과 저희 솔루션에 대해 무엇이든 물어보세요.';
 
   /* ---------- 로컬 FAQ — RAG 연결 전까지의 임시 지식 ---------- */
   var KB = [
     { k:['회사','소개','투비','tobis','어떤 회사','설립','규모','연혁'],
-      a:'**(주)투비아이에스컨설팅**은 2012년 설립 이후 보험·금융 영업시스템을 만들어 온 회사입니다.\n· 누적 46개 프로젝트 · 함께한 금융/기관 파트너 25곳\n· 20년치 보험 도메인(영업채널·가입설계·청약·언더라이팅)이 그대로 자산입니다.',
+      a:'**(주)투비AX**(구 투비아이에스컨설팅)는 2012년 설립 이후 보험·금융 영업시스템을 만들어 온 회사입니다.\n· 누적 47개 프로젝트 · 함께한 금융/기관 파트너 25곳\n· 20년치 보험 도메인(영업채널·가입설계·청약·언더라이팅)이 그대로 자산입니다.',
       s:[{t:'프로젝트 아카이브', u:'#s4'},{t:'팀 소개', u:'#s5'}] },
 
     { k:['도입','시작','어떻게 시작','컨설팅','절차','로드맵','단계','poc'],
@@ -3498,7 +3498,7 @@
       s:[{t:'Solutions', u:'#s3c5'}] },
 
     { k:['실적','프로젝트','레퍼런스','사례','고객사','파트너'],
-      a:'2012년부터 46개 프로젝트를 수행했습니다. 최근에는 신한라이프 AX HUB·LICO 고도화, NH손해보험 비대면채널, 동양생명 GEN AI 가입설계, 현대모비스 견적시스템 AI 등이 진행 중입니다.',
+      a:'2012년부터 47개 프로젝트를 수행했습니다. 최근에는 신한라이프 AX HUB·LICO 고도화, NH손해보험 비대면채널, 동양생명 GEN AI 가입설계, 현대모비스 견적시스템 AI 등이 진행 중입니다.',
       s:[{t:'Archive', u:'#s4'}] },
 
     /* '프로젝트 문의'는 실적 항목의 '프로젝트'와 겹친다 — 구(句)를 통째로 키워드에 넣어 이긴다 */
@@ -3676,7 +3676,7 @@
       if(typing.parentNode) typing.remove();
       var el = addMsg('bot', '연결에 문제가 있어 답변을 가져오지 못했습니다.\n잠시 후 다시 시도하시거나 02-717-2204 로 연락 주세요.');
       el.classList.add('err');
-      if(window.console) console.warn('[TobisChat]', err);
+      if(window.console) console.warn('[TobeChat]', err);
     }).then(function(){
       setBusy(false);
       if(panel.classList.contains('open')) input.focus();
@@ -3690,7 +3690,7 @@
     panel.removeAttribute('inert');
     fab.classList.add('open');
     fab.setAttribute('aria-expanded', 'true');
-    fab.setAttribute('aria-label', 'TOBIS AI 어시스턴트 닫기');
+    fab.setAttribute('aria-label', 'Cover 어시스턴트 닫기');
     setTimeout(function(){ input.focus(); }, 180);
   }
   function close(){
@@ -3698,7 +3698,7 @@
     panel.setAttribute('inert', '');
     fab.classList.remove('open');
     fab.setAttribute('aria-expanded', 'false');
-    fab.setAttribute('aria-label', 'TOBIS AI 어시스턴트 열기');
+    fab.setAttribute('aria-label', 'Cover 어시스턴트 열기');
     fab.focus();
   }
   fab.addEventListener('click', function(){
