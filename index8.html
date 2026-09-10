@@ -397,6 +397,71 @@ body{
 .close .eyebrow{ color:rgba(242,245,250,.6); }
 
 /* ================= 꼬리말 ================= */
+/* ================= 문의 — 폼 + 오시는 길 ================= */
+.ct-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,52px);
+  margin-top:clamp(44px,6vw,64px); align-items:start;
+}
+.ct-form .fl{ display:block; margin-bottom:16px; }
+.ct-form .fl > span{
+  display:block; font-size:12.5px; font-weight:600; letter-spacing:.01em;
+  color:rgba(242,245,250,.62); margin-bottom:7px;
+}
+.ct-form .fl > span i{ font-style:normal; color:#6FE7D6; margin-left:3px; }
+.ct-form input, .ct-form textarea{
+  width:100%; font-family:inherit; font-size:14.5px; color:var(--night-ink);
+  background:rgba(242,245,250,.05); border:1px solid var(--night-rule);
+  border-radius:11px; padding:13px 15px; line-height:1.6;
+  transition:border-color .18s ease, background .18s ease;
+}
+.ct-form textarea{ resize:vertical; min-height:112px; }
+.ct-form input::placeholder, .ct-form textarea::placeholder{ color:rgba(242,245,250,.32); }
+.ct-form input:focus, .ct-form textarea:focus{
+  outline:none; border-color:#4FA4FF; background:rgba(79,164,255,.08);
+}
+.ct-form button{
+  margin-top:6px; width:100%; cursor:pointer; font-family:inherit;
+  font-size:15px; font-weight:700; letter-spacing:-.01em;
+  color:var(--night); background:var(--night-ink);
+  border:0; border-radius:999px; padding:15px 28px;
+  transition:opacity .18s ease, transform .18s ease;
+}
+.ct-form button:hover{ opacity:.86; }
+.ct-form button:active{ transform:translateY(1px); }
+.ct-form button:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; }
+
+.ct-visit .vh{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:rgba(242,245,250,.55);
+}
+.ct-map{ display:block; margin-top:12px; border-radius:13px; overflow:hidden; border:1px solid var(--night-rule); }
+.ct-map img{ display:block; width:100%; height:auto; }
+.ct-addr{ margin-top:18px; font-size:13.5px; line-height:1.8; color:rgba(242,245,250,.72); }
+.ct-addr b{ display:block; color:var(--night-ink); font-weight:700; font-size:14.5px; margin-bottom:5px; }
+.ct-addr a{ color:var(--night-ink); text-decoration:none; border-bottom:1px solid var(--night-rule); }
+.ct-addr a:hover{ border-bottom-color:#4FA4FF; }
+.ct-tf{ display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:9px; align-items:center; }
+.ct-tf .bd{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700;
+  border:1px solid var(--night-rule); border-radius:5px; padding:2px 6px;
+  color:rgba(242,245,250,.6);
+}
+.ct-nav{
+  display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+  font-size:13.5px; font-weight:600; color:var(--night-ink); text-decoration:none;
+  border:1px solid var(--night-rule); border-radius:999px; padding:9px 17px 9px 12px;
+  transition:border-color .18s ease, background .18s ease;
+}
+.ct-nav:hover{ border-color:rgba(242,245,250,.42); background:rgba(242,245,250,.06); }
+.ct-nav .nb{
+  width:19px; height:19px; border-radius:4px; background:#03C75A; color:#fff;
+  font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none;
+}
+
+@media (max-width:860px){
+  .ct-grid{ grid-template-columns:1fr; }
+}
+
 .foot{ background:var(--night-2); color:rgba(242,245,250,.62); padding:40px 0 52px; font-size:13px; }
 .foot-in{ display:flex; flex-wrap:wrap; gap:16px 40px; justify-content:space-between; align-items:flex-end; }
 .foot b{ color:rgba(242,245,250,.86); font-weight:600; }
@@ -1028,9 +1093,36 @@ body{
     <div class="eyebrow">Contact</div>
     <h2>업무에 AI를<br>얹으려면</h2>
     <p>어느 업무부터 시작할지, 무엇을 위키로 적어야 할지부터 함께 봅니다. 현업 화면 한 곳을 골라 4~8주 PoC로 시작하는 방식을 가장 많이 씁니다.</p>
-    <div class="hero-cta">
-      <a class="btn solid" href="mailto:contact@2bis-consulting.com">메일 보내기</a>
-      <a class="btn line" href="tel:0271722204">02-717-2204</a>
+
+    <div class="ct-grid">
+      <form class="ct-form" id="ctForm" novalidate>
+        <label class="fl" for="ct-name"><span>이름<i>*</i></span>
+          <input id="ct-name" type="text" name="name" autocomplete="name" required></label>
+        <label class="fl" for="ct-phone"><span>연락처<i>*</i></span>
+          <input id="ct-phone" type="tel" name="phone" autocomplete="tel" required></label>
+        <label class="fl" for="ct-email"><span>Email<i>*</i></span>
+          <input id="ct-email" type="email" name="email" autocomplete="email" required></label>
+        <label class="fl" for="ct-msg"><span>문의내용<i>*</i></span>
+          <textarea id="ct-msg" name="message" rows="4" required placeholder="어떤 업무를 AI로 옮기고 싶으신지 적어 주세요."></textarea></label>
+        <button type="submit">문의하기</button>
+      </form>
+
+      <div class="ct-visit">
+        <div class="vh">오시는 길</div>
+        <a class="ct-map" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%98%81%EB%93%B1%ED%8F%AC%EA%B5%AC%20%EC%84%A0%EC%9C%A0%EB%A1%9C%2049%EA%B8%B8%2023%20%EC%95%84%EC%9D%B4%EC%97%90%EC%8A%A4%EB%B9%84%EC%A6%88%ED%83%80%EC%9B%8C%202%EC%B0%A8/place/32713854" target="_blank" rel="noopener" aria-label="네이버 지도에서 보기">
+          <img src="assets/map.jpg" width="1280" height="500" alt="투비AX 본사 위치 지도" loading="lazy">
+        </a>
+        <div class="ct-addr">
+          <b>본사</b>
+          서울특별시 영등포구 선유로 49길 23<br>아이에스비즈타워 2차 401호
+          <div class="ct-tf">
+            <span class="bd">T</span><a href="tel:0271722204">02-717-2204</a>
+            <span class="bd">F</span><span>02-717-2206</span>
+          </div>
+          <div style="margin-top:9px;">영업대표 이소연 팀장 · <a href="mailto:soyeonida@2bis-consulting.com">soyeonida@2bis-consulting.com</a></div>
+        </div>
+        <a class="ct-nav" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%98%81%EB%93%B1%ED%8F%AC%EA%B5%AC%20%EC%84%A0%EC%9C%A0%EB%A1%9C%2049%EA%B8%B8%2023%20%EC%95%84%EC%9D%B4%EC%97%90%EC%8A%A4%EB%B9%84%EC%A6%88%ED%83%80%EC%9B%8C%202%EC%B0%A8/place/32713854" target="_blank" rel="noopener"><span class="nb">N</span> 지도보기</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1313,6 +1405,30 @@ body{
   apply();
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
+})();
+</script>
+
+
+<script>
+/* 문의 폼 — 백엔드가 없으므로 입력값을 메일 본문으로 조립해 메일 앱을 연다.
+   index.html 의 contactForm 과 같은 방식. */
+(function(){
+  var form = document.getElementById('ctForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!form.reportValidity()) return;
+    var d = new FormData(form);
+    var name = (d.get('name') || '').toString().trim();
+    var phone = (d.get('phone') || '').toString().trim();
+    var email = (d.get('email') || '').toString().trim();
+    var msg = (d.get('message') || '').toString().trim();
+    var subject = encodeURIComponent('[프로젝트 문의] ' + name);
+    var body = encodeURIComponent(
+      '이름: ' + name + '\n연락처: ' + phone + '\nEmail: ' + email + '\n\n문의내용:\n' + msg
+    );
+    window.location.href = 'mailto:contact@2bis-consulting.com?subject=' + subject + '&body=' + body;
+  });
 })();
 </script>
 
