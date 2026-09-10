@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>투비AX — TOBIS AX</title>
+<meta name="description" content="보험 업무를 20년간 설계해 온 사람들이 만드는 AI. 투비AX.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   투비AX — EDITORIAL EDITION
+   단일 모드. 다크/라이트 토글 없음.
+   구조: 다크 히어로 밴드 + 화이트 본문 + 다크 푸터.
+   레이아웃의 축은 '왼쪽에 고정되는 장 제목 + 오른쪽으로 흐르는 내용'.
+   CI: #1A87FE(Primary) · #2B2B2B(Secondary). 보조로 teal/violet.
+   ============================================================ */
+
+:root{
+  --ink:#111418;
+  --ink-2:#3D4654;          /* 본문 */
+  --ink-3:#6B7789;          /* 라벨·캡션 */
+  --paper:#FFFFFF;
+  --paper-2:#F5F7FA;
+  --rule:rgba(17,20,24,.13);
+  --rule-2:rgba(17,20,24,.07);
+
+  --blue:#1A87FE;           /* CI Primary */
+  --blue-ink:#0F5FD6;       /* 작은 글자용 — 흰 배경 5.8:1 */
+  --teal:#17C3B2;
+  --teal-ink:#0B7A6D;
+  --violet:#7C5CFC;
+
+  --night:#0A1020;
+  --night-2:#0E1626;
+  --night-ink:#F2F5FA;
+  --night-ink-2:rgba(242,245,250,.72);
+  --night-rule:rgba(242,245,250,.18);
+
+  color-scheme:light;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif;
+  font-size:16px; line-height:1.7; letter-spacing:-.01em;
+  word-break:keep-all; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; }
+.wrap{ width:min(1240px, calc(100% - 48px)); margin:0 auto; }
+
+/* ================= 상단 바 ================= */
+.nav{
+  position:absolute; top:0; left:0; right:0; z-index:20;
+  padding:26px 0;
+}
+.nav-in{ display:flex; align-items:center; gap:36px; }
+.nav .mark{ display:block; height:24px; }
+.nav .mark img{ height:100%; width:auto; display:block; }
+.nav-links{ display:flex; gap:28px; margin-left:8px; }
+.nav-links a{
+  font-size:14.5px; font-weight:500; color:rgba(242,245,250,.78);
+  text-decoration:none; transition:color .18s ease;
+}
+.nav-links a:hover{ color:#fff; }
+.nav-cta{
+  margin-left:auto; display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:600; color:var(--night-ink); text-decoration:none;
+  border:1px solid var(--night-rule); border-radius:999px; padding:9px 20px;
+  transition:background .2s ease, border-color .2s ease;
+}
+.nav-cta:hover{ background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.45); }
+
+/* ================= 히어로 ================= */
+.hero{
+  position:relative; overflow:hidden;
+  background:var(--night); color:var(--night-ink);
+  padding:clamp(150px,20vh,210px) 0 clamp(84px,12vh,130px);
+}
+/* clova 의 구(球) 대신, 화면을 가로지르는 넓은 오로라 — 같은 인상, 다른 형태 */
+.hero::before{
+  content:""; position:absolute; inset:-20% -10% auto -10%; height:150%;
+  background:
+    radial-gradient(48vw 42vw at 18% 18%, rgba(26,135,254,.42), transparent 62%),
+    radial-gradient(44vw 38vw at 78% 8%,  rgba(124,92,252,.34), transparent 60%),
+    radial-gradient(52vw 40vw at 62% 92%, rgba(23,195,178,.26), transparent 62%);
+  filter:blur(10px); pointer-events:none;
+}
+.hero .wrap{ position:relative; z-index:1; }
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500;
+  letter-spacing:.22em; text-transform:uppercase; color:rgba(242,245,250,.6);
+}
+.hero h1{
+  margin:26px 0 0; font-weight:800;
+  font-size:clamp(44px,8.2vw,104px); line-height:1.04; letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(96deg,#7FC0FF 0%,#B7A6FF 48%,#6FE7D6 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p{
+  margin:30px 0 0; max-width:46ch;
+  font-size:clamp(16px,1.5vw,19px); line-height:1.75; color:var(--night-ink-2);
+}
+.hero-cta{ margin-top:44px; display:flex; flex-wrap:wrap; gap:12px; }
+.btn{
+  display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+  font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px;
+  transition:transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.btn.solid{ background:#fff; color:var(--night); }
+.btn.solid:hover{ transform:translateY(-2px); }
+.btn.line{ color:var(--night-ink); border:1px solid var(--night-rule); }
+.btn.line:hover{ border-color:rgba(255,255,255,.5); background:rgba(255,255,255,.08); }
+
+/* 히어로 하단 지표 */
+.stats{
+  position:relative; z-index:1; margin-top:clamp(56px,8vh,92px);
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  border-top:1px solid var(--night-rule);
+}
+.stats div{ padding:22px 20px 0 0; }
+.stats b{ display:block; font-size:clamp(26px,3vw,36px); font-weight:800; letter-spacing:-.03em; }
+.stats span{ display:block; margin-top:6px; font-size:13px; color:rgba(242,245,250,.55); }
+
+/* ================= 장(章) — 왼쪽 고정 라벨 ================= */
+.chap{ padding:clamp(78px,11vh,132px) 0; }
+.chap + .chap{ border-top:1px solid var(--rule-2); }
+.chap-in{ display:grid; grid-template-columns:270px 1fr; gap:clamp(28px,5vw,72px); align-items:start; }
+.chap-label{ position:sticky; top:48px; }
+.chap-label .kick{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--blue-ink);
+}
+.chap-label h2{
+  margin:14px 0 0; font-size:clamp(30px,3.6vw,44px); font-weight:800;
+  line-height:1.16; letter-spacing:-.035em;
+}
+.chap-label p{ margin:16px 0 0; font-size:14.5px; line-height:1.75; color:var(--ink-3); max-width:26ch; }
+
+.lede{ font-size:clamp(20px,2.3vw,27px); line-height:1.5; font-weight:600; letter-spacing:-.028em; max-width:22ch; }
+.body-t{ margin:22px 0 0; max-width:56ch; color:var(--ink-2); }
+.body-t b{ color:var(--ink); font-weight:700; }
+
+/* ================= 제품 타일 ================= */
+.tiles{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.tile{
+  position:relative; border-radius:18px; overflow:hidden; text-decoration:none;
+  color:#fff; min-height:186px; padding:26px 26px 24px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  transition:transform .25s ease;
+}
+.tile:hover{ transform:translateY(-4px); }
+.tile.wide{ grid-column:span 2; min-height:214px; }
+.tile .g{ position:absolute; inset:0; z-index:0; }
+.tile.t1 .g{ background:linear-gradient(128deg,#0F5FD6 0%,#1A87FE 46%,#7C5CFC 100%); }
+.tile.t2 .g{ background:linear-gradient(128deg,#5B45C9 0%,#7C5CFC 52%,#1A87FE 100%); }
+.tile.t3 .g{ background:linear-gradient(128deg,#0F5FD6 0%,#1A87FE 44%,#17C3B2 100%); }
+.tile.t4 .g{ background:linear-gradient(128deg,#0B7A6D 0%,#17C3B2 50%,#4FA4FF 100%); }
+.tile.t5 .g{ background:linear-gradient(128deg,#3C4655 0%,#5A6675 100%); }
+.tile > *:not(.g){ position:relative; z-index:1; }
+.tile .tag{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600;
+  letter-spacing:.14em; opacity:.82; margin-bottom:auto;
+}
+.tile .nm{ font-size:clamp(24px,2.6vw,31px); font-weight:800; letter-spacing:-.03em; }
+.tile .nm i{ font-style:normal; opacity:.62; font-weight:600; }
+.tile .rl{ margin-top:7px; font-size:14px; opacity:.86; line-height:1.6; }
+.tile-note{ margin-top:20px; font-size:13.5px; color:var(--ink-3); }
+
+/* ================= 흐름 (위키 → 코드) ================= */
+.flow{ display:grid; grid-template-columns:1fr auto 1fr; gap:clamp(12px,2.4vw,24px); align-items:center; margin-top:30px; }
+.flow .b{ border:1px solid var(--rule); border-radius:16px; padding:24px 22px; background:var(--paper-2); }
+.flow .b.src{ background:#EEF5FF; border-color:rgba(26,135,254,.30); }
+.flow .k{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); }
+.flow .b.src .k{ color:var(--blue-ink); }
+.flow .v{ margin-top:11px; font-size:clamp(18px,2vw,22px); font-weight:800; letter-spacing:-.028em; }
+.flow .d{ margin-top:9px; font-size:13.5px; line-height:1.7; color:var(--ink-3); }
+.flow .ar{ font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--blue); text-align:center; }
+.slots{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+.slots span{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500;
+  padding:6px 12px; border-radius:999px; border:1px solid var(--rule); color:var(--ink-2);
+}
+
+/* ================= 실적 — 에디토리얼 그리드 ================= */
+.feat{ padding-bottom:26px; border-bottom:1px solid var(--rule); }
+.feat .when{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--blue-ink); font-weight:600; }
+.feat h3{ margin:10px 0 0; font-size:clamp(26px,3.2vw,38px); font-weight:800; line-height:1.22; letter-spacing:-.035em; }
+.feat p{ margin:14px 0 0; max-width:52ch; color:var(--ink-2); }
+.rows{ margin-top:4px; }
+.row{
+  display:grid; grid-template-columns:112px 1fr auto; gap:18px; align-items:baseline;
+  padding:17px 0; border-bottom:1px solid var(--rule-2);
+}
+.row .yr{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-3); }
+.row .nm{ font-size:16px; font-weight:700; letter-spacing:-.02em; }
+.row .cl{ font-size:13px; color:var(--ink-3); margin-left:9px; font-weight:400; }
+.row .st{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.1em; }
+.row .st.live{ color:var(--teal-ink); }
+.row .st.prog{ color:var(--blue-ink); }
+
+/* ================= 사람 ================= */
+.people{ display:grid; grid-template-columns:repeat(5,1fr); gap:0; border-top:1px solid var(--rule); }
+.people div{ padding:20px 16px 0 0; border-right:1px solid var(--rule-2); }
+.people div:last-child{ border-right:none; padding-right:0; }
+.people b{ display:block; font-size:15.5px; font-weight:700; letter-spacing:-.02em; }
+.people span{ display:block; margin-top:8px; font-size:12.5px; line-height:1.6; color:var(--ink-3); }
+
+/* ================= 닫는 밴드 ================= */
+.close{
+  position:relative; overflow:hidden;
+  background:var(--night); color:var(--night-ink);
+  padding:clamp(88px,13vh,144px) 0;
+}
+.close::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(46vw 40vw at 82% 12%, rgba(124,92,252,.34), transparent 62%),
+    radial-gradient(44vw 36vw at 12% 88%, rgba(26,135,254,.30), transparent 60%);
+  pointer-events:none;
+}
+.close .wrap{ position:relative; z-index:1; }
+.close h2{ margin:22px 0 0; font-size:clamp(32px,5vw,62px); font-weight:800; line-height:1.1; letter-spacing:-.042em; text-wrap:balance; }
+.close p{ margin:24px 0 0; max-width:44ch; color:var(--night-ink-2); }
+.close .hero-cta{ margin-top:40px; }
+.close .eyebrow{ color:rgba(242,245,250,.6); }
+
+/* ================= 꼬리말 ================= */
+.foot{ background:var(--night-2); color:rgba(242,245,250,.62); padding:40px 0 52px; font-size:13px; }
+.foot-in{ display:flex; flex-wrap:wrap; gap:16px 40px; justify-content:space-between; align-items:flex-end; }
+.foot b{ color:rgba(242,245,250,.86); font-weight:600; }
+.foot a{ color:rgba(242,245,250,.78); }
+.foot .old{ color:rgba(242,245,250,.36); }
+.foot .sig{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.16em; }
+
+/* ================= 반응형 ================= */
+@media (max-width:960px){
+  .chap-in{ grid-template-columns:1fr; gap:24px; }
+  .chap-label{ position:static; }
+  .chap-label p{ max-width:52ch; }
+  .stats{ grid-template-columns:repeat(2,1fr); row-gap:4px; }
+  .people{ grid-template-columns:repeat(2,1fr); }
+  .people div{ border-right:none; border-bottom:1px solid var(--rule-2); padding:16px 0; }
+  .nav-links{ display:none; }
+}
+@media (max-width:680px){
+  .tiles{ grid-template-columns:1fr; }
+  .tile.wide{ grid-column:auto; }
+  .flow{ grid-template-columns:1fr; }
+  .flow .ar{ transform:rotate(90deg); }
+  .row{ grid-template-columns:1fr auto; }
+  .row .yr{ grid-column:1 / -1; }
+  .people{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 히어로 ============ -->
+<header class="hero">
+  <nav class="nav">
+    <div class="wrap nav-in">
+      <a class="mark" href="#top" aria-label="투비AX 홈"><img src="data:image/png;base64,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" alt="TOBIS AX"></a>
+      <div class="nav-links">
+        <a href="#products">제품</a>
+        <a href="#how">방법</a>
+        <a href="#proof">실적</a>
+        <a href="#people">사람</a>
+      </div>
+      <a class="nav-cta" href="#contact">문의하기</a>
+    </div>
+  </nav>
+
+  <div class="wrap" id="top">
+    <div class="eyebrow">TOBIS AX · Insurance × AI</div>
+    <h1>보험 업무를 아는<br><em>AI를 만듭니다</em></h1>
+    <p>
+      가입설계·청약·언더라이팅을 20년간 설계해 온 사람들이,
+      그 업무 규칙을 그대로 AI 안에 넣습니다.
+    </p>
+    <div class="hero-cta">
+      <a class="btn solid" href="#products">제품 보기</a>
+      <a class="btn line" href="#contact">프로젝트 문의 &rarr;</a>
+    </div>
+
+    <div class="stats">
+      <div><b>46</b><span>수행 프로젝트</span></div>
+      <div><b>25</b><span>금융·기관 파트너</span></div>
+      <div><b>2012</b><span>법인 설립</span></div>
+      <div><b>2026.02</b><span>업계 최초 실서비스</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 제품 ============ -->
+  <section class="chap" id="products">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">Products</div>
+        <h2>파는 것</h2>
+        <p>기반 둘과 보험 핵심 업무 셋. 다섯이 같은 위키, 같은 승인·검증 흐름 위에 올라갑니다.</p>
+      </aside>
+      <div>
+        <div class="tiles">
+          <a class="tile wide t1" href="#how">
+            <span class="g"></span>
+            <div class="tag">FOUNDATION</div>
+            <div class="nm"><i>Cover</i>Link</div>
+            <div class="rl">AI 개발 플랫폼 — 위키가 원본, 코드는 출력</div>
+          </a>
+          <a class="tile t2" href="#how">
+            <span class="g"></span>
+            <div class="tag">FOUNDATION</div>
+            <div class="nm"><i>Cover</i>Studio</div>
+            <div class="rl">에이전트 제작 환경</div>
+          </a>
+          <a class="tile t3" href="#proof">
+            <span class="g"></span>
+            <div class="tag">실서비스</div>
+            <div class="nm"><i>Cover</i>Plan</div>
+            <div class="rl">가입설계 · 청약</div>
+          </a>
+          <div class="tile t4">
+            <span class="g"></span>
+            <div class="tag">고도화 중</div>
+            <div class="nm"><i>Cover</i>UW</div>
+            <div class="rl">언더라이팅 · 심사</div>
+          </div>
+          <div class="tile t5">
+            <span class="g"></span>
+            <div class="tag">준비 중</div>
+            <div class="nm"><i>Cover</i>Claim</div>
+            <div class="rl">보험금 청구 · 지급</div>
+          </div>
+        </div>
+        <p class="tile-note">한 업무에서 검증한 승인·검증 흐름이 다음 업무로 그대로 넘어갑니다. 그래서 두 번째는 처음부터 다시 만들지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 방법 ============ -->
+  <section class="chap" id="how">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">How</div>
+        <h2>만드는 법</h2>
+        <p>모델은 반년마다 바뀝니다. 업무 규칙은 20년째 그대로입니다.</p>
+      </aside>
+      <div>
+        <div class="lede">위키가 원본이고,<br>코드는 그 출력입니다.</div>
+        <p class="body-t">
+          바뀌는 것을 원본으로 두면 매번 다시 만들어야 합니다. 그래서 자리를 바꿨습니다.
+          업무 규칙을 위키에 적고, <b>코드를 그 위키의 출력물로 내렸습니다.</b>
+          규칙을 고치면 구현이 따라오고, 모델이 바뀌어도 규칙은 남습니다.
+        </p>
+        <div class="flow">
+          <div class="b src">
+            <div class="k">Source of truth</div>
+            <div class="v">업무 위키</div>
+            <div class="d">도메인 전문가가 직접 씁니다. 마크다운 한 장에 규칙과 예외.</div>
+          </div>
+          <div class="ar">&rarr;</div>
+          <div class="b">
+            <div class="k">Output</div>
+            <div class="v">코드 · 화면 · API</div>
+            <div class="d">자사 메타에 맞춰 80%가 생성되고, 남은 상세만 사람이 봅니다.</div>
+          </div>
+        </div>
+        <div class="slots">
+          <span>Claude</span><span>GPT</span><span>Gemini</span><span>오픈 LLM</span><span>사내 배치</span>
+        </div>
+        <p class="tile-note">업무 규칙 · 검증 · 승인은 OKF에 남고, 모델만 슬롯에서 교체됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 실적 ============ -->
+  <section class="chap" id="proof">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">Proof</div>
+        <h2>증명</h2>
+        <p>생각은 누구나 합니다. 문제는 보험사 전산 환경에서 실제로 도는가입니다.</p>
+      </aside>
+      <div>
+        <div class="feat">
+          <div class="when">2026.02 · SERVICE OPEN</div>
+          <h3>신한라이프 LICO —<br>생성형 AI 가입설계 · 청약</h3>
+          <p>
+            업계 최초의 실서비스입니다. 별도 챗봇을 띄운 게 아니라 설계사가 원래 쓰던 화면 안에 들어갔습니다.
+            보장분석·특약·보험료를 추천하고 한도와 심사기준을 함께 검증하며, 최종 승인은 사람이 합니다.
+          </p>
+        </div>
+        <div class="rows">
+          <div class="row">
+            <div class="yr">2026.06~</div>
+            <div><span class="nm">AX HUB</span><span class="cl">신한라이프</span></div>
+            <div class="st prog">진행 중</div>
+          </div>
+          <div class="row">
+            <div class="yr">2026.09~</div>
+            <div><span class="nm">AI 통합 추진</span><span class="cl">동양생명 / ABL생명</span></div>
+            <div class="st prog">진행 중</div>
+          </div>
+          <div class="row">
+            <div class="yr">2025.06~</div>
+            <div><span class="nm">견적시스템 AI</span><span class="cl">현대모비스</span></div>
+            <div class="st live">오픈</div>
+          </div>
+          <div class="row">
+            <div class="yr">2012~</div>
+            <div><span class="nm">누적 46개 프로젝트</span><span class="cl">신한라이프 · NH손보 · 우체국금융 · DB생명 외</span></div>
+            <div class="st">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 사람 ============ -->
+  <section class="chap" id="people">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">People</div>
+        <h2>원본을 쓰는 사람들</h2>
+        <p>커버링크가 80%를 생성해도, 무엇을 만들지 쓰는 일과 마지막 20%를 마감하는 일은 사람이 합니다.</p>
+      </aside>
+      <div>
+        <div class="people">
+          <div><b>컨설팅</b><span>보험 업무와 IT 현장 20년 — ‘무엇’과 ‘왜’를 정합니다</span></div>
+          <div><b>업무설계</b><span>핵심 업무경험 20년 — 판단 기준과 예외를 위키로 씁니다</span></div>
+          <div><b>TA · AA</b><span>기술 · 응용 아키텍처 — 자사 메타와 생성 규격을 정의합니다</span></div>
+          <div><b>개발</b><span>가입설계 · 청약 · 전자청약 — 영업채널 최다 전문 개발자</span></div>
+          <div><b>PM</b><span>금융 SI 현장 PM — 일정과 품질을 끝까지 책임집니다</span></div>
+        </div>
+        <p class="tile-note">이 다섯이 쓴 것이 커버링크의 원본이 됩니다. 나머지는 플랫폼이 생성합니다.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ 닫는 밴드 ============ -->
+<section class="close" id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h2>업무에 AI를<br>얹으려면</h2>
+    <p>어느 업무부터 시작할지, 무엇을 위키로 적어야 할지부터 함께 봅니다. 현업 화면 한 곳을 골라 4~8주 PoC로 시작하는 방식을 가장 많이 씁니다.</p>
+    <div class="hero-cta">
+      <a class="btn solid" href="mailto:contact@2bis-consulting.com">메일 보내기</a>
+      <a class="btn line" href="tel:0271722204">02-717-2204</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div><b>(주)투비AX</b> <span class="old">(구 (주)투비아이에스컨설팅)</span> · 대표 주상언 · 사업자번호 105-87-79763</div>
+      <div>서울특별시 영등포구 선유로 49길 23, 아이에스비즈타워 2차 401호</div>
+      <div>T. 02-717-2204 · <a href="mailto:contact@2bis-consulting.com">contact@2bis-consulting.com</a></div>
+    </div>
+    <div class="sig">TOBIS AX · EDITORIAL EDITION</div>
+  </div>
+</footer>
+
+</body>
+</html>
