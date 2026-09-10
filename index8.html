@@ -72,13 +72,13 @@ body{
    맨 위에서는 아무 클래스도 없어 완전히 투명하다. */
 .nav.dark{
   padding:12px 0;
-  background:rgba(9,14,26,.82);
+  background:rgba(9,14,26,.96);
   -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
   border-bottom-color:var(--night-rule);
 }
 .nav.solid{
   padding:12px 0;
-  background:rgba(255,255,255,.90);
+  background:rgba(255,255,255,.96);
   -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
   border-bottom-color:var(--rule);
   box-shadow:0 8px 24px rgba(17,20,24,.05);
@@ -88,6 +88,59 @@ body{
 .nav.solid .nav-links a:hover{ color:var(--ink); }
 .nav.solid .nav-cta{ color:var(--ink); border-color:var(--rule); }
 .nav.solid .nav-cta:hover{ background:rgba(17,20,24,.05); border-color:var(--ink-3); }
+/* ---------- 모바일 햄버거 ---------- */
+.nav-burger{
+  display:none; flex:none; margin-left:auto; cursor:pointer;
+  width:42px; height:42px; padding:0; border-radius:999px;
+  background:transparent; border:1px solid var(--night-rule);
+  align-items:center; justify-content:center;
+  transition:border-color .18s ease, background .18s ease;
+}
+.nav-burger:hover{ background:rgba(242,245,250,.06); }
+.nav-burger:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; }
+.nav-burger i{ position:relative; display:block; width:17px; height:1.7px; border-radius:2px; background:var(--night-ink); }
+.nav-burger i::before, .nav-burger i::after{
+  content:""; position:absolute; left:0; width:17px; height:1.7px; border-radius:2px; background:inherit;
+}
+.nav-burger i::before{ top:-5.5px; }
+.nav-burger i::after{ top:5.5px; }
+/* 흰 배경 상태에서는 아이콘도 뒤집는다 */
+.nav.solid .nav-burger{ border-color:var(--rule); }
+.nav.solid .nav-burger:hover{ background:rgba(17,20,24,.05); }
+.nav.solid .nav-burger i{ background:var(--ink); }
+
+.m-menu{
+  position:fixed; inset:0; z-index:70;
+  background:rgba(8,12,22,.98);
+  -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:0 26px; opacity:0; visibility:hidden;
+  transition:opacity .24s ease, visibility .24s ease;
+}
+.m-menu.open{ opacity:1; visibility:visible; }
+.m-menu a{
+  display:block; padding:15px 0; text-decoration:none; color:var(--night-ink);
+  font-size:clamp(24px,7vw,32px); font-weight:800; letter-spacing:-.04em;
+  border-bottom:1px solid var(--night-rule);
+}
+.m-menu a:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; }
+.m-menu .mcta{
+  margin-top:30px; border:1px solid var(--night-rule); border-radius:999px;
+  padding:15px 26px; text-align:center; font-size:16px; font-weight:700; letter-spacing:-.01em;
+}
+.m-close{
+  position:absolute; top:16px; right:22px; width:44px; height:44px; cursor:pointer;
+  background:transparent; border:1px solid var(--night-rule); border-radius:999px;
+  color:var(--night-ink); font-size:20px; line-height:1; padding:0;
+}
+.m-close:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; }
+body.menu-open{ overflow:hidden; }
+
+@media (max-width:960px){
+  .nav-burger{ display:flex; }
+  .nav .nav-cta{ display:none; }
+}
+
 /* 로고 | 가운데 메뉴 | 문의 버튼 — 양끝을 잡고 메뉴를 가운데 둔다 */
 .nav-in{ display:flex; align-items:center; gap:28px; }
 .nav .mark{ display:block; height:30px; flex:none;
@@ -613,6 +666,7 @@ body{
         <a href="#archive">프로젝트</a>
         <a href="#people">사람</a>
       </div>
+      <button class="nav-burger" id="burger" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mMenu"><i></i></button>
       <a class="nav-cta" href="#contact">문의하기</a>
     </div>
   </nav>
@@ -637,6 +691,17 @@ body{
     </div>
   </div>
 </header>
+
+<nav class="m-menu" id="mMenu" aria-label="모바일 메뉴" aria-hidden="true">
+  <button class="m-close" id="mClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+  <a href="#products">제품</a>
+  <a href="#how">구조</a>
+  <a href="#build">업무</a>
+  <a href="#proof">성과</a>
+  <a href="#archive">프로젝트</a>
+  <a href="#people">사람</a>
+  <a class="mcta" href="#contact">문의하기</a>
+</nav>
 
 <main>
 
@@ -1428,6 +1493,43 @@ body{
       '이름: ' + name + '\n연락처: ' + phone + '\nEmail: ' + email + '\n\n문의내용:\n' + msg
     );
     window.location.href = 'mailto:contact@2bis-consulting.com?subject=' + subject + '&body=' + body;
+  });
+})();
+</script>
+
+
+<script>
+/* 모바일 햄버거 — 960px 이하에서 메뉴가 숨겨지므로 진입로가 필요하다. */
+(function(){
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mMenu');
+  var closeB = document.getElementById('mClose');
+  if(!burger || !menu) return;
+
+  function setOpen(open){
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    document.body.classList.toggle('menu-open', open);
+    if(open){ (menu.querySelector('a') || closeB).focus(); }
+  }
+
+  burger.addEventListener('click', function(){ setOpen(!menu.classList.contains('open')); });
+  if(closeB) closeB.addEventListener('click', function(){ setOpen(false); burger.focus(); });
+
+  /* 링크를 누르면 닫고, 스크롤은 해시가 처리하게 둔다 */
+  menu.addEventListener('click', function(e){
+    if(e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && menu.classList.contains('open')){ setOpen(false); burger.focus(); }
+  });
+
+  /* 데스크톱 폭으로 돌아가면 열린 메뉴를 정리한다 */
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 960 && menu.classList.contains('open')) setOpen(false);
   });
 })();
 </script>
