@@ -1585,7 +1585,6 @@
 <a class="brandmark" id="brandmark" href="#s1" aria-label="TOBE AX 홈으로 이동"><svg class="logo-svg" viewBox="0 0 166 52" role="img" aria-label="TOBE AX — To Be AI Transformation"><defs><mask id="lgKey" maskUnits="userSpaceOnUse" x="20" y="0" width="40" height="40"><circle cx="38.5" cy="17.6" r="14.4" fill="#fff"/><circle cx="38.5" cy="14.72" r="5.35" fill="#000"/><path d="M35.62,14.72 L34.80,34 L42.20,34 L41.38,14.72 Z" fill="#000"/></mask></defs><text x="1" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-t)">T</text><circle cx="38.5" cy="17.6" r="14.4" fill="var(--lg-t)" mask="url(#lgKey)"/><text x="51" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ink)">BE</text><text x="109" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ax)">AX</text><text x="1.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="8.2" font-weight="600" fill="var(--lg-tag)">TO BE AI TRANSFORMATION</text></svg></a>
   <div class="header-right">
 <nav class="topmenu" id="topmenu">
-  <a href="newlogo.html">Identity</a>
   <a href="#s1c1">Perspective</a>
   <a href="#s3p">Solutions</a>
   <a href="#s2">Reference</a>
@@ -1619,7 +1618,6 @@
   <button class="mobile-menu-close" id="mobileMenuClose" aria-label="메뉴 닫기">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
-  <a href="newlogo.html">Identity</a>
   <a href="#s1c1">Perspective</a>
   <a href="#s3p">Solutions</a>
   <a href="#s2">Reference</a>
@@ -3157,7 +3155,7 @@
 
   // 첫 로드 시 URL 해시로 이동
   // scroller 가 별도 스크롤 컨테이너라 브라우저 기본 해시 이동이 먹지 않는다.
-  // 외부 페이지(newlogo.html)의 메뉴가 index.html#s5 같은 딥링크를 걸기 때문에 필요.
+  // 외부에서 공유된 딥링크(예: .../tobis/#s4)와 newlogo.html 의 메뉴가 이 경로를 쓴다.
   (function(){
     const id = (location.hash || '').slice(1);
     if(!id) return;
