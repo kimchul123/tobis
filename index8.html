@@ -63,9 +63,10 @@ body{
   position:absolute; top:0; left:0; right:0; z-index:20;
   padding:26px 0;
 }
-.nav-in{ display:flex; align-items:center; gap:36px; }
-.nav .mark{ display:block; height:24px; }
-.nav .mark img{ height:100%; width:auto; display:block; }
+.nav .mark{ display:block; height:30px;
+  /* 상단바는 position:absolute 로 다크 히어로 위에만 얹히므로 색은 한 벌이면 된다 */
+  --lg-t:#4FA4FF; --lg-ink:#FFFFFF; --lg-ax:#4FA4FF; --lg-tag:rgba(255,255,255,.72); }
+.nav .mark svg{ height:100%; width:auto; display:block; overflow:visible; }
 .nav-links{ display:flex; gap:28px; margin-left:8px; }
 .nav-links a{
   font-size:14.5px; font-weight:500; color:rgba(242,245,250,.78);
@@ -99,6 +100,12 @@ body{
 .eyebrow{
   font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500;
   letter-spacing:.22em; text-transform:uppercase; color:rgba(242,245,250,.6);
+}
+/* 국문 아이브로 — .22em 트래킹과 uppercase 는 영문 전용 값이라 한글이 늘어진다 */
+.eyebrow.ko{
+  font-family:Pretendard,'Pretendard Variable',system-ui,sans-serif;
+  font-size:14px; font-weight:600; letter-spacing:-.005em;
+  text-transform:none; color:#8FC4FF;
 }
 .hero h1{
   margin:26px 0 0; font-weight:800;
@@ -435,7 +442,7 @@ body{
 <header class="hero">
   <nav class="nav">
     <div class="wrap nav-in">
-      <a class="mark" href="#top" aria-label="투비AX 홈"><img src="data:image/png;base64,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" alt="TOBE AX"></a>
+      <a class="mark" href="#top" aria-label="투비AX 홈"><svg viewBox="0 0 166 52" role="img" aria-label="TOBE AX — To Be AI Transformation"><defs><mask id="i8Key" maskUnits="userSpaceOnUse" x="20" y="0" width="40" height="40"><circle cx="38.5" cy="17.6" r="14.4" fill="#fff"/><circle cx="38.5" cy="14.72" r="5.35" fill="#000"/><path d="M35.62,14.72 L34.80,34 L42.20,34 L41.38,14.72 Z" fill="#000"/></mask></defs><text x="1" y="32" font-family="Pretendard,'Pretendard Variable',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-t)">T</text><circle cx="38.5" cy="17.6" r="14.4" fill="var(--lg-t)" mask="url(#i8Key)"/><text x="51" y="32" font-family="Pretendard,'Pretendard Variable',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ink)">BE</text><text x="109" y="32" font-family="Pretendard,'Pretendard Variable',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ax)">AX</text><text x="1.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable',system-ui,sans-serif" font-size="8.2" font-weight="600" fill="var(--lg-tag)">TO BE AI TRANSFORMATION</text></svg></a>
       <div class="nav-links">
         <a href="#products">제품</a>
         <a href="#how">구조</a>
@@ -448,11 +455,11 @@ body{
   </nav>
 
   <div class="wrap" id="top">
-    <div class="eyebrow">TOBE AX · Insurance × AI</div>
-    <h1><em>AI를 아는 사람이 아니라</em><br>보험을 아는 사람이 만듭니다</h1>
+    <div class="eyebrow ko">업계 최초 생성형 AI 가입설계 · 실서비스 중</div>
+    <h1>업무를 아는 사람이 만드는<br><em>AI는 다릅니다</em></h1>
     <p>
-      가입설계·청약·언더라이팅을 20년간 설계해 온 사람들이,
-      그 업무 규칙을 그대로 AI 안에 넣습니다.
+      보험·금융 업무를 20년간 설계해 온 사람들이
+      AI의 가장 안쪽에 있습니다 — 투비AX.
     </p>
     <div class="hero-cta">
       <a class="btn solid" href="#products">제품 보기</a>
