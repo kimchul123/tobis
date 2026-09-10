@@ -266,6 +266,114 @@ body{
   .row .yr{ grid-column:1 / -1; }
   .people{ grid-template-columns:1fr; }
 }
+
+/* ================= 전체 프로젝트 ================= */
+.filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
+.filters button{
+  font-family:inherit; font-size:13px; font-weight:600; padding:8px 16px; border-radius:999px;
+  border:1px solid var(--rule); background:#fff; color:var(--ink-2); cursor:pointer;
+  transition:border-color .2s ease, background .2s ease, color .2s ease;
+}
+.filters button:hover{ border-color:var(--blue); color:var(--blue-ink); }
+.filters button.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+.filters button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+.yblock{ margin-bottom:34px; }
+.yblock[hidden]{ display:none; }
+.ylabel{
+  font-family:'IBM Plex Mono',monospace; font-size:13.5px; font-weight:600; color:var(--blue-ink);
+  padding-bottom:10px; border-bottom:2px solid var(--ink);
+}
+.prow{
+  display:grid; grid-template-columns:152px 116px 1fr; gap:18px; align-items:baseline;
+  padding:13px 0; border-bottom:1px solid var(--rule-2);
+}
+.prow .pd{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-3); }
+.prow .pc{ font-size:13px; color:var(--ink-3); }
+.prow .pn{ font-size:15px; font-weight:600; letter-spacing:-.02em; }
+.acount{ margin-top:2px; font-size:13.5px; color:var(--ink-3); }
+@media(max-width:680px){
+  .prow{ grid-template-columns:1fr; gap:2px; padding:14px 0; }
+  .prow .pd{ order:3; }
+}
+
+/* ================= Cover 어시스턴트 ================= */
+.cfab{
+  position:fixed; right:clamp(16px,2.5vw,28px); bottom:clamp(16px,2.5vw,28px);
+  z-index:60; width:58px; height:58px; padding:0; border:none; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:#fff;
+  background:linear-gradient(135deg,#1A87FE 0%,#7C5CFC 48%,#17C3B2 100%);
+  box-shadow:0 10px 30px rgba(26,135,254,.34), 0 2px 8px rgba(17,20,24,.18);
+  transition:transform .22s ease, box-shadow .22s ease, opacity .2s ease;
+}
+.cfab:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 14px 38px rgba(124,92,252,.42); }
+.cfab:focus-visible{ outline:2px solid #4FA4FF; outline-offset:3px; }
+.cfab svg{ display:block; position:relative; z-index:1; }
+.cfab .x{ display:none; }
+.cfab.open .s{ display:none; }
+.cfab.open .x{ display:block; }
+.cfab::after{
+  content:""; position:absolute; inset:-3px; border-radius:50%; z-index:0; pointer-events:none;
+  background:conic-gradient(from 0deg,#4FA4FF,#7C5CFC,#22D3A5,#4FA4FF);
+  filter:blur(5px); opacity:.8; animation:cspin 4.5s linear infinite;
+}
+@keyframes cspin{ to{ transform:rotate(360deg); } }
+
+.cpanel{
+  position:fixed; z-index:61;
+  right:clamp(16px,2.5vw,28px); bottom:calc(clamp(16px,2.5vw,28px) + 72px);
+  width:min(392px, calc(100vw - 32px)); height:min(560px, calc(100vh - 150px));
+  display:flex; flex-direction:column; overflow:hidden;
+  background:#fff; border:1px solid var(--rule); border-radius:18px;
+  box-shadow:0 24px 60px rgba(17,20,24,.18);
+  opacity:0; transform:translateY(12px) scale(.98); pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.cpanel.open{ opacity:1; transform:none; pointer-events:auto; }
+.chead{ display:flex; align-items:center; gap:12px; flex-shrink:0; padding:15px 13px 15px 17px; border-bottom:1px solid var(--rule-2); }
+.cav{
+  width:38px; height:38px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff;
+  background:linear-gradient(135deg,#1A87FE 0%,#7C5CFC 48%,#17C3B2 100%);
+}
+.cid{ flex:1; min-width:0; }
+.cid b{ display:block; font-size:15px; font-weight:700; letter-spacing:-.02em; }
+.cst{ display:flex; align-items:center; gap:6px; margin-top:2px; font-size:12px; color:var(--ink-3); }
+.cst i{ width:6px; height:6px; border-radius:50%; background:var(--teal); }
+.cx{ width:34px; height:34px; flex-shrink:0; padding:0; border:none; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:transparent; color:var(--ink-3); }
+.cx:hover{ background:var(--paper-2); color:var(--ink); }
+.clog{ flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:18px; display:flex; flex-direction:column; gap:11px; }
+.cmsg{ max-width:86%; padding:12px 14px; border-radius:14px; font-size:14px; line-height:1.72; white-space:pre-wrap; word-break:break-word; }
+.cmsg.bot{ align-self:flex-start; border-bottom-left-radius:5px; background:var(--paper-2); border:1px solid var(--rule-2); color:var(--ink-2); }
+.cmsg.bot b{ color:var(--ink); font-weight:700; }
+.cmsg.user{ align-self:flex-end; border-bottom-right-radius:5px; background:var(--blue); color:#fff; }
+.csrc{ align-self:flex-start; max-width:86%; display:flex; flex-wrap:wrap; gap:6px; margin-top:-3px; }
+.csrc a{ font-size:11.5px; font-weight:600; text-decoration:none; padding:5px 10px; border-radius:999px; border:1px solid var(--rule); color:var(--ink-3); }
+.csrc a:hover{ border-color:var(--blue); color:var(--blue-ink); }
+.ctype{ align-self:flex-start; display:flex; gap:4px; padding:14px 15px; border-radius:14px; border-bottom-left-radius:5px; background:var(--paper-2); border:1px solid var(--rule-2); }
+.ctype span{ width:6px; height:6px; border-radius:50%; background:var(--ink-3); animation:cdot 1.2s infinite ease-in-out; }
+.ctype span:nth-child(2){ animation-delay:.16s; }
+.ctype span:nth-child(3){ animation-delay:.32s; }
+@keyframes cdot{ 0%,60%,100%{ transform:translateY(0); opacity:.4; } 30%{ transform:translateY(-4px); opacity:1; } }
+.cchips{ flex-shrink:0; display:flex; flex-wrap:wrap; gap:6px; padding:0 18px 12px; }
+.cchips button{ font-family:inherit; font-size:12px; font-weight:600; padding:6px 11px; border-radius:999px; cursor:pointer; background:#fff; border:1px solid var(--rule); color:var(--ink-2); }
+.cchips button:hover{ border-color:var(--blue); color:var(--blue-ink); }
+.cform{ flex-shrink:0; display:flex; align-items:flex-end; gap:10px; padding:12px 14px 10px 16px; border-top:1px solid var(--rule-2); background:var(--paper-2); }
+.cform textarea{ flex:1; min-width:0; resize:none; max-height:112px; font-family:inherit; font-size:14px; line-height:1.6; padding:11px 12px; border-radius:12px; background:#fff; border:1px solid var(--rule); color:var(--ink); }
+.cform textarea:focus{ outline:none; border-color:var(--blue); }
+.csend{ width:42px; height:42px; flex-shrink:0; padding:0; border:none; border-radius:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#fff; background:linear-gradient(135deg,#1A87FE 0%,#7C5CFC 55%,#17C3B2 100%); }
+.csend:disabled{ opacity:.35; cursor:not-allowed; }
+.cnote{ flex-shrink:0; padding:0 16px 12px; font-size:11px; line-height:1.6; color:var(--ink-3); }
+.cnote a{ color:var(--ink-3); }
+.sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+@media (max-width:640px){
+  .cfab{ width:52px; height:52px; }
+  .cfab.open{ opacity:0; pointer-events:none; }
+  .cpanel{ right:10px; left:10px; bottom:10px; width:auto; height:min(80vh, calc(100vh - 88px)); }
+}
+@media (prefers-reduced-motion:reduce){
+  .cfab::after{ animation:none; }
+  .cfab, .cpanel, .csend{ transition:none; }
+  .ctype span{ animation:none; }
+}
 </style>
 </head>
 <body>
@@ -278,7 +386,8 @@ body{
       <div class="nav-links">
         <a href="#products">제품</a>
         <a href="#how">구조</a>
-        <a href="#proof">실적</a>
+        <a href="#proof">성과</a>
+        <a href="#archive">프로젝트</a>
         <a href="#people">사람</a>
       </div>
       <a class="nav-cta" href="#contact">문의하기</a>
@@ -298,7 +407,7 @@ body{
     </div>
 
     <div class="stats">
-      <div><b>46</b><span>수행 프로젝트</span></div>
+      <div><b>47</b><span>수행 프로젝트</span></div>
       <div><b>25</b><span>금융·기관 파트너</span></div>
       <div><b>2012</b><span>법인 설립</span></div>
       <div><b>2026.02</b><span>업계 최초 실서비스</span></div>
@@ -426,7 +535,7 @@ body{
           </div>
           <div class="row">
             <div class="yr">2012~</div>
-            <div><span class="nm">누적 46개 프로젝트</span><span class="cl">신한라이프 · NH손보 · 우체국금융 · DB생명 외</span></div>
+            <div><span class="nm">누적 47개 프로젝트</span><span class="cl">신한라이프 · NH손보 · 우체국금융 · DB생명 외</span></div>
             <div class="st">&nbsp;</div>
           </div>
         </div>
@@ -434,6 +543,103 @@ body{
     </div>
   </section>
 
+
+  <!-- ============ 전체 프로젝트 ============ -->
+  <section class="chap" id="archive">
+    <div class="wrap chap-in">
+      <aside class="chap-label">
+        <div class="kick">Projects</div>
+        <h2>지나온 모든 것</h2>
+        <p>2012년 법인 설립 이후 수행한 프로젝트 전부입니다. 골라 담지 않았습니다.</p>
+      </aside>
+      <div>
+        <div class="filters" id="afilters">
+          <button class="on" data-r="all" type="button">전체</button>
+          <button data-r="2026" type="button">2026</button>
+          <button data-r="2025-2022" type="button">2025–2022</button>
+          <button data-r="2021-2016" type="button">2021–2016</button>
+          <button data-r="2015-2012" type="button">2015–2012</button>
+        </div>
+
+        <div class="yblock" data-r="2026">
+          <div class="ylabel">2026</div>
+          <div class="prow"><div class="pd">2026.06 ~ 2027.03</div><div class="pc">신한라이프</div><div class="pn">AX HUB</div></div>
+          <div class="prow"><div class="pd">2026.04 ~ 2027.03</div><div class="pc">NH손해보험</div><div class="pn">비대면채널시스템 개발</div></div>
+          <div class="prow"><div class="pd">2026.07 ~ 2027.02</div><div class="pc">동양생명</div><div class="pn">GEN AI 기반 가입설계</div></div>
+          <div class="prow"><div class="pd">2026.04 ~ 2026.11</div><div class="pc">신한라이프</div><div class="pn">LICO 고도화 (생성형 AI 기반 가입설계/청약)</div></div>
+          <div class="prow"><div class="pd">2026.07 ~ 2026.11</div><div class="pc">신한라이프</div><div class="pn">보장분석시스템 고도화</div></div>
+          <div class="prow"><div class="pd">2025.06 ~ 2026.05</div><div class="pc">DB생명</div><div class="pn">영업지원시스템 고도화</div></div>
+          <div class="prow"><div class="pd">2025.12 ~ 2026.04</div><div class="pc">NH손해보험</div><div class="pn">영업지원시스템 사전 컨설팅</div></div>
+          <div class="prow"><div class="pd">2025.05 ~ 2026.03</div><div class="pc">신한라이프</div><div class="pn">ICT개발 전담반</div></div>
+          <div class="prow"><div class="pd">2025.01 ~ 2026.03</div><div class="pc">신한라이프</div><div class="pn">TM(T1) 프로젝트</div></div>
+          <div class="prow"><div class="pd">2025.05 ~ 2026.02</div><div class="pc">신한라이프</div><div class="pn">LICO 프로젝트 (생성형 AI 가입설계 및 언더라이팅 고도화)</div></div>
+          <div class="prow"><div class="pd">2025.06 ~ 2026.02</div><div class="pc">현대모비스</div><div class="pn">견적시스템 AI (AI 기반 견적 산출 자동화)</div></div>
+        </div>
+
+        <div class="yblock" data-r="2025-2022">
+          <div class="ylabel">2025</div>
+          <div class="prow"><div class="pd">2024.12 ~ 2025.08</div><div class="pc">미래에셋생명</div><div class="pn">영업지원 고도화</div></div>
+          <div class="prow"><div class="pd">2024.05 ~ 2025.05</div><div class="pc">동양생명</div><div class="pn">영업지원시스템 고도화</div></div>
+          <div class="prow"><div class="pd">2024.08 ~ 2025.01</div><div class="pc">신한라이프</div><div class="pn">영업지원 고도화 TF</div></div>
+        </div>
+
+        <div class="yblock" data-r="2025-2022">
+          <div class="ylabel">2024</div>
+          <div class="prow"><div class="pd">2023.11 ~ 2024.11</div><div class="pc">신한라이프</div><div class="pn">더스퀘어앱(고객채널) 고도화</div></div>
+          <div class="prow"><div class="pd">2023.08 ~ 2024.07</div><div class="pc">신한라이프</div><div class="pn">대면영업지원시스템 통합</div></div>
+          <div class="prow"><div class="pd">2023.07 ~ 2024.01</div><div class="pc">신한라이프</div><div class="pn">고객지원서비스 간소화</div></div>
+        </div>
+
+        <div class="yblock" data-r="2025-2022">
+          <div class="ylabel">2023</div>
+          <div class="prow"><div class="pd">2023.05 ~ 2023.12</div><div class="pc">DB생명</div><div class="pn">비대면 영업지원시스템 재구축</div></div>
+          <div class="prow"><div class="pd">2022.12 ~ 2023.04</div><div class="pc">흥국생명</div><div class="pn">차세대 영업채널 대응개발</div></div>
+        </div>
+
+        <div class="yblock" data-r="2025-2022">
+          <div class="ylabel">2022</div>
+          <div class="prow"><div class="pd">2020.10 ~ 2022.06</div><div class="pc">신한생명</div><div class="pn">신한오렌지 통합</div></div>
+          <div class="prow"><div class="pd">2021.10 ~ 2022.04</div><div class="pc">하나손해보험</div><div class="pn">홈페이지 대응개발</div></div>
+        </div>
+
+        <div class="yblock" data-r="2021-2016">
+          <div class="ylabel">2021 – 2016</div>
+          <div class="prow"><div class="pd">2020.05 ~ 2021.01</div><div class="pc">신한생명</div><div class="pn">Mobile 영업지원시스템</div></div>
+          <div class="prow"><div class="pd">2020.04 ~ 2020.12</div><div class="pc">DB생명</div><div class="pn">GA Mobile Web</div></div>
+          <div class="prow"><div class="pd">2020.06 ~ 2020.12</div><div class="pc">DGB생명</div><div class="pn">Mobile Platform 고도화</div></div>
+          <div class="prow"><div class="pd">2019.06 ~ 2020.03</div><div class="pc">동양생명</div><div class="pn">통합 영업지원시스템</div></div>
+          <div class="prow"><div class="pd">2019.01 ~ 2020.03</div><div class="pc">신협</div><div class="pn">공제 Mobile Platform</div></div>
+          <div class="prow"><div class="pd">2019.04 ~ 2020.03</div><div class="pc">현대해상</div><div class="pn">일반손사 포탈</div></div>
+          <div class="prow"><div class="pd">2018.07 ~ 2019.03</div><div class="pc">Orange Life</div><div class="pn">OMNI Platform</div></div>
+          <div class="prow"><div class="pd">2018.04 ~ 2018.09</div><div class="pc">MetLife 생명</div><div class="pn">Met Care</div></div>
+          <div class="prow"><div class="pd">2018.04 ~ 2018.06</div><div class="pc">르노삼성</div><div class="pn">Mobile App</div></div>
+          <div class="prow"><div class="pd">2017.05 ~ 2018.05</div><div class="pc">ING생명</div><div class="pn">The Life Connected</div></div>
+          <div class="prow"><div class="pd">2016.10 ~ 2017.05</div><div class="pc">현대라이프</div><div class="pn">Mobile SFA 고도화</div></div>
+          <div class="prow"><div class="pd">2017.02 ~ 2017.04</div><div class="pc">교보생명</div><div class="pn">Mobile 전략컨설팅</div></div>
+          <div class="prow"><div class="pd">2016.11 ~ 2017.01</div><div class="pc">DGB생명</div><div class="pn">증권분석시스템</div></div>
+          <div class="prow"><div class="pd">2016.03 ~ 2017.01</div><div class="pc">동부생명</div><div class="pn">통합 SFA (Web &amp; Mobile)</div></div>
+          <div class="prow"><div class="pd">2015.12 ~ 2016.07</div><div class="pc">KDB생명</div><div class="pn">Mobile SFA</div></div>
+          <div class="prow"><div class="pd">2015.11 ~ 2016.05</div><div class="pc">우리은행</div><div class="pn">ODS (Outdoor Sales)</div></div>
+          <div class="prow"><div class="pd">2015.10 ~ 2016.03</div><div class="pc">DGB생명</div><div class="pn">SFA UI 고도화</div></div>
+          <div class="prow"><div class="pd">2015.02 ~ 2016.02</div><div class="pc">PCA생명</div><div class="pn">차세대 SFA</div></div>
+        </div>
+
+        <div class="yblock" data-r="2015-2012">
+          <div class="ylabel">2015 – 2012</div>
+          <div class="prow"><div class="pd">2014.11 ~ 2015.06</div><div class="pc">Allianz생명</div><div class="pn">Mobile SFA</div></div>
+          <div class="prow"><div class="pd">2014.09 ~ 2015.02</div><div class="pc">ING생명</div><div class="pn">GA Portal</div></div>
+          <div class="prow"><div class="pd">2014.02 ~ 2014.07</div><div class="pc">ING생명</div><div class="pn">Home Page Renewal</div></div>
+          <div class="prow"><div class="pd">2013.05 ~ 2014.01</div><div class="pc">ING생명</div><div class="pn">Smart Mobile SFA</div></div>
+          <div class="prow"><div class="pd">2012.11 ~ 2013.04</div><div class="pc">메리츠화재</div><div class="pn">BSR 재무설계</div></div>
+          <div class="prow"><div class="pd">2012.09 ~ 2012.12</div><div class="pc">미래에셋증권</div><div class="pn">Tablet 전자계좌 개설</div></div>
+          <div class="prow"><div class="pd">2012.01 ~ 2012.12</div><div class="pc">한화손해보험</div><div class="pn">Mobile SFA</div></div>
+          <div class="prow"><div class="pd">2012.07 ~ 2012.08</div><div class="pc">메리츠화재</div><div class="pn">Mobile 전략 Consulting</div></div>
+        </div>
+
+        <p class="acount" id="acount"></p>
+      </div>
+    </div>
+  </section>
   <!-- ============ 사람 ============ -->
   <section class="chap" id="people">
     <div class="wrap chap-in">
@@ -481,5 +687,246 @@ body{
   </div>
 </footer>
 
+
+<!-- ============ Cover 어시스턴트 ============ -->
+<button class="cfab" id="cfab" type="button" aria-label="Cover 어시스턴트 열기" aria-expanded="false" aria-controls="cpanel">
+  <svg class="s" viewBox="0 0 24 24" width="25" height="25" aria-hidden="true">
+    <path d="M12 2.4l1.85 4.9 4.9 1.85-4.9 1.85L12 15.9l-1.85-4.9L5.25 9.15l4.9-1.85L12 2.4Z" fill="#ffffff"/>
+    <circle cx="18.7" cy="18.1" r="2" fill="#EAFFF8"/>
+    <circle cx="6" cy="17.6" r="1.3" fill="#ffffff" opacity=".75"/>
+  </svg>
+  <svg class="x" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+
+<div class="cpanel" id="cpanel" role="dialog" aria-labelledby="ctitle" inert>
+  <div class="chead">
+    <div class="cav" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="21" height="21">
+        <path d="M12 2.4l1.85 4.9 4.9 1.85-4.9 1.85L12 15.9l-1.85-4.9L5.25 9.15l4.9-1.85L12 2.4Z" fill="#ffffff"/>
+        <circle cx="18.7" cy="18.1" r="1.9" fill="#EAFFF8"/>
+      </svg>
+    </div>
+    <div class="cid">
+      <b id="ctitle">Cover 어시스턴트</b>
+      <span class="cst"><i aria-hidden="true"></i>온라인 · 보통 1분 내 응답</span>
+    </div>
+    <button class="cx" id="cclose" type="button" aria-label="대화창 닫기">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="clog" id="clog" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+  <div class="cchips" id="cchips">
+    <button type="button">AI 도입, 어떻게 시작하나요?</button>
+    <button type="button">CoverLink가 뭔가요?</button>
+    <button type="button">가입설계 AI 사례</button>
+    <button type="button">투비AX는 어떤 회사인가요?</button>
+    <button type="button">프로젝트 문의</button>
+  </div>
+
+  <form class="cform" id="cform">
+    <label class="sr" for="cinput">메시지 입력</label>
+    <textarea id="cinput" rows="1" placeholder="메시지를 입력하세요..." autocomplete="off"></textarea>
+    <button class="csend" id="csend" type="submit" aria-label="보내기">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  </form>
+  <p class="cnote">AI가 생성한 답변이라 사실과 다를 수 있습니다. 정확한 상담은 <a href="#contact">문의하기</a>를 이용해 주세요.</p>
+</div>
+
+<script>
+/* ================================================================
+   Cover 어시스턴트 — 백엔드 연결 지점은 window.TobisChat 하나뿐이다.
+     window.TobisChat.endpoint = 'https://api.tobisax.com/rag/chat';
+     요청 { message, history:[{role,content}], page:{url,title} }
+     응답 { answer, sources:[{title,url}] }  또는 text/event-stream
+   비어 있으면 아래 로컬 FAQ 로 답한다 — RAG 연결 전까지의 임시 응답.
+   ================================================================ */
+(function(){
+  var fab=document.getElementById('cfab'), panel=document.getElementById('cpanel');
+  if(!fab||!panel) return;
+  var closeB=document.getElementById('cclose'), log=document.getElementById('clog');
+  var chips=document.getElementById('cchips'), form=document.getElementById('cform');
+  var input=document.getElementById('cinput'), sendB=document.getElementById('csend');
+
+  var CFG = window.TobisChat = window.TobisChat || {};
+  if(CFG.endpoint===undefined) CFG.endpoint=null;
+  if(CFG.headers===undefined) CFG.headers={};
+  if(CFG.timeout===undefined) CFG.timeout=25000;
+  if(CFG.historyLimit===undefined) CFG.historyLimit=8;
+
+  var history=[], busy=false;
+  var GREETING='안녕하세요, 투비AX의 Cover 어시스턴트입니다.\n보험·금융 AI 도입과 저희 제품에 대해 무엇이든 물어보세요.';
+
+  var KB=[
+    { k:['회사','소개','투비','투비ax','tobis ax','tobis','어떤 회사','설립','규모','연혁'],
+      a:'**(주)투비AX**(구 투비아이에스컨설팅)는 2012년 설립 이후 보험·금융 영업시스템을 만들어 온 회사입니다.\n· 2012년부터 수행한 프로젝트 전부를 홈페이지에 공개합니다\n· 함께한 금융·기관 파트너 25곳\n· 가입설계·청약·언더라이팅 도메인이 그대로 자산입니다.',
+      s:[{t:'지나온 모든 것', u:'#archive'},{t:'원본을 쓰는 사람들', u:'#people'}] },
+    { k:['도입','시작','어떻게 시작','컨설팅','절차','로드맵','단계','poc'],
+      a:'권하는 순서는 셋입니다.\n**1. 업무 규칙의 위키화** — 흩어진 규정·상품 문서를 하나의 원본으로 모읍니다.\n**2. 지식 주입(RAG)** — 학습이 아니라 지식·규칙으로 도메인을 넣습니다.\n**3. 하네스 구축** — 도구·검증·가드레일을 붙이고, 승인 지점만 사람이 지킵니다.\n\n현업 화면 한 곳을 골라 4~8주 PoC로 시작하는 방식을 가장 많이 씁니다.',
+      s:[{t:'위키가 원본입니다', u:'#how'}] },
+    { k:['coverlink','커버링크','플랫폼','자사','솔루션','제품','시리즈','cover'],
+      a:'**Cover 시리즈** 다섯입니다.\n· **CoverLink** — AI 개발 플랫폼(기반)\n· **CoverStudio** — 에이전트 제작 환경(기반)\n· **CoverPlan** — 가입설계·청약 (실서비스)\n· **CoverUW** — 언더라이팅·심사 (고도화 중)\n· **CoverClaim** — 보험금 청구·지급 (준비 중)\n\n다섯이 같은 위키, 같은 승인·검증 흐름 위에 올라갑니다.',
+      s:[{t:'같은 구조 위의 다섯', u:'#products'}] },
+    { k:['가입설계','청약','언더라이팅','lico','신한라이프','보장분석','사례'],
+      a:'신한라이프 **LICO**에서 생성형 AI 가입설계·청약을 **업계 최초로 실서비스 오픈**했습니다(2026.02).\n여러 회사가 시도했지만 시연에서 멈췄던 영역입니다. 별도 챗봇이 아니라 설계사가 원래 쓰던 화면 안에 인라인으로 들어갔습니다.',
+      s:[{t:'실서비스에 성공했습니다', u:'#proof'}] },
+    { k:['위키','원본','okf','코드','부산물','비종속','모델','교체'],
+      a:'**위키가 원본이고, 코드는 그 출력입니다.**\n업무 규칙을 위키에 적으면 자사 메타에 맞춰 80%가 생성되고, 남은 상세만 사람이 봅니다.\n규칙·검증·승인은 OKF에 남고 모델만 슬롯에서 교체되므로, 모델이 바뀌어도 다시 만들지 않습니다.',
+      s:[{t:'위키가 원본입니다', u:'#how'}] },
+    { k:['실적','프로젝트','레퍼런스','고객사','파트너','전체','목록'],
+      a:'2012년부터 수행한 **모든 프로젝트를 골라 담지 않고 전부** 공개합니다.\n최근에는 신한라이프 AX HUB · LICO 고도화, NH손해보험 비대면채널, 동양생명 GEN AI 가입설계, 현대모비스 견적시스템 AI 등이 진행 중입니다.',
+      s:[{t:'지나온 모든 것', u:'#archive'}] },
+    { k:['사람','팀','조직','인력','채용','누가'],
+      a:'다섯 그룹이 하나의 흐름으로 움직입니다 — 컨설팅 · 업무설계 · TA/AA · 개발 · PM.\n커버링크가 80%를 생성해도, 무엇을 만들지 쓰는 일과 마지막 20%를 마감하는 일은 사람이 합니다.',
+      s:[{t:'원본을 쓰는 사람들', u:'#people'}] },
+    { k:['프로젝트 문의','문의','연락','견적','상담','전화','메일','이메일','주소','위치','오시는'],
+      a:'**연락처**\n· T. 02-717-2204\n· contact@2bis-consulting.com\n· 서울특별시 영등포구 선유로 49길 23 아이에스비즈타워 2차 401호\n\n어느 업무부터 시작할지부터 함께 봅니다.',
+      s:[{t:'문의하기', u:'#contact'}] }
+  ];
+
+  function askLocal(text){
+    var q=String(text).toLowerCase(), best=null, bs=0;
+    KB.forEach(function(e){ var s=0; e.k.forEach(function(w){ if(q.indexOf(w)!==-1) s+=w.length; }); if(s>bs){ bs=s; best=e; } });
+    if(!best) return Promise.resolve({ answer:'아직 제가 답할 수 있는 범위 밖의 질문입니다.\n회사 소개 · AI 도입 절차 · Cover 시리즈 · 가입설계 AI · 전체 프로젝트 · 연락처 중에서 물어봐 주시거나, 문의하기로 남겨 주시면 담당자가 직접 답변드립니다.', sources:[{title:'문의하기', url:'#contact'}] });
+    return new Promise(function(res){ setTimeout(function(){ res({ answer:best.a, sources:best.s.map(function(x){ return {title:x.t, url:x.u}; }) }); }, 420+Math.random()*380); });
+  }
+
+  function askEndpoint(text, onDelta){
+    var ctl=('AbortController' in window)? new AbortController():null;
+    var timer=setTimeout(function(){ if(ctl) ctl.abort(); }, CFG.timeout);
+    var h={'Content-Type':'application/json'};
+    Object.keys(CFG.headers||{}).forEach(function(k){ h[k]=CFG.headers[k]; });
+    return fetch(CFG.endpoint,{ method:'POST', headers:h, signal:ctl?ctl.signal:undefined,
+      body:JSON.stringify({ message:text, history:history.slice(-CFG.historyLimit), page:{url:location.href,title:document.title} })
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      var ct=r.headers.get('content-type')||'';
+      if(ct.indexOf('text/event-stream')!==-1 && r.body && r.body.getReader) return readStream(r,onDelta);
+      return r.json().then(function(d){ return { answer:d.answer||d.text||d.message||d.content||'', sources:d.sources||d.citations||[] }; });
+    }).finally(function(){ clearTimeout(timer); });
+  }
+  function readStream(res,onDelta){
+    var rd=res.body.getReader(), dec=new TextDecoder(), buf='', ans='', src=[];
+    function pump(){ return rd.read().then(function(r){
+        if(r.done) return { answer:ans, sources:src };
+        buf+=dec.decode(r.value,{stream:true});
+        var lines=buf.split('\n'); buf=lines.pop();
+        lines.forEach(function(line){
+          line=line.trim(); if(line.indexOf('data:')!==0) return;
+          var p=line.slice(5).trim(); if(!p||p==='[DONE]') return;
+          var d; try{ d=JSON.parse(p); }catch(e){ d={delta:p}; }
+          if(d.sources) src=d.sources;
+          var piece=d.delta||d.text||d.content||'';
+          if(piece){ ans+=piece; if(onDelta) onDelta(ans); }
+        });
+        return pump();
+      }); }
+    return pump();
+  }
+  function ask(text,onDelta){
+    if(typeof CFG.send==='function') return Promise.resolve(CFG.send(text, history.slice(-CFG.historyLimit), {onDelta:onDelta}));
+    if(CFG.endpoint) return askEndpoint(text,onDelta);
+    return askLocal(text);
+  }
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function fmt(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+  function toBottom(){ log.scrollTop=log.scrollHeight; }
+  function addMsg(role,text){
+    var el=document.createElement('div'); el.className='cmsg '+role;
+    if(role==='user') el.textContent=text; else el.innerHTML=fmt(text);
+    log.appendChild(el); toBottom(); return el;
+  }
+  function addSources(list){
+    if(!list||!list.length) return;
+    var w=document.createElement('div'); w.className='csrc';
+    list.slice(0,4).forEach(function(s){
+      var url=s.url||s.href||'', a=document.createElement('a');
+      a.textContent=s.title||s.name||url; a.href=url||'#';
+      if(url.indexOf('#')!==0){ a.target='_blank'; a.rel='noopener'; }
+      w.appendChild(a);
+    });
+    log.appendChild(w); toBottom();
+  }
+  function addTyping(){
+    var el=document.createElement('div'); el.className='ctype';
+    el.innerHTML='<span></span><span></span><span></span>';
+    el.setAttribute('aria-label','답변을 작성하는 중');
+    log.appendChild(el); toBottom(); return el;
+  }
+  function setBusy(v){ busy=v; sendB.disabled=v; input.disabled=v; }
+
+  function submit(text){
+    text=String(text||'').trim(); if(!text||busy) return;
+    addMsg('user',text); history.push({role:'user',content:text});
+    input.value=''; grow(); setBusy(true);
+    var typing=addTyping(), bubble=null;
+    function onDelta(p){ if(!bubble){ typing.remove(); bubble=addMsg('bot',''); } bubble.innerHTML=fmt(p); toBottom(); }
+    ask(text,onDelta).then(function(r){
+      r=r||{};
+      var answer=(r.answer||'').trim()||'답변을 받지 못했습니다. 잠시 후 다시 시도해 주세요.';
+      if(bubble) bubble.innerHTML=fmt(answer); else { typing.remove(); addMsg('bot',answer); }
+      addSources(r.sources); history.push({role:'assistant',content:answer});
+    }).catch(function(err){
+      if(bubble) bubble.remove();
+      if(typing.parentNode) typing.remove();
+      addMsg('bot','연결에 문제가 있어 답변을 가져오지 못했습니다.\n잠시 후 다시 시도하시거나 02-717-2204 로 연락 주세요.');
+      if(window.console) console.warn('[CoverChat]',err);
+    }).then(function(){ setBusy(false); if(panel.classList.contains('open')) input.focus(); });
+  }
+
+  function open(){
+    if(log.childElementCount===0) addMsg('bot',GREETING);
+    panel.classList.add('open'); panel.removeAttribute('inert');
+    fab.classList.add('open'); fab.setAttribute('aria-expanded','true'); fab.setAttribute('aria-label','Cover 어시스턴트 닫기');
+    setTimeout(function(){ input.focus(); },180);
+  }
+  function close(){
+    panel.classList.remove('open'); panel.setAttribute('inert','');
+    fab.classList.remove('open'); fab.setAttribute('aria-expanded','false'); fab.setAttribute('aria-label','Cover 어시스턴트 열기');
+    fab.focus();
+  }
+  fab.addEventListener('click',function(){ panel.classList.contains('open')?close():open(); });
+  closeB.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&panel.classList.contains('open')) close(); });
+  panel.addEventListener('click',function(e){ if(e.target.closest('a[href^="#"]')) close(); });
+
+  function grow(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,112)+'px'; }
+  input.addEventListener('input',grow);
+  input.addEventListener('keydown',function(e){
+    var enterSends = window.matchMedia && window.matchMedia('(hover:hover)').matches;
+    if(e.key==='Enter'&&!e.shiftKey&&enterSends){ e.preventDefault(); submit(input.value); }
+  });
+  form.addEventListener('submit',function(e){ e.preventDefault(); submit(input.value); });
+  chips.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) submit(b.textContent); });
+})();
+
+/* 전체 프로젝트 — 연도 필터 */
+(function(){
+  var f=document.getElementById('afilters'); if(!f) return;
+  var blocks=[].slice.call(document.querySelectorAll('.yblock'));
+  var count=document.getElementById('acount');
+  var total=document.querySelectorAll('.prow').length;
+  function apply(r){
+    var n=0;
+    blocks.forEach(function(b){
+      var on = (r==='all' || b.dataset.r===r);
+      b.hidden=!on;
+      if(on) n += b.querySelectorAll('.prow').length;
+    });
+    count.textContent = (r==='all')
+      ? ('총 ' + total + '건 — 2012년부터 오늘까지, 하나도 빼지 않았습니다.')
+      : (n + '건 표시 중 · 전체 ' + total + '건');
+  }
+  f.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    [].forEach.call(f.querySelectorAll('button'),function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); apply(b.dataset.r);
+  });
+  apply('all');
+})();
+</script>
 </body>
 </html>
