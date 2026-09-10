@@ -195,6 +195,59 @@ body{
   padding:6px 12px; border-radius:999px; border:1px solid var(--rule); color:var(--ink-2);
 }
 
+/* ================= 만드는 법 — 80/20 ================= */
+.mk{ margin-top:clamp(46px,6vw,68px); padding-top:clamp(38px,5vw,54px); border-top:1px solid var(--rule-2); }
+.mk-h{ font-size:clamp(19px,2.1vw,24px); font-weight:800; letter-spacing:-.03em; line-height:1.35; }
+.mk-h em{ font-style:normal; color:var(--teal-ink); }
+.mk-d{ margin:14px 0 0; max-width:56ch; font-size:15px; color:var(--ink-2); }
+
+/* 비율 막대 — 폭 자체가 80/20을 말한다 */
+.mk-bar{ display:grid; grid-template-columns:80fr 20fr; gap:6px; margin-top:26px; }
+.mk-bar > div{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+  padding:11px 14px; border-radius:10px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.mk-bar .g80{ background:#E2F7F3; border:1px solid rgba(23,195,178,.42); color:var(--teal-ink); }
+.mk-bar .h20{ background:var(--paper-2); border:1px solid var(--rule); color:var(--ink-2); }
+
+.mk-split{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+.mk-p{ border:1px solid var(--rule); border-radius:16px; padding:22px 20px; background:var(--paper-2); }
+.mk-p.gen{ background:#F1FBF9; border-color:rgba(23,195,178,.30); }
+.mk-p .n{ font-size:26px; font-weight:800; letter-spacing:-.03em; }
+.mk-p.gen .n{ color:var(--teal-ink); }
+.mk-p .w{ margin-left:9px; font-size:13.5px; font-weight:700; color:var(--ink-2); }
+.mk-p ul{ margin:14px 0 0; padding:0; list-style:none; }
+.mk-p li{ position:relative; padding-left:13px; margin-top:8px; font-size:13.5px; line-height:1.65; color:var(--ink-3); }
+.mk-p li::before{ content:''; position:absolute; left:0; top:.66em; width:4px; height:4px; border-radius:50%; background:var(--ink-3); opacity:.5; }
+
+/* 5단계 — 누가 하는지를 먼저 밝힌다 */
+.mk-steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:26px; }
+.mk-step{ border:1px solid var(--rule); border-radius:14px; padding:17px 15px; background:var(--paper); }
+.mk-step.hl{ border-color:rgba(23,195,178,.45); background:#F1FBF9; }
+.mk-step .n{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.1em; color:var(--ink-3); }
+.mk-step .who{ display:inline-block; margin-left:7px; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:999px; vertical-align:1px; }
+.mk-step .who.man{ background:rgba(26,135,254,.12); color:var(--blue-ink); }
+.mk-step .who.au{ background:rgba(23,195,178,.16); color:var(--teal-ink); }
+.mk-step .t{ margin-top:12px; font-size:14.5px; font-weight:700; letter-spacing:-.022em; }
+.mk-step .d{ margin-top:6px; font-size:12.5px; line-height:1.6; color:var(--ink-3); }
+
+.mk-lang{ margin-top:26px; padding:20px 22px; border:1px solid var(--rule); border-radius:16px; background:var(--paper-2); }
+.mk-lang .t{ font-size:15.5px; font-weight:700; letter-spacing:-.022em; }
+.mk-lang .t em{ font-style:normal; color:var(--teal-ink); }
+.mk-lang .d{ margin-top:8px; max-width:58ch; font-size:13.5px; line-height:1.7; color:var(--ink-3); }
+.mk-lang .slots{ margin-top:14px; }
+.mk-lang .slots span{ background:var(--paper); }
+
+@media (max-width:960px){
+  .mk-steps{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:680px){
+  .mk-bar{ grid-template-columns:1fr; }
+  .mk-split{ grid-template-columns:1fr; }
+  .mk-steps{ grid-template-columns:1fr; }
+}
+
 /* ================= 실적 — 에디토리얼 그리드 ================= */
 .feat{ padding-bottom:26px; border-bottom:1px solid var(--rule); }
 .feat .when{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--blue-ink); font-weight:600; }
@@ -494,7 +547,60 @@ body{
         <div class="slots">
           <span>Claude</span><span>GPT</span><span>Gemini</span><span>오픈 LLM</span><span>사내 배치</span>
         </div>
-        <p class="tile-note">업무 규칙 · 검증 · 승인은 OKF에 남고, 모델만 슬롯에서 교체됩니다.</p>
+        <p class="tile-note">업무 규칙 · 검증 · 승인은 CoverLink에 남고, 모델만 슬롯에서 교체됩니다.</p>
+
+        <!-- 만드는 법 — 위키 작성만으로 80% -->
+        <div class="mk">
+          <div class="mk-h">그래서 위키를 쓰면 <em>80%가 생성됩니다.</em></div>
+          <p class="mk-d">
+            범용 코드 생성이 아닙니다. 도메인 업무 규칙 · 아키텍처 표준 · UI 컴포넌트 · 데이터 연동 규격을
+            자사 메타로 적재해 뒀기 때문에, 그 회사의 결과물이 나옵니다.
+            사람은 마지막 상세 보정에만 손을 얹습니다.
+          </p>
+
+          <div class="mk-bar">
+            <div class="g80">80% · CoverLink 자동 생성</div>
+            <div class="h20">20% · 사람</div>
+          </div>
+
+          <div class="mk-split">
+            <div class="mk-p gen">
+              <span class="n">80%</span><span class="w">CoverLink가 생성</span>
+              <ul>
+                <li>화면 · API · 데이터 접근 · 배치</li>
+                <li>업무 규칙 분기와 예외 처리 초안</li>
+                <li>산출물 문서와 테스트 케이스</li>
+                <li>자사 표준 구조 · 명명 규칙 준수</li>
+              </ul>
+            </div>
+            <div class="mk-p">
+              <span class="n">20%</span><span class="w">사람이 상세 보정</span>
+              <ul>
+                <li>예외 케이스와 현장 판단이 필요한 규칙</li>
+                <li>UX 디테일과 문구 · 표기 기준</li>
+                <li>성능 · 보안 · 규제 대응 마감</li>
+                <li>검토 결과는 다시 위키로 회귀</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mk-steps">
+            <div class="mk-step"><span class="n">01</span><span class="who man">사람</span><div class="t">업무 위키 작성</div><div class="d">'무엇을 · 왜'를 도메인 전문가가</div></div>
+            <div class="mk-step"><span class="n">02</span><span class="who au">자동</span><div class="t">메타 정합 검증</div><div class="d">자사 표준 · 규칙 충돌 사전 점검</div></div>
+            <div class="mk-step hl"><span class="n">03</span><span class="who au">자동</span><div class="t">생성</div><div class="d">웹 · 앱 · API · 문서 · 테스트 산출</div></div>
+            <div class="mk-step"><span class="n">04</span><span class="who man">사람</span><div class="t">상세 보정</div><div class="d">예외 · UX · 규제 마감</div></div>
+            <div class="mk-step"><span class="n">05</span><span class="who man">사람+자동</span><div class="t">위키 회귀</div><div class="d">보정 결과를 원본에 반영</div></div>
+          </div>
+
+          <div class="mk-lang">
+            <div class="t">검증된 개발 위키는 <em>개발 언어에 종속되지 않습니다.</em></div>
+            <div class="d">
+              원본이 코드가 아니라 위키이기 때문에, 대상 언어나 프레임워크가 바뀌어도
+              다시 쓰지 않고 다시 생성합니다. 보정한 내용도 코드에만 남지 않고 위키로 돌아갑니다.
+            </div>
+            <div class="slots"><span>Java</span><span>C#</span><span>.NET</span><span>Python</span><span>JS/TS</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -773,7 +879,7 @@ body{
       a:'신한라이프 **LICO**에서 생성형 AI 가입설계·청약을 **업계 최초로 실서비스 오픈**했습니다(2026.02).\n여러 회사가 시도했지만 시연에서 멈췄던 영역입니다. 별도 챗봇이 아니라 설계사가 원래 쓰던 화면 안에 인라인으로 들어갔습니다.',
       s:[{t:'실서비스에 성공했습니다', u:'#proof'}] },
     { k:['위키','원본','okf','코드','부산물','비종속','모델','교체'],
-      a:'**위키가 원본이고, 코드는 그 출력입니다.**\n업무 규칙을 위키에 적으면 자사 메타에 맞춰 80%가 생성되고, 남은 상세만 사람이 봅니다.\n규칙·검증·승인은 OKF에 남고 모델만 슬롯에서 교체되므로, 모델이 바뀌어도 다시 만들지 않습니다.',
+      a:'**위키가 원본이고, 코드는 그 출력입니다.**\n업무 규칙을 위키에 적으면 자사 메타에 맞춰 80%가 생성되고, 남은 상세만 사람이 봅니다.\n규칙·검증·승인은 CoverLink에 남고 모델만 슬롯에서 교체되므로, 모델이 바뀌어도 다시 만들지 않습니다.',
       s:[{t:'위키가 원본입니다', u:'#how'}] },
     { k:['실적','프로젝트','레퍼런스','고객사','파트너','전체','목록'],
       a:'2012년부터 수행한 **모든 프로젝트를 골라 담지 않고 전부** 공개합니다.\n최근에는 신한라이프 AX HUB · LICO 고도화, NH손해보험 비대면채널, 동양생명 GEN AI 가입설계, 현대모비스 견적시스템 AI 등이 진행 중입니다.',
