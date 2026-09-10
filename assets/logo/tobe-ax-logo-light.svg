@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 52" width="166" height="52" role="img" aria-label="TOBE AX — To Be AI Transformation">
+  <title>TOBE AX</title>
+  <defs>
+    <mask id="k" maskUnits="userSpaceOnUse" x="20" y="0" width="40" height="40">
+      <circle cx="38.5" cy="17.6" r="14.4" fill="#fff"/>
+      <circle cx="38.5" cy="14.72" r="5.35" fill="#000"/>
+      <path d="M35.62,14.72 L34.80,34 L42.20,34 L41.38,14.72 Z" fill="#000"/>
+    </mask>
+  </defs>
+  <g font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6">
+    <text x="1" y="32" fill="#1A87FE">T</text>
+    <text x="51" y="32" fill="#2B2B2B">BE</text>
+    <text x="109" y="32" fill="#1A87FE">AX</text>
+  </g>
+  <circle cx="38.5" cy="17.6" r="14.4" fill="#1A87FE" mask="url(#k)"/>
+  <text x="1.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="8.2" font-weight="600" fill="#5A6270">TO BE AI TRANSFORMATION</text>
+</svg>

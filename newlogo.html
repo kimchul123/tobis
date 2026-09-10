@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CI 소개 — TOBE AX</title>
+<meta name="description" content="TOBE AX 로고와 컬러 시스템, 로고 파일 내려받기.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOBE AX — CI 소개
+   기존 2bis-consulting.com/web/aboutus.html 의 CI 소개 구조를 따름.
+   좌측 고정 라벨 + 우측 본문. 단일(라이트) 모드.
+   ============================================================ */
+:root{
+  --ink:#12171F;
+  --ink-2:#5B6573;
+  --ink-3:#8A94A2;
+  --paper:#FFFFFF;
+  --paper-2:#F5F7FA;
+  --rule:rgba(18,23,31,.12);
+  --rule-2:rgba(18,23,31,.06);
+  --blue:#1A87FE;          /* Pantone 2727C */
+  --blue-ink:#0F5FD6;      /* 작은 글자용 — 흰 배경 대비 확보 */
+  --dark:#2B2B2B;          /* Pantone 419C */
+  color-scheme:light;
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif;
+  font-size:15px; line-height:1.8; letter-spacing:-.01em; word-break:keep-all;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ width:min(1080px, calc(100% - 48px)); margin:0 auto; }
+
+/* ---------- 좌측 라벨 + 우측 본문 ---------- */
+.sheet{ display:grid; grid-template-columns:270px 1fr; gap:clamp(28px,5vw,64px); padding:72px 0 96px; align-items:start; }
+.side{ position:sticky; top:44px; }
+.side .k{ font-size:19px; font-weight:800; letter-spacing:-.03em; }
+.side .n{ margin-top:10px; font-size:clamp(26px,3vw,34px); font-weight:800; line-height:1.22; letter-spacing:-.035em; color:var(--blue); }
+.side .sub{ margin-top:14px; font-size:13px; line-height:1.75; color:var(--ink-3); }
+
+.blk + .blk{ margin-top:64px; padding-top:56px; border-top:1px solid var(--rule-2); }
+h2{ margin:0; font-size:19px; font-weight:800; letter-spacing:-.028em; }
+.lead{ margin:14px 0 0; max-width:66ch; color:var(--ink-2); font-size:14.5px; }
+.lead b{ color:var(--ink); font-weight:700; }
+
+/* ---------- 로고 전시 ---------- */
+.stage{ margin-top:26px; border:1px solid var(--rule); border-radius:14px; overflow:hidden; }
+.stage .bar{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3); padding:11px 16px; border-bottom:1px solid var(--rule-2);
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.stage .bar em{ font-style:normal; color:var(--ink-2); text-transform:none; letter-spacing:0; }
+.field{ display:flex; align-items:center; gap:44px; padding:34px 26px; flex-wrap:wrap; }
+.field.on-white{ background:#FFFFFF; --w-t:#1A87FE; --w-ink:#2B2B2B; --w-ax:#1A87FE; --w-tag:#5A6270; }
+.field.on-navy{  background:#0B1220; --w-t:#4FA4FF; --w-ink:#FFFFFF; --w-ax:#4FA4FF; --w-tag:rgba(255,255,255,.78); }
+.field.on-black{ background:#141414; --w-t:#4FA4FF; --w-ink:#FFFFFF; --w-ax:#4FA4FF; --w-tag:rgba(255,255,255,.78); }
+.field.on-mono{  background:#FFFFFF; --w-t:#000; --w-ink:#000; --w-ax:#000; --w-tag:#000; }
+.field.on-photo{ background:linear-gradient(120deg,#28323F,#4A5A6E); --w-t:#fff; --w-ink:#fff; --w-ax:#fff; --w-tag:rgba(255,255,255,.8); }
+.lg{ display:block; width:auto; overflow:visible; }
+.h36{ height:36px } .h64{ height:64px } .h108{ height:108px }
+
+/* ---------- 구성 해설 ---------- */
+.parts{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px; }
+.part{ border:1px solid var(--rule); border-radius:11px; padding:16px 15px; background:var(--paper-2); }
+.part .t{ font-size:14px; font-weight:800; letter-spacing:-.02em; }
+.part .t span{ color:var(--blue-ink); }
+.part .d{ margin-top:7px; font-size:12.5px; line-height:1.65; color:var(--ink-3); }
+
+/* ---------- 열쇠구멍 컨셉 ---------- */
+.concept{ margin-top:26px; border-radius:14px; overflow:hidden; border:1px solid var(--rule); }
+.concept svg{ display:block; width:100%; height:auto; }
+
+/* ---------- 컬러 시스템 ---------- */
+.colors{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:26px; }
+.swatch{ height:52px; border-radius:8px 8px 0 0; display:flex; align-items:center; padding:0 18px;
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; letter-spacing:.02em; }
+.swatch.p{ background:#1A87FE; color:#fff; }
+.swatch.s{ background:#2B2B2B; color:#fff; }
+.spec{ border:1px solid var(--rule); border-top:none; border-radius:0 0 8px 8px; }
+.spec div{ display:grid; grid-template-columns:104px 1fr; gap:12px; padding:10px 18px; font-size:13px; border-bottom:1px solid var(--rule-2); }
+.spec div:last-child{ border-bottom:none; }
+.spec dt{ font-weight:700; margin:0; }
+.spec dd{ margin:0; color:var(--ink-2); font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-variant-numeric:tabular-nums; }
+
+/* ---------- 다운로드 ---------- */
+.dl{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:24px; }
+.dl a{
+  display:flex; align-items:center; gap:15px; text-decoration:none; color:inherit;
+  border:1px solid var(--rule); border-radius:12px; padding:15px 17px; background:var(--paper);
+  transition:border-color .18s ease, background .18s ease;
+}
+.dl a:hover{ border-color:var(--blue); background:#F4F9FF; }
+.dl a:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+.dl .chip{ width:52px; height:34px; border-radius:6px; flex:none; display:flex; align-items:center; justify-content:center; border:1px solid var(--rule-2); }
+.dl .chip.w{ background:#fff; --w-t:#1A87FE; --w-ink:#2B2B2B; --w-ax:#1A87FE; --w-tag:#5A6270; }
+.dl .chip.n{ background:#0B1220; --w-t:#4FA4FF; --w-ink:#FFF; --w-ax:#4FA4FF; --w-tag:rgba(255,255,255,.78); }
+.dl .chip.k{ background:#fff; --w-t:#000; --w-ink:#000; --w-ax:#000; --w-tag:#000; }
+.dl .chip.g{ background:#4A5A6E; --w-t:#fff; --w-ink:#fff; --w-ax:#fff; --w-tag:rgba(255,255,255,.8); }
+.dl .chip svg{ height:15px; width:auto; overflow:visible; }
+.dl .nm{ font-size:14px; font-weight:700; letter-spacing:-.02em; }
+.dl .fn{ margin-top:3px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-3); }
+.dl .arw{ margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--blue); }
+
+.warn{ margin-top:22px; border-left:3px solid var(--blue); background:#F4F9FF; padding:16px 18px; border-radius:0 10px 10px 0; }
+.warn b{ display:block; font-size:13.5px; font-weight:800; margin-bottom:6px; }
+.warn p{ margin:0; font-size:13px; line-height:1.75; color:var(--ink-2); }
+.warn p + p{ margin-top:8px; }
+.warn code{ font-family:'IBM Plex Mono',monospace; font-size:12px; background:rgba(18,23,31,.06); padding:1px 5px; border-radius:4px; }
+
+/* ---------- 사용 규정 ---------- */
+.rules{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:22px; }
+.rule{ border:1px solid var(--rule); border-radius:11px; padding:17px 16px; }
+.rule .t{ font-size:13.5px; font-weight:800; letter-spacing:-.02em; }
+.rule .d{ margin-top:7px; font-size:12.5px; line-height:1.7; color:var(--ink-3); }
+.rule .d b{ color:var(--ink-2); }
+
+footer{ border-top:1px solid var(--rule); padding:26px 0 60px; font-size:12.5px; color:var(--ink-3); line-height:1.8; }
+footer b{ color:var(--ink-2); }
+
+@media (max-width:900px){
+  .sheet{ grid-template-columns:1fr; gap:26px; padding-top:44px; }
+  .side{ position:static; }
+  .parts{ grid-template-columns:repeat(2,1fr); }
+  .colors{ grid-template-columns:1fr; }
+  .dl{ grid-template-columns:1fr; }
+  .rules{ grid-template-columns:1fr; }
+}
+@media (max-width:560px){
+  .parts{ grid-template-columns:1fr; }
+  .field{ gap:26px; padding:24px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 로고 원본: 한 번만 정의하고 크기·색만 바꿔 끼운다 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <mask id="ciKey" maskUnits="userSpaceOnUse" x="20" y="0" width="40" height="40">
+    <circle cx="38.5" cy="17.6" r="14.4" fill="#fff"/>
+    <circle cx="38.5" cy="14.72" r="5.35" fill="#000"/>
+    <path d="M35.62,14.72 L34.80,34 L42.20,34 L41.38,14.72 Z" fill="#000"/>
+  </mask>
+  <symbol id="ciLogo" viewBox="0 0 166 52" overflow="visible">
+    <text x="1" y="32" font-family="Pretendard,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--w-t)">T</text>
+    <circle cx="38.5" cy="17.6" r="14.4" fill="var(--w-t)" mask="url(#ciKey)"/>
+    <text x="51"  y="32" font-family="Pretendard,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--w-ink)">BE</text>
+    <text x="109" y="32" font-family="Pretendard,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--w-ax)">AX</text>
+    <text x="1.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,sans-serif" font-size="8.2" font-weight="600" fill="var(--w-tag)">TO BE AI TRANSFORMATION</text>
+  </symbol>
+</defs></svg>
+
+<div class="wrap">
+<div class="sheet">
+
+  <aside class="side">
+    <div class="k">CI 소개</div>
+    <div class="n">To Be<br>AI Transformation</div>
+    <p class="sub">투비AX · TOBE AX<br>(구 (주)투비아이에스컨설팅)</p>
+  </aside>
+
+  <main>
+
+    <!-- ============ 로고 ============ -->
+    <section class="blk">
+      <h2>이름은 바뀌었고, 열쇠구멍은 남았습니다</h2>
+      <p class="lead">
+        사명을 <b>TOBE AX</b>로 바꾸면서 로고를 새로 만들지 않고, 기존 CI에서 <b>앞의 T와 열쇠구멍 O를 그대로 가져왔습니다.</b>
+        바뀐 것은 뒤쪽 <b>BIS → BE AX</b> 뿐입니다. 14년간 쌓은 마크를 버리지 않으면서 새 이름을 담는 방법입니다.
+      </p>
+
+      <div class="stage">
+        <div class="bar"><span>Primary — 밝은 배경</span><em>사이트 헤더 실측 36px / 확대 108px</em></div>
+        <div class="field on-white">
+          <svg class="lg h36" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+          <svg class="lg h108" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+        </div>
+        <div class="bar"><span>Reversed — 어두운 배경</span><em>열쇠구멍으로 배경이 그대로 비칩니다</em></div>
+        <div class="field on-navy">
+          <svg class="lg h36" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+          <svg class="lg h64" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+        </div>
+        <div class="field on-black">
+          <svg class="lg h36" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+          <svg class="lg h64" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+        </div>
+        <div class="bar"><span>Mono — 단색</span><em>각인 · 1도 인쇄 · 팩스</em></div>
+        <div class="field on-mono">
+          <svg class="lg h36" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+          <svg class="lg h64" viewBox="0 0 166 52"><use href="#ciLogo"/></svg>
+        </div>
+      </div>
+
+      <div class="parts">
+        <div class="part"><div class="t">T<span> · 계승</span></div><div class="d">기존 CI의 T를 그대로. 획 굵기와 자간까지 원본 실측값을 옮겼습니다.</div></div>
+        <div class="part"><div class="t">O<span> · 열쇠구멍</span></div><div class="d">해결책을 뜻하는 열쇠구멍. 원본의 상징을 손대지 않고 유지했습니다.</div></div>
+        <div class="part"><div class="t">BE<span> · 새 이름</span></div><div class="d">TOBIS의 BIS 자리. Secondary 먹색으로 조용히 받칩니다.</div></div>
+        <div class="part"><div class="t">AX<span> · 전환</span></div><div class="d">AI Transformation. 사명을 바꾼 이유이므로 Primary 블루로 시선을 둡니다.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 열쇠구멍 컨셉 ============ -->
+    <section class="blk">
+      <h2>단 하나의 열쇠구멍</h2>
+      <p class="lead">
+        우리는 &lt;빛&gt;과 &lt;열쇠구멍&gt;의 메타포로 <b>고객사에 단 하나뿐인 명확한 해결책을 제시하는 회사</b>라는 이미지를 담았습니다.
+        혁신적인 아이디어를 명확하게 집중하여 내려쬐는 빛줄기의 형태와 탈출구, 해결책을 의미하는 열쇠구멍으로 표현하였습니다.
+      </p>
+      <p class="lead">
+        새 사명에서도 이 메타포는 그대로입니다. 달라진 것은 그 열쇠를 여는 방식입니다 —
+        <b>이제 그 해결책을 AI로 만듭니다.</b> 열쇠구멍은 남고, 그 너머가 AX로 바뀌었습니다.
+      </p>
+
+      <div class="concept">
+        <svg viewBox="0 0 1000 340" role="img" aria-label="어둠 속 열쇠구멍에서 빛이 새어 나오는 이미지">
+          <defs>
+            <linearGradient id="cRoom" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0A0E14"/><stop offset="0.5" stop-color="#141B26"/><stop offset="1" stop-color="#0A0E14"/>
+            </linearGradient>
+            <radialGradient id="cHalo" cx="0.5" cy="0.5">
+              <stop offset="0" stop-color="#EAF4FF" stop-opacity=".95"/>
+              <stop offset="0.35" stop-color="#7FBEFF" stop-opacity=".38"/>
+              <stop offset="1" stop-color="#1A87FE" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="cBeam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#EAF4FF" stop-opacity=".62"/>
+              <stop offset="0.55" stop-color="#8CC5FF" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#1A87FE" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="cFloor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1A87FE" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#1A87FE" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <rect width="1000" height="340" fill="url(#cRoom)"/>
+          <!-- 바닥에 퍼지는 빛 -->
+          <ellipse cx="500" cy="330" rx="330" ry="52" fill="url(#cFloor)"/>
+          <!-- 빛줄기 -->
+          <path d="M470,150 L530,150 L700,340 L300,340 Z" fill="url(#cBeam)"/>
+          <!-- 후광 -->
+          <circle cx="500" cy="128" r="150" fill="url(#cHalo)"/>
+          <!-- 열쇠구멍 (로고와 동일한 형태) -->
+          <g transform="translate(500 128) scale(3.1)" fill="#F4FAFF">
+            <circle cx="0" cy="-3.5" r="6.5"/>
+            <path d="M-3.5,-3.5 L-4.6,17 L4.6,17 L3.5,-3.5 Z"/>
+          </g>
+          <!-- 사람 실루엣 -->
+          <g fill="#070B12" transform="translate(500 246) scale(1.5)">
+            <circle cx="0" cy="-30" r="5.4"/>
+            <path d="M-5.6,-23 h11.2 l2.2,18 h-4.2 l-0.9,22 h-4.4 l-1.2,-19 l-1.2,19 h-4.4 l-0.9,-22 h-4.2 Z"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============ 컬러 시스템 ============ -->
+    <section class="blk">
+      <h2>투비AX의 컬러 시스템</h2>
+      <p class="lead">
+        Primary Color의 밝은 블루컬러는 신뢰를 의미하며 스마트한 자신감을 강조합니다.
+        Secondary Color의 화이트/블랙/그레이 컬러는 차분하고 안정된 느낌을 전달합니다.
+        <b>사명이 바뀌어도 컬러는 그대로입니다</b> — 기존 CI와 완전히 동일한 값을 씁니다.
+      </p>
+
+      <div class="colors">
+        <div>
+          <div class="swatch p">Primary Color</div>
+          <dl class="spec">
+            <div><dt>Pantone</dt><dd>Pantone 2727C</dd></div>
+            <div><dt>RGB color</dt><dd>26 / 135 / 254</dd></div>
+            <div><dt>Hex</dt><dd>#1A87FE</dd></div>
+            <div><dt>CMYK</dt><dd>82 / 44 / 00</dd></div>
+          </dl>
+        </div>
+        <div>
+          <div class="swatch s">Secondary Color</div>
+          <dl class="spec">
+            <div><dt>Pantone</dt><dd>Pantone 419C</dd></div>
+            <div><dt>RGB color</dt><dd>43 / 43 / 43</dd></div>
+            <div><dt>Hex</dt><dd>#2B2B2B</dd></div>
+            <div><dt>CMYK</dt><dd>81 / 76 / 74 / 52</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="warn">
+        <b>작은 글자에는 #0F5FD6 을 쓰세요</b>
+        <p>
+          Primary <code>#1A87FE</code>는 흰 배경에서 명도 대비가 3.6:1 입니다. 큰 제목·로고에는 문제없지만
+          본문처럼 작은 글자에 쓰면 웹 접근성 기준(4.5:1)에 못 미칩니다.
+          같은 계열의 <code>#0F5FD6</code>(5.8:1)을 작은 글자 전용으로 함께 운용합니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 다운로드 ============ -->
+    <section class="blk">
+      <h2>로고 내려받기</h2>
+      <p class="lead">
+        SVG 벡터 파일입니다. 크기를 아무리 키워도 깨지지 않습니다.
+        <b>열쇠구멍은 흰색으로 덮은 것이 아니라 실제로 뚫린 구멍</b>이라, 어떤 배경에 올려도 그 배경이 그대로 비칩니다.
+        배경색마다 파일을 따로 만들 필요가 없습니다.
+      </p>
+
+      <div class="dl">
+        <a href="assets/logo/tobe-ax-logo-light.svg" download>
+          <span class="chip w"><svg viewBox="0 0 166 52"><use href="#ciLogo"/></svg></span>
+          <span><span class="nm">밝은 배경용</span><span class="fn">tobe-ax-logo-light.svg</span></span>
+          <span class="arw">&darr;</span>
+        </a>
+        <a href="assets/logo/tobe-ax-logo-dark.svg" download>
+          <span class="chip n"><svg viewBox="0 0 166 52"><use href="#ciLogo"/></svg></span>
+          <span><span class="nm">어두운 배경용</span><span class="fn">tobe-ax-logo-dark.svg</span></span>
+          <span class="arw">&darr;</span>
+        </a>
+        <a href="assets/logo/tobe-ax-logo-mono-black.svg" download>
+          <span class="chip k"><svg viewBox="0 0 166 52"><use href="#ciLogo"/></svg></span>
+          <span><span class="nm">단색 검정</span><span class="fn">tobe-ax-logo-mono-black.svg</span></span>
+          <span class="arw">&darr;</span>
+        </a>
+        <a href="assets/logo/tobe-ax-logo-mono-white.svg" download>
+          <span class="chip g"><svg viewBox="0 0 166 52"><use href="#ciLogo"/></svg></span>
+          <span><span class="nm">단색 흰색</span><span class="fn">tobe-ax-logo-mono-white.svg</span></span>
+          <span class="arw">&darr;</span>
+        </a>
+      </div>
+
+      <div class="warn">
+        <b>배포 전에 글자를 윤곽선으로 바꿔 주세요</b>
+        <p>
+          이 파일들은 워드마크와 태그라인이 아웃라인(패스)이 아니라 <b>폰트 텍스트</b>로 들어가 있습니다.
+          Pretendard가 설치되지 않은 PC나 프로그램에서 열면 다른 폰트로 대체되어 자간과 글자 모양이 달라집니다.
+        </p>
+        <p>
+          Illustrator에서 열고 <code>문자 &gt; 윤곽선 만들기</code>(Ctrl+Shift+O)를 한 번 실행한 뒤 저장하면
+          폰트와 무관하게 어디서든 동일하게 나옵니다. 외부에 넘기는 로고는 반드시 이 처리를 거쳐야 합니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 사용 규정 ============ -->
+    <section class="blk">
+      <h2>사용 규정</h2>
+      <p class="lead">로고가 제 역할을 하려면 최소한 이 세 가지는 지켜져야 합니다.</p>
+
+      <div class="rules">
+        <div class="rule">
+          <div class="t">최소 크기</div>
+          <div class="d">태그라인이 포함된 조합은 <b>높이 36px / 인쇄 12mm</b> 아래로 줄이지 않습니다. 그보다 작아지면 태그라인이 글자가 아니라 얼룩으로 보입니다.</div>
+        </div>
+        <div class="rule">
+          <div class="t">여백</div>
+          <div class="d">로고 사방으로 <b>O(열쇠구멍) 지름의 절반</b> 이상을 비웁니다. 다른 로고나 글자가 이 안으로 들어오지 않게 합니다.</div>
+        </div>
+        <div class="rule">
+          <div class="t">금지</div>
+          <div class="d">가로세로 비율 변경, 열쇠구멍을 단색으로 메우기, CI 외 색상 적용, 그림자·외곽선 추가, 글자 사이 간격 임의 조정.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <b>주의</b> — 이 페이지의 로고는 디자이너 원본 파일이 아니라, 기존 CI 이미지(<code>img_tobe_logo.png</code>)를 픽셀 단위로 실측해 벡터로 재현한 것입니다.
+      O 중심 (173, 91.5) 반지름 17.5 / 키홀 머리 중심 (173, 88) 반지름 6.5 / 슬롯 x 169~177 을 축척 0.8229로 환산했습니다.
+      자간과 획 굵기는 원본과 미세하게 다를 수 있으므로, 디자이너 원본(AI·SVG)을 수령하시면 그것으로 교체하시기 바랍니다.
+      <br><br>
+      <b>투비AX</b> (주)투비AX · 구 (주)투비아이에스컨설팅 · Pantone 2727C / 419C
+    </footer>
+
+  </main>
+</div>
+</div>
+
+</body>
+</html>
