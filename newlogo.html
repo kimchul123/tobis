@@ -47,6 +47,11 @@ body{
 .side .k{ font-size:19px; font-weight:800; letter-spacing:-.03em; }
 .side .n{ margin-top:10px; font-size:clamp(26px,3vw,34px); font-weight:800; line-height:1.22; letter-spacing:-.035em; color:var(--blue); }
 .side .sub{ margin-top:14px; font-size:13px; line-height:1.75; color:var(--ink-3); }
+.side .back{ display:inline-flex; align-items:center; gap:7px; margin-top:20px; font-size:13px; font-weight:600;
+  color:var(--blue-ink); text-decoration:none; border:1px solid var(--rule); border-radius:999px; padding:7px 15px 7px 12px;
+  transition:border-color .18s ease, background .18s ease; }
+.side .back:hover{ border-color:var(--blue); background:#F4F9FF; }
+.side .back:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
 
 .blk + .blk{ margin-top:64px; padding-top:56px; border-top:1px solid var(--rule-2); }
 h2{ margin:0; font-size:19px; font-weight:800; letter-spacing:-.028em; }
@@ -167,6 +172,7 @@ footer b{ color:var(--ink-2); }
     <div class="k">CI 소개</div>
     <div class="n">To Be<br>AI Transformation</div>
     <p class="sub">투비AX · TOBE AX<br>(구 (주)투비아이에스컨설팅)</p>
+    <a class="back" href="index.html">&larr; 홈으로</a>
   </aside>
 
   <main>
