@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 234 52" width="234" height="52" role="img" aria-label="TOBE AX — To Be AI Transformation">
+  <title>TOBE AX — 시안 3 심볼 분리형</title>
+  <defs><mask id="k3" maskUnits="userSpaceOnUse" x="0" y="0" width="52" height="56"><rect x="0" y="0" width="52" height="52" rx="13" fill="#fff"/><circle cx="26" cy="22.8" r="6" fill="#000"/><path d="M22.8,22.8 L21.9,53 L30.1,53 L29.2,22.8 Z" fill="#000"/></mask></defs>
+  <rect x="0" y="0" width="52" height="52" rx="13" fill="#4FA4FF" mask="url(#k3)"/>
+  <g font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6">
+    <text x="68" y="32" fill="#FFFFFF">TOBE</text>
+    <text x="176" y="32" fill="#4FA4FF">AX</text>
+  </g>
+  <text x="68.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="8.2" font-weight="600" fill="#B9C2CE">TO BE AI TRANSFORMATION</text>
+</svg>

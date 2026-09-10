@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 52" width="170" height="52" role="img" aria-label="TOBE AX — To Be AI Transformation">
+  <title>TOBE AX — 시안 2 교차형</title>
+  <text x="1" y="32" font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="#FFFFFF">TOBE A</text>
+  <g stroke-width="7.4" stroke-linecap="butt">
+    <line x1="140" y1="4.4" x2="162" y2="30.8" stroke="#FFFFFF"/>
+    <line x1="162" y1="4.4" x2="140" y2="30.8" stroke="#9E9E9E"/>
+  </g>
+  <text x="1.5" y="47" textLength="164" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable',Inter,'Helvetica Neue',Arial,sans-serif" font-size="8.2" font-weight="600" fill="#FFFFFF">TO BE AI TRANSFORMATION</text>
+</svg>
