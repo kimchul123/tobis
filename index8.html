@@ -68,6 +68,14 @@ body{
 }
 /* 흰 본문 위로 올라오면 배경과 글자색을 뒤집는다.
    히어로를 벗어났는지는 하단 스크립트에서 .solid 로 표시한다. */
+/* 히어로 안에서 스크롤할 때 — 배경을 깔아 본문 글자가 메뉴를 뚫고 올라오지 않게 한다.
+   맨 위에서는 아무 클래스도 없어 완전히 투명하다. */
+.nav.dark{
+  padding:12px 0;
+  background:rgba(9,14,26,.82);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  border-bottom-color:var(--night-rule);
+}
 .nav.solid{
   padding:12px 0;
   background:rgba(255,255,255,.90);
@@ -1281,8 +1289,10 @@ body{
 </script>
 
 <script>
-/* 상단바: 히어로를 벗어나면 흰 배경으로 뒤집는다.
-   .nav 이 position:fixed 라 다크 히어로를 지나면 흰 본문 위에 얹히기 때문. */
+/* 상단바 3단계
+   맨 위        : 클래스 없음 — 완전히 투명
+   히어로 안    : .dark  — 다크 배경. 헤드라인이 메뉴를 뚫고 올라오는 것을 막는다
+   히어로 통과  : .solid — 흰 배경. 흰 본문 위에서 글자가 보이게 색을 뒤집는다 */
 (function(){
   var nav = document.querySelector('.nav');
   var hero = document.querySelector('.hero');
@@ -1290,8 +1300,10 @@ body{
   var ticking = false;
   function apply(){
     ticking = false;
-    var past = window.scrollY > (hero.offsetHeight - nav.offsetHeight - 8);
+    var y = window.scrollY;
+    var past = y > (hero.offsetHeight - nav.offsetHeight - 8);
     nav.classList.toggle('solid', past);
+    nav.classList.toggle('dark', !past && y > 24);
   }
   function onScroll(){
     if(ticking) return;
