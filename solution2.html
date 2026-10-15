@@ -1,0 +1,2533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions2 · CoverLink — 투비AX (TOBE AX)</title>
+<meta name="description" content="CoverLink 솔루션 — 위키가 원본, 절차대로 일하는 보험 업무 에이전트. 제품 구성, 가입설계 워크플로우, 멀티 에이전트, 안전 통제, 아키텍처.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12151c;
+    --ink-soft:#5b6472;
+    --bg:#f5f7fa;
+    --bg-deep:#0a0e17;
+    --panel-deep:#101627;
+    --blue:#1a87fe;
+    --blue-deep:#0f5fd6;
+    --violet:#7c5cfc;
+    --teal:#17c3b2;
+    --line:rgba(18,21,28,.10);
+    --text-base:255,255,255;
+    --line-deep:rgba(var(--text-base),.12);
+    --white:#ffffff;
+    --blue-soft:#4fa4ff;
+    --text-faint:rgba(var(--text-base),.4);
+    --input-bg:#12182a;
+    /* 인라인 SVG 색 — 테마 전환을 위해 변수로 뺀다 (다크 기본값) */
+    --sv-blue:#1a87fe;
+    --sv-blue-soft:#4fa4ff;
+    --sv-teal:#17c3b2;
+    --sv-mint:#22D3A5;
+    --sv-peak:#7FBEFF;
+    --sv-dim:#4B5563;
+    --sv-gray:#9AA3B2;
+    --sv-core-blue:#EAF4FF;
+    --sv-core-mint:#EAFFF8;
+    --sv-bg:#0a0e17;
+    --sv-ink:255,255,255;
+    --sv-ink2:232,236,243;
+    --sv-mint-rgb:34,211,165;
+    --sv-teal-rgb:23,195,178;
+    --sv-gray-rgb:154,163,178;
+    --sv-peak-rgb:127,190,255;
+    /* 별자리 라벨 — 비활성 상태 색. 테마마다 바닥이 반대라 변수로 뺀다 */
+    --sv-label-fade:#8A93A1;
+    --sv-label-peak:#DCEBFF;
+    --sv-label-form:#BFF3E4;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans KR', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    overflow-x:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  /* ---------- scroll container ---------- */
+  .scroller{
+    height:100vh;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+  section{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 clamp(24px, 7vw, 120px);
+  }
+
+  /* ---------- side nav ---------- */
+  .header-bar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px clamp(20px,4vw,64px);
+    background:var(--bg-deep); border-bottom:1px solid var(--line-deep);
+  }
+  .header-inner{
+    max-width:1600px; margin:0 auto; width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .header-right{ display:flex; align-items:center; }
+
+  .brandmark{
+    height:36px; display:block; cursor:pointer;
+    /* 로고는 SVG 한 장. 키홀은 진짜 뚫린 구멍이라 배경이 그대로 비친다.
+       색은 변수로만 바꾼다 — 밝은 섹션은 .on-light 가,
+       라이트 테마는 themeLight 블록이 같은 변수를 덮어쓴다. */
+    --lg-t:#4FA4FF; --lg-ink:#FFFFFF; --lg-ax:#4FA4FF; --lg-tag:rgba(255,255,255,.78);
+  }
+  .brandmark svg{ height:100%; width:auto; display:block; overflow:visible; }
+  .brandmark.on-light{ --lg-t:#1A87FE; --lg-ink:#2B2B2B; --lg-ax:#1A87FE; --lg-tag:rgba(43,43,43,.72); }
+
+  .topmenu{
+    display:flex; gap:30px; align-items:center;
+  }
+  .topmenu a{
+    font-size:15px; font-weight:600; color:rgba(var(--text-base),.7);
+    text-decoration:none;
+  }
+  .topmenu a:hover{ color:var(--white); }
+  .topmenu.on-light a{ color:var(--ink-soft); }
+  .topmenu.on-light a:hover{ color:var(--ink); }
+
+  .hamburger{
+    display:none; width:30px; height:26px; padding:0; border:none; background:none; cursor:pointer;
+    flex-direction:column; justify-content:space-between; margin-left:18px;
+  }
+  .hamburger span{
+    display:block; height:2px; width:100%; background:#ffffff; border-radius:2px;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .hamburger.on-light span{ background:var(--ink); }
+
+  .hamburger.open span:nth-child(1){ transform:translateY(11px) rotate(45deg); }
+  .hamburger.open span:nth-child(2){ opacity:0; }
+  .hamburger.open span:nth-child(3){ transform:translateY(-11px) rotate(-45deg); }
+  .hamburger.open span{ background:#ffffff; }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:55; background:#0a0e1a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .mobile-menu.open{ opacity:1; pointer-events:auto; }
+  .mobile-menu a{ font-size:24px; font-weight:700; color:#ffffff; text-decoration:none; }
+  .mobile-menu-close{
+    position:absolute; top:22px; right:20px; width:44px; height:44px; padding:0;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.08); border:none; border-radius:10px;
+    color:#ffffff; cursor:pointer;
+  }
+  .mobile-menu-close svg{ width:22px; height:22px; }
+
+  /* ================= SECTION 1 — HERO ================= */
+  /* ================================================================
+     은하수 히어로 (AS-IS 홈페이지 무드 이식) — v4.5.0
+     사진을 붙이지 않고 코드로 생성한다. 이유:
+       · 단일 파일 원칙 (외부 리소스 금지)
+       · 사진 별밤은 base64 로 200~400KB — v4.3.0 에서 뺀 갤럭시 이미지와 같은 문제
+       · 코드 생성이면 몇 KB, 해상도 무한, 브랜드 색으로 성운을 물들일 수 있다
+     구성: 밤하늘 그라디언트 → 성운 → 은하수 띠 → 별(canvas) → 별자리선
+     ================================================================ */
+  #s1{
+    position:relative; overflow:hidden; color:var(--white);
+    background:
+      radial-gradient(1200px 700px at 78% 2%,  rgba(23,195,178,.20), transparent 58%),
+      radial-gradient(1000px 640px at 12% 8%,  rgba(26,135,254,.22), transparent 60%),
+      radial-gradient(1500px 900px at 50% 118%, rgba(26,135,254,.10), transparent 62%),
+      linear-gradient(180deg,#05080F 0%,#0A1220 44%,#0C1520 78%,#0a0e17 100%);
+  }
+
+  /* 은하수 띠 — 대각선으로 흐리게 깔린다 */
+  #s1 .milky{
+    position:absolute; left:-12%; right:-12%; top:-8%; height:82%;
+    background:radial-gradient(58% 44% at 50% 50%,
+      rgba(202,224,255,.16) 0%, rgba(150,190,255,.08) 44%, transparent 72%);
+    transform:rotate(-13deg); filter:blur(16px); pointer-events:none;
+  }
+
+  /* 별 — canvas 로 생성, 시드 고정이라 매번 같은 하늘 */
+  #s1 .star-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  /* 기존 네트워크 SVG는 별자리선으로 격하 */
+  #s1 .hero-bg svg.net{ opacity:.32; }
+
+
+  /* 히어로 글자가 별 위에서 뜨도록 아주 옅은 그림자 */
+  #s1 .hero-content h1.hero-h,
+  #s1 .hero-content .hero-sub{ text-shadow:0 2px 18px rgba(5,8,15,.55); }
+
+  @media (max-width:880px){
+    /* 원본은 모바일에서 .hero-bg 를 통째로 숨긴다 — 별은 살리고 네트워크선만 숨김 */
+    #s1 .hero-bg{ display:block; }
+    #s1 .hero-bg svg.net{ display:none; }
+    #s1 .milky{ height:70%; }
+  }
+  .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+  .hero-bg svg{ width:100%; height:100%; display:block; }
+  .hero-content{ position:relative; z-index:1; max-width:1000px; margin:0 auto; width:100%; }
+  :root{ --pillar-overlay: rgba(9,13,24,.62); }
+
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:14.5px; color:var(--blue); margin-bottom:20px;
+  }
+  .kicker i{ width:6px; height:6px; border-radius:50%; background:var(--blue); display:inline-block; }
+  h1.hero-h{
+    font-size:clamp(29px, 4.3vw, 53px);
+    font-weight:900; line-height:1.32; letter-spacing:-.01em;
+    color:var(--white); max-width:960px;
+    opacity:0; transform:translateY(16px);
+    animation:rise .8s .15s ease forwards;
+  }
+  h1.hero-h em{ font-style:normal; color:var(--blue); white-space:nowrap; }
+  .hero-sub{
+    margin-top:20px; font-size:18px; line-height:1.7; color:rgba(var(--text-base),.68);
+    max-width:none; white-space:nowrap; word-break:keep-all;
+    opacity:0; transform:translateY(16px);
+    animation:rise .8s .35s ease forwards;
+  }
+  .hero-cta{
+    margin-top:32px; display:flex; gap:14px;
+    opacity:0; transform:translateY(16px);
+    animation:rise .8s .55s ease forwards;
+  }
+  .btn{
+    padding:15px 28px; border-radius:8px; font-size:14.5px; font-weight:700;
+    cursor:pointer; border:none; display:inline-flex; align-items:center; gap:8px;
+    text-decoration:none;
+  }
+  .btn-primary{ background:var(--blue); color:#fff; }
+  .btn-primary:hover{ background:var(--blue-deep); }
+  .btn-ghost{ background:transparent; color:var(--white); border:1px solid rgba(var(--text-base),.28); }
+  .btn-ghost:hover{ border-color:var(--white); }
+
+  .pillars{
+    margin-top:48px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    opacity:0; transform:translateY(16px);
+    animation:rise .8s .75s ease forwards;
+  }
+  .pillars div, .pillars a{
+    position:relative;
+    background:var(--pillar-overlay);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(var(--text-base),.14);
+    border-radius:14px; padding:26px 22px;
+  }
+  /* 히어로 카드 — 각 섹션으로 이동한다 */
+  .pillars a{ text-decoration:none; color:inherit; display:block; transition:border-color .2s ease, background .2s ease; }
+  .pillars a:hover{ border-color:var(--blue); }
+  .pillars a b::after{ content:" ↗"; opacity:0; transition:opacity .2s ease; }
+  .pillars a:hover b::after{ opacity:1; }
+  .pillars b{ display:block; font-size:16px; font-weight:700; color:var(--blue); word-break:keep-all; }
+  .pillars small{ display:block; margin-top:12px; font-size:14px; color:rgba(var(--text-base),.62); line-height:1.6; word-break:keep-all; }
+
+  .hero-stats{
+    margin-top:48px; padding-top:32px; border-top:1px solid rgba(var(--text-base),.12);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;
+    opacity:0; transform:translateY(16px);
+    animation:rise .8s .95s ease forwards;
+  }
+  .hero-stats div, .hero-stats a{ min-width:120px; }
+  .hero-stats b{
+    display:block; font-family:'IBM Plex Mono', monospace; font-size:44px; font-weight:700;
+    color:var(--blue-soft); letter-spacing:-.01em; line-height:1;
+  }
+  .hero-stats small{ display:block; margin-top:10px; font-size:14px; color:rgba(var(--text-base),.55); }
+  .hero-stats a{ cursor:pointer; }
+  .hero-stats a b, .hero-stats a small{ transition:color .2s ease; }
+  .hero-stats a:hover b{ color:var(--white); }
+  .hero-stats a:hover small{ color:var(--blue-soft); text-decoration:underline; text-underline-offset:3px; }
+  .hero-stats a small::after{ content:"↗"; display:inline-block; margin-left:5px; color:var(--blue-soft); opacity:0; transform:translateX(-3px); transition:opacity .2s ease, transform .2s ease; }
+  .hero-stats a:hover small::after{ opacity:1; transform:translateX(0); }
+
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  @media (max-width:880px){
+    .pillars{ grid-template-columns:1fr 1fr; }
+    h1.hero-h em{ white-space:normal; }
+    .hero-sub{ white-space:normal; }
+    .sec-desc{ white-space:normal; }
+    .hero-bg{ display:none; }
+  }
+
+  /* ================= REFERENCE (#s2) — AI TRACK RECORD ================= */
+  #s2{ background:var(--bg-deep); color:var(--white); }
+  .sec-head{ max-width:1000px; margin:0 auto 52px; width:100%; }
+  .sec-eyebrow{ font-size:14.5px; color:var(--blue); margin-bottom:20px; }
+  .sec-title{ font-size:clamp(29px,4.3vw,53px); font-weight:900; line-height:1.32; letter-spacing:-.01em; }
+  .sec-title.light{ color:var(--white); }
+  .sec-desc{ margin-top:14px; font-size:15px; color:rgba(var(--text-base),.6); max-width:760px; white-space:normal; line-height:1.7; }
+
+  .proj-grid{
+    max-width:1000px; margin:0 auto; width:100%;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  }
+  .proj-card{
+    background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:14px;
+    padding:26px 22px; min-height:300px;
+    display:flex; flex-direction:column;
+  }
+  .proj-status{
+    align-self:flex-start; font-size:13px; padding:4px 11px; border-radius:20px;
+    border:1px solid rgba(var(--text-base),.25); color:rgba(var(--text-base),.75); margin-bottom:26px;
+  }
+  .proj-status.on{ border-color:var(--teal); color:var(--teal); }
+  .proj-status.done{ border-color:var(--blue); color:var(--blue); }
+  .proj-client{ font-size:14.5px; color:rgba(var(--text-base),.5); margin-bottom:8px; }
+  .proj-name{ font-size:19px; font-weight:700; line-height:1.4; margin-bottom:16px; }
+  .proj-desc{ font-size:15px; color:rgba(var(--text-base),.55); line-height:1.65; margin-top:auto; }
+  .proj-period{ margin-top:16px; padding-top:14px; border-top:1px solid rgba(var(--text-base),.12); font-size:13px; color:rgba(var(--text-base),.4); font-family:'IBM Plex Mono', monospace; }
+
+  .client-strip{
+    max-width:1000px; margin:56px auto 0; width:100%;
+    padding-top:28px; border-top:1px solid rgba(var(--text-base),.12);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+  }
+  .client-strip span{
+    font-size:16px; font-weight:700; color:rgba(var(--text-base),.4); letter-spacing:.01em;
+  }
+  @media (max-width:880px){
+    .client-strip{ justify-content:flex-start; gap:28px; }
+  }
+
+  /* ================= SECTION 4 — PROJECT ARCHIVE ================= */
+  #s4{ background:var(--bg-deep); color:var(--white); padding-top:120px; padding-bottom:70px; justify-content:flex-start; }
+  .pa-wrap{ max-width:1000px; margin:0 auto; width:100%; }
+  .pa-lead{ margin-top:14px; font-size:15px; line-height:1.75; color:rgba(var(--text-base),.6); max-width:640px; }
+  .pa-stat-row{ margin-top:36px; display:flex; gap:36px; flex-wrap:wrap; padding-bottom:28px; border-bottom:1px solid var(--line-deep); }
+  .pa-stat b{ display:block; font-family:'IBM Plex Mono', monospace; font-size:24px; font-weight:600; color:var(--blue-soft); }
+  .pa-stat span{ display:block; margin-top:4px; font-size:13.5px; color:var(--text-faint); }
+
+  .pa-filters{ margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; }
+  .pa-filters button{
+    font-family:'Noto Sans KR'; font-size:14px; font-weight:700; color:rgba(var(--text-base),.6);
+    background:rgba(var(--text-base),.06); border:1px solid var(--line-deep); border-radius:24px; padding:10px 22px; cursor:pointer;
+  }
+  .pa-filters button.active{ background:var(--white); border-color:var(--white); color:var(--bg-deep); }
+  .pa-year-block.hidden{ display:none; }
+
+  .pa-timeline{ margin-top:36px; }
+  .pa-year-block{ margin-bottom:44px; }
+  .pa-year-label{ font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:600; color:var(--white); margin-bottom:18px; }
+  .pa-entry-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:14px; }
+  .pa-entry{
+    display:flex; flex-direction:column; gap:8px;
+    background:rgba(var(--text-base),.05); border:1px solid var(--line-deep); border-radius:12px;
+    padding:22px 20px;
+    transition:background .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .pa-entry:hover{
+    background:rgba(var(--text-base),.09); border-color:var(--blue);
+    transform:translateY(-3px);
+  }
+  .pa-entry-client{ font-size:12.5px; font-weight:700; color:var(--blue-soft); }
+  .pa-entry-title{ font-size:15px; color:var(--white); line-height:1.55; font-weight:700; }
+  .pa-entry-date{ margin-top:6px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-faint); }
+  .pa-note{ margin-top:24px; padding-top:18px; border-top:1px solid var(--line-deep); font-size:13px; color:var(--text-faint); line-height:1.8; }
+
+  @media (max-width:640px){
+    .ba-head{ gap:10px; align-items:center; }
+    .ba-head h3{ font-size:20px; }
+    #s4FlipBtn{ padding:6px 10px; font-size:10.5px; }
+    .pa-entry-grid{ grid-template-columns:1fr 1fr; }
+  }
+
+  /* ===== (dead) 구 #s3 CoverLink 적용사례 잔여 스타일 — .sol-* 는 #s4 에서 재사용 ===== */
+  #s3{ background:var(--bg-deep); color:var(--white); }
+  .sol-wrap{ max-width:1000px; margin:0 auto; width:100%; display:grid; grid-template-columns:.95fr 1.05fr; gap:60px; align-items:center; }
+  .sol-tag{ font-size:14.5px; color:var(--blue); margin-bottom:20px; }
+  .sol-name{ font-size:clamp(29px,4.3vw,53px); font-weight:900; line-height:1.32; letter-spacing:-.01em; color:var(--white); }
+  .sol-name span{ color:var(--blue); }
+  .sol-desc{ margin-top:20px; font-size:15.5px; line-height:1.8; color:rgba(var(--text-base),.65); max-width:480px; }
+  .feat-list{ margin-top:36px; display:flex; flex-direction:column; }
+  .feat-list li{ list-style:none; display:flex; gap:16px; padding:18px 0; border-top:1px solid var(--line-deep); }
+  .feat-list li:last-child{ border-bottom:1px solid var(--line-deep); }
+  .feat-num{ font-size:14.5px; color:var(--blue); flex-shrink:0; width:22px; }
+  .feat-body b{ display:block; font-size:15px; font-weight:700; color:var(--white); }
+  .feat-body small{ display:block; margin-top:4px; font-size:14.5px; color:rgba(var(--text-base),.6); line-height:1.6; }
+
+  .sol-visual{ position:relative; aspect-ratio:4/3.4; }
+  .sol-visual svg{ width:100%; height:100%; }
+  .diagram-box-a{ fill:rgba(var(--text-base),.08); }
+  .diagram-box-c{ fill:rgba(var(--text-base),.14); stroke:rgba(var(--text-base),.2); }
+  .diagram-text{ fill:var(--white); }
+  .diagram-line{ stroke:rgba(var(--text-base),.3); }
+
+  /* ========== 공통 콘텐츠 섹션 (PERSPECTIVE 01-04 · SOLUTION 01-05 · REFERENCE) ========== */
+  #s2, #s1c1, #s1c2, #s1c4, #s1c7, #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{ background:var(--bg-deep); color:var(--white); padding-top:120px; padding-bottom:70px; justify-content:flex-start; }
+
+  /* 콘텐츠 섹션 팔레트 — 흰색 계열 본문·헤어라인 (:root 의 --line 은 어두운 선이므로 여기서 반전) */
+  #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2,
+  #s3c4, #s3c5, #s3c8, #s3p{
+    --bg-deep:#0a0e17;
+    --text-base:255,255,255;
+    --white:#ffffff;
+    --input-bg:#12182a;
+    --line:rgba(255,255,255,.10);
+    color-scheme:dark;
+  }
+  .cv-wrap{ max-width:1000px; margin:0 auto; width:100%; }
+  .cv-block{ width:100%; }
+  .cv-sub{ font-family:'IBM Plex Mono', monospace; font-size:13.5px; color:var(--blue-soft); margin-bottom:14px; }
+  .cv-block h3{ font-size:clamp(22px,2.8vw,32px); font-weight:900; line-height:1.35; letter-spacing:-.01em; max-width:820px; }
+  .cv-block .cv-lead{ margin-top:12px; font-size:14px; line-height:1.7; color:rgba(var(--text-base),.6); max-width:600px; }
+  #s3d2 .cv-lead{ line-height:1.95; max-width:680px; }
+  #s3c4 .cv-lead{ line-height:1.95; max-width:700px; }
+  #s3c4 .cv-lead + .cl-subh{ margin-top:28px; }
+  .concept-diagram{ margin-top:36px; }
+  .concept-diagram svg{ width:100%; height:auto; display:block; }
+  .concept-diagram .cd-mobile{ display:none; }
+  @media (max-width:640px){
+    .concept-diagram .cd-desktop{ display:none; }
+    .concept-diagram .cd-mobile{ display:block; }
+  }
+
+  /* ---------- AI Trend components ---------- */
+  .trend-hero-chart{ margin-top:56px; }
+  .trend-hero-chart svg{ width:100%; height:auto; display:block; }
+  .trend-hero-chart .thc-mobile{ display:none; }
+  @media (max-width:640px){
+    .trend-hero-chart .thc-desktop{ display:none; }
+    .trend-hero-chart .thc-mobile{ display:block; }
+  }
+  .trend-tagline{ margin-top:28px; font-size:13px; color:var(--text-faint); font-family:'IBM Plex Mono', monospace; }
+
+  .trend-timeline{ margin-top:48px; }
+  .trend-timeline svg{ width:100%; height:auto; display:block; }
+  /* 가로 타임라인은 1000 유닛을 360px 에 눌러 담아 글자가 5px 이 된다.
+     모바일은 세로로 세운 별도 SVG 로 바꿔, 글자를 실제 크기로 읽히게 한다. */
+  .trend-timeline .tl-mobile{ display:none; }
+  @media (max-width:640px){
+    .trend-timeline{ margin-top:34px; }
+    .trend-timeline .tl-desktop{ display:none; }
+    .trend-timeline .tl-mobile{ display:block; }
+  }
+
+  .trend-split{ margin-top:32px; display:grid; grid-template-columns:1fr 1fr; background:rgba(var(--text-base),.04); border:1px solid rgba(var(--text-base),.14); border-radius:12px; overflow:hidden; }
+  .trend-split > div{ padding:26px 28px; }
+  .trend-split > div:first-child{ border-right:1px solid rgba(var(--text-base),.14); }
+  .trend-split .ts-eyebrow{ font-size:12px; color:var(--text-faint); margin-bottom:10px; }
+  .trend-split .ts-bold{ font-size:17px; font-weight:700; margin-bottom:10px; }
+  .trend-split p{ font-size:13px; color:rgba(var(--text-base),.6); line-height:1.7; }
+
+  .model-scroll-wrap{ margin-top:36px; }
+  .model-row{ display:flex; gap:14px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; -ms-overflow-style:none; padding-bottom:2px; }
+  .model-row::-webkit-scrollbar{ display:none; }
+  .model-card{ flex:0 0 152px; background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:18px 16px; }
+  .model-card.faded{ opacity:.45; }
+  .model-card .mc-date{ font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono', monospace; margin-bottom:10px; }
+  .model-card .mc-name{ font-size:15px; font-weight:700; margin-bottom:6px; line-height:1.3; min-height:39px; }
+  .model-card .mc-spec{ font-size:12px; color:rgba(var(--text-base),.55); margin-bottom:14px; }
+  .model-scrollbar{ margin-top:14px; display:flex; align-items:center; gap:10px; }
+  .model-scroll-btn{ flex:0 0 24px; width:24px; height:24px; border-radius:5px; border:1px solid rgba(var(--text-base),.2); background:rgba(var(--text-base),.05); color:rgba(var(--text-base),.6); font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .model-scroll-btn:hover{ background:rgba(var(--text-base),.1); }
+  .model-scroll-track{ flex:1; height:4px; background:rgba(var(--text-base),.1); border-radius:2px; position:relative; overflow:hidden; }
+  .model-scroll-thumb{ position:absolute; top:0; left:0; height:100%; background:rgba(var(--text-base),.4); border-radius:2px; }
+  .badge-pill{ display:inline-block; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; border:1px solid rgba(var(--text-base),.25); color:rgba(var(--text-base),.7); }
+  .badge-pill.new{ border-color:var(--blue); color:var(--blue-soft); }
+  .badge-pill.prog{ border-color:var(--teal); color:var(--teal); }
+  .badge-pill.open{ border-color:rgba(var(--text-base),.35); color:rgba(var(--text-base),.8); }
+  .badge-pill.live{ border-color:rgba(var(--text-base),.35); color:rgba(var(--text-base),.8); }
+
+  .tag-row{ margin-top:24px; display:flex; flex-wrap:wrap; gap:10px; }
+  .tag-pill{ font-size:12.5px; padding:8px 16px; border-radius:20px; border:1px solid rgba(var(--text-base),.18); color:rgba(var(--text-base),.65); }
+
+  /* ---------- PRODUCTS — Cover 시리즈 ---------- */
+  .prd-layer{ margin-top:34px; }
+  .prd-layer + .prd-layer{ margin-top:30px; }
+  .prd-layer-head{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    padding-bottom:10px; margin-bottom:16px; border-bottom:1px solid var(--line-deep);
+  }
+  .prd-layer-head b{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
+    letter-spacing:.14em; color:var(--blue-soft);
+  }
+  .prd-layer-head span{ font-size:13px; color:rgba(var(--text-base),.5); }
+
+  .prd-grid{ display:grid; gap:14px; }
+  .prd-grid.two{ grid-template-columns:repeat(2,1fr); }
+  .prd-grid.three{ grid-template-columns:repeat(3,1fr); }
+
+  .prd-card{
+    background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14);
+    border-radius:10px; padding:22px 20px;
+    display:flex; flex-direction:column; gap:9px;
+  }
+  /* 링크가 걸린 카드 — 라인업이 뒤따르는 솔루션 섹션의 목차 역할을 한다 */
+  a.prd-card{
+    text-decoration:none; color:inherit;
+    transition:border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  a.prd-card:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); transform:translateY(-2px); }
+  a.prd-card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+  .prd-more{
+    margin-top:auto; padding-top:4px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
+    letter-spacing:.06em; color:var(--blue-soft); opacity:0; transition:opacity .2s ease;
+  }
+  a.prd-card:hover .prd-more, a.prd-card:focus-visible .prd-more{ opacity:1; }
+  @media (hover:none){ .prd-more{ opacity:1; } }
+  /* 접두어는 눌러 두고 뒷말만 살린다 — 시리즈라는 게 이름에서 바로 보이게 */
+  .prd-name{ font-size:21px; font-weight:800; letter-spacing:-.01em; line-height:1.25; }
+  .prd-name i{ font-style:normal; color:rgba(var(--text-base),.42); }
+  .prd-name b{ font-weight:800; color:var(--blue-soft); }
+
+  .prd-role{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:13px; color:rgba(var(--text-base),.72);
+  }
+  .prd-stat{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600;
+    letter-spacing:.08em; padding:3px 8px; border-radius:3px;
+    border:1px solid currentColor; white-space:nowrap;
+  }
+  .prd-stat.live{ color:var(--teal); }
+  .prd-stat.wip{ color:var(--blue-soft); }
+  .prd-stat.plan{ color:rgba(var(--text-base),.45); }
+
+  .prd-card p{ margin:0; font-size:13.5px; line-height:1.75; color:rgba(var(--text-base),.58); }
+
+  .prd-foot{
+    margin-top:30px; padding-top:20px; border-top:1px solid var(--line-deep);
+    font-size:13.5px; line-height:1.8; color:rgba(var(--text-base),.55); max-width:760px;
+  }
+  .prd-foot b{ color:rgba(var(--text-base),.8); font-weight:700; }
+
+  @media (max-width:880px){
+    .prd-grid.two, .prd-grid.three{ grid-template-columns:1fr; }
+  }
+
+  .answer-card{ margin-top:28px; padding:26px 28px; border-radius:12px; background:rgba(23,195,178,.06); border:1px solid rgba(23,195,178,.4); }
+  .answer-card .ac-eyebrow{ font-size:12px; font-weight:700; color:var(--teal); margin-bottom:10px; letter-spacing:.02em; }
+  .answer-card .ac-bold{ font-size:17px; font-weight:700; margin-bottom:8px; }
+  .answer-card p{ font-size:13.5px; color:rgba(var(--text-base),.65); line-height:1.7; }
+
+  .ba-mini-wrap{ margin-top:36px; display:grid; grid-template-columns:1fr 60px 1fr; align-items:stretch; gap:8px; }
+  .ba-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:16px; }
+  .ba-head h3{ margin:0; min-width:0; }
+  #s4FlipBtn{ flex:0 0 auto; white-space:nowrap; padding:8px 16px; font-size:12px; cursor:pointer; background:none; font-family:inherit; }
+  .ba-mini{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:22px 24px; display:flex; flex-direction:column; }
+  .ba-mini .bm-eyebrow{ font-size:12px; color:var(--text-faint); margin-bottom:8px; }
+  .ba-mini .bm-bold{ font-size:19px; font-weight:700; margin-bottom:16px; }
+  .ba-mini .bm-bar{ border-radius:6px; margin-bottom:16px; transition:height .6s cubic-bezier(.4,0,.2,1), opacity .6s ease, background .6s ease; }
+  /* 중립 막대 — 테마에 따라 흰/검정이 뒤집혀야 한다 (인라인 style 로 두면 전환 시 다시 계산되지 않는다) */
+  #s4RightBar{ background:rgba(var(--text-base),.35); }
+  .ba-mini p{ font-size:13px; color:rgba(var(--text-base),.55); line-height:1.6; margin-top:auto; }
+  .ba-mini-wrap .ba-arrow{ align-self:center; }
+  .ba-arrow{ text-align:center; color:var(--blue-soft); font-size:22px; }
+
+  .trend-track-grid{ margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .trend-track-card{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:12px; padding:20px 22px; }
+  .trend-track-card .tt-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .trend-track-card .tt-name{ font-size:18px; font-weight:700; }
+  .trend-track-card .tt-name span{ font-size:12.5px; font-weight:400; color:rgba(var(--text-base),.5); margin-left:9px; }
+  /* '세상의 변화 → 투비가 한 일'을 한 줄로 눕힌다 — 상자 둘을 겹쳐 쌓던 자리 */
+  .trend-track-card .tt-flow{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    margin:14px 0 12px; padding:11px 0; font-size:13px;
+    border-top:1px solid rgba(var(--text-base),.10);
+    border-bottom:1px solid rgba(var(--text-base),.10);
+  }
+  .trend-track-card .tt-flow .from{ color:rgba(var(--text-base),.55); }
+  .trend-track-card .tt-flow .ar{ color:var(--blue-soft); font-family:'IBM Plex Mono', monospace; }
+  .trend-track-card .tt-flow .to{ font-weight:700; color:var(--white); }
+  .trend-track-card p{ font-size:12.5px; color:rgba(var(--text-base),.55); line-height:1.6; }
+
+  .okf-pipeline{ margin-top:40px; max-width:640px; margin-left:auto; margin-right:auto; }
+  /* s3d1 — 1단 · 파이프라인 가로 한 줄 · 세로 리듬 */
+  #s3d1 .cl-hero{ grid-template-columns:1fr; gap:46px; align-items:start; }
+  #s3d1 .cl-name{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin:12px 0 28px; }
+  #s3d1 .cl-h1{ margin:0; }
+  #s3d1 .cl-brand-en{ margin:0; }
+  #s3d1 .cl-claim{ word-break:keep-all; margin-bottom:18px; line-height:1.35; }
+  #s3d1 .cl-desc{ max-width:none; margin-bottom:0; line-height:1.85; }
+  #s3d1 .cl-subh{ margin-bottom:20px; }
+  #s3d1 .okf-answers{ margin-top:0; }
+  #s3d1 .okf-answer .oa-bold{ line-height:1.6; }
+  #s3d1 .okf-node .on-sub{ line-height:1.6; }
+  #s3d1 .okf-pipeline{
+    margin:0; max-width:none;
+    display:grid; align-items:center;
+    grid-template-columns:minmax(180px,1fr) 30px minmax(330px,1.75fr) 30px minmax(180px,1.05fr);
+    column-gap:14px; row-gap:8px;
+  }
+  #s3d1 .okf-pipeline > *:nth-child(1){ grid-column:1; grid-row:1; }
+  #s3d1 .okf-pipeline > *:nth-child(2){ grid-column:2; grid-row:1; }
+  #s3d1 .okf-pipeline > *:nth-child(3){ grid-column:3; grid-row:1; }
+  #s3d1 .okf-pipeline > *:nth-child(4){ grid-column:4; grid-row:1; }
+  #s3d1 .okf-pipeline > *:nth-child(5){ grid-column:5; grid-row:1; }
+  #s3d1 .okf-pipeline > *:nth-child(6){ grid-column:5; grid-row:2; margin:0; }
+  #s3d1 .okf-arrow{ padding:0; transform:rotate(-90deg); }
+  #s3d1 .okf-outputs{ margin-bottom:0; }
+  .okf-node{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:12px; padding:22px 26px; text-align:center; }
+  .okf-node .on-eyebrow{ font-size:11px; color:var(--text-faint); letter-spacing:.05em; margin-bottom:8px; }
+  .okf-node .on-bold{ font-size:18px; font-weight:700; margin-bottom:6px; }
+  .okf-node .on-sub{ font-size:13px; color:rgba(var(--text-base),.55); }
+  .okf-arrow{ text-align:center; color:var(--blue-soft); font-size:20px; padding:10px 0; }
+  .okf-box{ border:1px solid var(--blue); border-radius:12px; padding:22px 26px; background:rgba(26,135,254,.06); }
+  .okf-box-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px; }
+  .okf-box-head b{ font-size:16px; font-family:'IBM Plex Mono', monospace; color:var(--blue-soft); }
+  .okf-box-head span{ font-size:10.5px; color:var(--text-faint); letter-spacing:.03em; }
+  .okf-slots{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+  .okf-slot{ text-align:center; padding:12px 8px; border-radius:8px; border:1px solid rgba(var(--text-base),.16); font-size:13px; font-weight:600; color:rgba(var(--text-base),.6); }
+  .okf-slot.active{ border-color:var(--blue); background:rgba(26,135,254,.14); color:var(--white); }
+  .okf-box .okf-caption{ font-size:12.5px; color:rgba(var(--text-base),.55); text-align:center; }
+  .okf-outputs{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .okf-output-pill{ padding:10px 22px; border-radius:20px; border:1px solid rgba(var(--text-base),.18); font-size:13px; font-weight:600; }
+  .okf-answers{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .okf-answer{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:18px 18px; text-align:center; }
+  .okf-answer .oa-eyebrow{ font-size:11px; color:var(--text-faint); margin-bottom:10px; }
+  .okf-answer .oa-bold{ font-size:14px; font-weight:700; line-height:1.5; }
+  a.okf-answer{ display:block; text-decoration:none; color:inherit; transition:border-color .2s ease, background .2s ease; }
+  a.okf-answer:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); }
+  a.okf-answer .oa-eyebrow::after{ content:" ↗"; color:var(--blue-soft); opacity:0; transition:opacity .2s ease; }
+  a.okf-answer:hover .oa-eyebrow::after{ opacity:1; }
+  .okf-final-tag{ margin-top:28px; text-align:center; }
+  .okf-final-tag span{ display:inline-block; padding:10px 22px; border-radius:20px; border:1px solid var(--blue); color:var(--blue-soft); font-size:13px; font-weight:700; }
+
+  /* ---------- OKF — Open Knowledge Format · 흩어진 지식을 한 포맷으로 ---------- */
+  .okf-std{ display:grid; grid-template-columns:1fr auto 1fr; gap:18px; margin-top:18px; }
+  .okf-std-col{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:18px 20px; }
+  .okf-std-col.is-okf{ border-color:var(--blue); background:rgba(26,135,254,.06); }
+  .okf-std-label{ font-size:12px; font-weight:800; color:rgba(var(--text-base),.5); margin-bottom:12px; }
+  .okf-std-col.is-okf .okf-std-label{ color:var(--blue-soft); }
+  .okf-std-col ul{ list-style:none; }
+  .okf-std-col li{ font-size:13.5px; color:rgba(var(--text-base),.62); padding:7px 0; border-top:1px solid var(--line-deep); }
+  .okf-std-col li:first-child{ border-top:none; }
+  .okf-std-col.is-okf li{ color:rgba(var(--text-base),.85); }
+  .okf-std-arrow{ align-self:center; color:var(--blue-soft); font-size:20px; }
+  .okf-file{ grid-column:1 / -1; border:1px solid var(--cl-line); background:var(--cl-card2); border-radius:12px; padding:16px 20px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; line-height:1.9; color:rgba(var(--text-base),.72); overflow-x:auto; }
+  .okf-file .fpath{ color:var(--blue-soft); font-weight:600; }
+  .okf-file .fkey{ color:var(--blue-soft); }
+  .okf-file .fdim{ color:rgba(var(--text-base),.38); }
+  .okf-std-note{ margin-top:18px; font-size:15px; line-height:1.8; color:rgba(var(--text-base),.62); }
+  .okf-std-note b{ color:var(--blue-soft); font-weight:800; }
+
+  .galaxy-wrap{ margin-top:32px; }
+  .galaxy-wrap svg{ width:100%; height:auto; display:block; }
+  .galaxy-detail{ margin-top:24px; background:rgba(26,135,254,.06); border:1px solid var(--blue); border-radius:12px; padding:26px 28px; transition:border-color .4s ease, background .4s ease; }
+  .galaxy-detail .gd-tag{ display:inline-block; font-size:11.5px; font-weight:700; color:var(--blue-soft); border:1px solid var(--blue); border-radius:20px; padding:5px 14px; margin-bottom:14px; }
+  .galaxy-detail .gd-name{ font-size:20px; font-weight:700; margin-bottom:20px; }
+  .galaxy-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .galaxy-cols .gc-label{ font-size:11.5px; color:var(--text-faint); margin-bottom:8px; }
+  .galaxy-cols p{ font-size:13px; color:rgba(var(--text-base),.6); line-height:1.65; }
+  .galaxy-cols p b{ color:rgba(var(--text-base),.9); }
+
+  /* ---------- CoverLink 3-page (S1/S2/S3) ---------- */
+  :root{ --cl-mint:#34D399; --cl-amber:#F5A524; --cl-card:#121C30; --cl-card2:#0E1728; --cl-line:#24314D; --cl-line2:#1A2337; }
+  .cl-hero{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+  .cl-brand{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.24em; color:var(--blue); font-weight:700; }
+  /* SOLUTION 01 의 아이브로는 나머지 다섯 장(.cv-sub)과 같은 규격으로 맞춘다.
+     .24em 트래킹은 'TOBE AX SOLUTION' 같은 영문 전용 값이라 한글이 늘어져 보인다. */
+  #s3d1 .cl-brand{ font-size:13.5px; letter-spacing:.02em; color:var(--blue-soft); font-weight:600; }
+  .cl-h1{ font-size:clamp(40px,6vw,60px); line-height:1.05; margin:14px 0 6px; font-weight:800; letter-spacing:-.02em; }
+  .cl-brand-en{ font-family:'IBM Plex Mono',monospace; font-size:clamp(14px,1.8vw,18px); letter-spacing:.22em; color:var(--text-faint); margin-bottom:22px; }
+  .cl-claim{ font-size:clamp(22px,3vw,32px); font-weight:800; color:var(--cl-mint); letter-spacing:-.02em; margin-bottom:18px; line-height:1.25; }
+  .cl-desc{ color:rgba(var(--text-base),.65); font-size:15px; margin-bottom:24px; max-width:46ch; }
+  .cl-mini{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:22px; }
+  .cl-mini-n{ font-size:12px; font-weight:700; color:rgba(var(--text-base),.65); border:1px solid var(--cl-line); background:var(--cl-card2); border-radius:8px; padding:7px 10px; white-space:nowrap; }
+  .cl-mini-n.src{ color:#fff; border-color:var(--blue); background:#16243D; }
+  .cl-mini-n.out{ color:var(--cl-mint); border-color:#1F5F4C; background:#0D2A22; }
+  .cl-mini-a{ color:var(--blue); font-size:13px; }
+  .cl-mini-g{ display:inline-flex; align-items:center; gap:7px; white-space:nowrap; }
+  .cl-meta{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-faint); letter-spacing:.02em; }
+
+  .cl-bar{ display:flex; gap:6px; height:56px; margin-top:28px; margin-bottom:20px; }
+  .cl-bar > div{ border-radius:10px; display:flex; align-items:center; overflow:hidden; }
+  .cl-bar .b80{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px; width:80%; background:#13513F; border:1px solid var(--cl-mint); color:#D6FBEC; padding-left:18px; font-weight:800; font-size:14px; }
+  .cl-bar .b20{ white-space:nowrap; padding:0 6px; width:20%; background:#3B2C0E; border:1px solid var(--cl-amber); color:#FBE2B4; justify-content:center; font-weight:800; font-size:12px; }
+
+  .cl-split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .cl-panel{ border-radius:16px; padding:22px 24px; }
+  .cl-panel.gen{ background:#0D1A17; border:1px solid #1F5F4C; }
+  .cl-panel.human{ background:#1A150A; border:1px solid #6B4E12; }
+  .cl-panel .cl-num{ font-size:32px; font-weight:800; line-height:1; display:inline-block; vertical-align:middle; }
+  .cl-panel .cl-num + span{ font-size:14px; font-weight:700; margin-left:12px; vertical-align:middle; }
+  .cl-panel ul{ margin:14px 0 0; padding:0; list-style:none; }
+  .cl-panel li{ color:rgba(var(--text-base),.62); font-size:13px; padding-left:16px; position:relative; margin-bottom:8px; }
+  .cl-panel li::before{ content:"·"; position:absolute; left:2px; color:var(--text-faint); }
+
+  .cl-steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:20px; }
+  .cl-step{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:14px 13px; }
+  .cl-step.hl{ border-color:var(--blue); background:#0F1D30; }
+  .cl-step .n{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700; color:var(--blue); }
+  .cl-step .who{ font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; float:right; letter-spacing:.05em; }
+  .cl-step .t{ font-size:13.5px; font-weight:800; margin-top:10px; }
+  .cl-step .d{ font-size:11px; color:rgba(var(--text-base),.55); margin-top:5px; line-height:1.5; }
+
+  .cl-band{ display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; margin-top:20px; border:1px solid var(--cl-line); background:var(--cl-card2); border-radius:14px; padding:17px 22px; }
+  .cl-band-t{ font-size:15px; font-weight:800; }
+  .cl-band-d{ color:rgba(var(--text-base),.6); font-size:12px; margin-top:6px; max-width:70ch; line-height:1.6; }
+  .cl-langs{ display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end; }
+
+  .cl-subh{ font-size:15px; font-weight:800; line-height:1.55; margin:0 0 14px; word-break:keep-all; }
+  .cl-subh::before{ content:"— "; color:var(--blue); }
+  .cl-wf{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:26px; }
+  .cl-wf .c{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:14px 13px; }
+  .cl-wf .c.last{ border-color:var(--cl-amber); background:#1A150A; }
+  .cl-wf .t{ font-size:13.5px; font-weight:800; }
+  .cl-wf .c.last .t{ color:var(--cl-amber); }
+  .cl-wf .d{ font-size:11px; color:rgba(var(--text-base),.55); margin-top:5px; line-height:1.5; }
+
+  /* TEAM — 다섯 그룹은 같은 무게다. PM 만 고정으로 켜 두는 대신, 마우스를 올린 카드가 켜진다.
+     SOLUTION 의 '사람 승인(HITL)' 앰버는 '여기는 사람이 한다'는 뜻이므로 건드리지 않는다. */
+  #s5 .cl-wf .c{ transition:border-color .22s ease, background .22s ease; }
+  #s5 .cl-wf .c.last{ border-color:var(--cl-line); background:var(--cl-card); }
+  #s5 .cl-wf .c.last .t{ color:inherit; }
+  #s5 .cl-wf .c:hover{ border-color:var(--cl-amber); background:rgba(245,165,36,.10); }
+  #s5 .cl-wf .c:hover .t{ color:var(--cl-amber); }
+
+  .cl-addflow{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px; }
+  .cl-addflow .a{ border:1px solid var(--cl-line); background:var(--cl-card); border-radius:12px; padding:16px; }
+  .cl-addflow .a.done{ border-color:var(--cl-mint); background:#0D1A17; }
+  .cl-addflow .n{ font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--blue); }
+  .cl-addflow .a.done .n{ color:var(--cl-mint); }
+  .cl-addflow .t{ font-size:14px; font-weight:800; margin:9px 0 7px; }
+  .cl-addflow .d{ font-size:11.5px; color:rgba(var(--text-base),.55); line-height:1.6; }
+  .cl-addflow .d b{ color:rgba(var(--text-base),.9); font-weight:700; }
+
+  .cl-contact{ display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; border:1px solid var(--blue); background:#0F1D30; border-radius:16px; padding:22px 24px; }
+  .cl-contact .k{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.16em; color:var(--blue); font-weight:700; }
+  .cl-contact .ct{ font-size:19px; font-weight:800; margin:8px 0 6px; }
+  .cl-contact .cd{ color:rgba(var(--text-base),.6); font-size:12px; }
+  .cl-cinfo{ text-align:right; }
+  .cl-cinfo a{ display:block; font-family:'IBM Plex Mono',monospace; font-size:14px; text-decoration:none; margin-bottom:4px; }
+  .cl-cinfo a.tel{ color:#fff; }
+  .cl-cinfo a.mail{ color:var(--blue); }
+  .cl-cinfo .addr{ color:var(--text-faint); font-size:10.5px; margin-top:10px; line-height:1.5; }
+  .cl-foot{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint); margin-top:24px; }
+
+  @media (max-width:900px){
+    .cl-bar{ height:52px; }
+    .cl-bar .b80{ font-size:13px; padding-left:14px; }
+    .cl-bar .b20{ font-size:11px; }
+    .cl-hero{ grid-template-columns:1fr; gap:30px; }
+    #s3d1 .okf-pipeline{ display:block; }
+    #s3d1 .okf-arrow{ transform:none; padding:10px 0; }
+    #s3d1 .okf-outputs{ margin-bottom:10px; }
+    .cl-split, .cl-steps, .cl-wf, .cl-addflow, .cl-contact, .cl-band, .okf-std{ grid-template-columns:1fr; }
+    .okf-std-arrow{ transform:rotate(90deg); text-align:center; }
+    .cl-cinfo, .cl-langs{ text-align:left; justify-content:flex-start; }
+  }
+
+  @media (max-width:768px){
+    .model-card{ flex-basis:130px; }
+    .trend-split{ grid-template-columns:1fr; }
+    .trend-split > div:first-child{ border-right:none; border-bottom:1px solid rgba(var(--text-base),.14); }
+    .ba-mini-wrap{ grid-template-columns:1fr; }
+    .ba-arrow{ transform:rotate(90deg); }
+    .trend-track-grid{ grid-template-columns:1fr; }
+    .okf-slots{ grid-template-columns:repeat(2,1fr); }
+    .okf-answers{ grid-template-columns:1fr; }
+    .galaxy-cols{ grid-template-columns:1fr; }
+  }
+
+  .cv-compare{ margin-top:40px; }
+  .cv-compare-head{ display:grid; grid-template-columns:1fr 1fr; gap:20px; padding-bottom:14px; border-bottom:1px solid var(--line-deep); }
+  .cv-compare-head span{ font-size:12.5px; font-weight:700; color:var(--text-faint); }
+  .cv-compare-head span:last-child{ color:var(--blue-soft); }
+  .cv-compare-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:20px 0; border-bottom:1px solid var(--line-deep); align-items:center; }
+  .cv-compare-row .before{ font-size:13.5px; color:rgba(var(--text-base),.5); line-height:1.65; }
+  .cv-compare-row .after{ font-size:13.5px; color:var(--white); line-height:1.65; font-weight:500; }
+
+  .cv-stat-row{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-deep); border:1px solid var(--line-deep); }
+  .cv-stat{ background:var(--bg-deep); padding:22px 20px; }
+  .cv-stat .tag{ font-size:13px; color:var(--text-faint); margin-bottom:10px; }
+  .cv-stat .num{ font-family:'IBM Plex Mono', monospace; font-size:clamp(20px,2.2vw,28px); font-weight:700; color:var(--blue-soft); }
+  .cv-stat .desc{ margin-top:8px; font-size:13.5px; color:rgba(var(--text-base),.6); line-height:1.6; }
+
+  .cv-prob-row{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .cv-prob{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:20px 18px; }
+  .cv-prob .n{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--blue-soft); margin-bottom:10px; }
+  .cv-prob h4{ font-size:14.5px; font-weight:700; margin-bottom:8px; }
+  .cv-prob p{ font-size:13.5px; color:rgba(var(--text-base),.6); line-height:1.65; }
+  /* 링크로 쓰이는 카드 — 현재는 PERSPECTIVE 01 의 AI 카드가 02 로 이어진다 */
+  a.cv-prob{ display:block; text-decoration:none; color:inherit; transition:border-color .2s ease, background .2s ease; }
+  a.cv-prob:hover{ border-color:var(--blue); background:rgba(26,135,254,.07); }
+  a.cv-prob .n::after{ content:" ↗"; opacity:0; transition:opacity .2s ease; }
+  a.cv-prob:hover .n::after{ opacity:1; }
+  #s2 .cv-prob-row{ grid-template-columns:repeat(2,1fr); }
+  #s2 .cv-prob{ position:relative; padding-left:20px; }
+  #s2 .cv-prob::before{ content:""; position:absolute; left:0; top:20px; bottom:20px; width:2px; border-radius:2px; background:linear-gradient(var(--blue-soft), var(--teal)); }
+  #s2 .proof-open{ margin-top:36px; display:flex; align-items:center; gap:14px; padding:16px 20px; border:1px solid var(--blue); border-radius:12px; background:rgba(26,135,254,.06); }
+  #s2 .proof-open .dot{ width:9px; height:9px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 4px rgba(23,195,178,.18); flex-shrink:0; }
+  #s2 .proof-open b{ font-size:14.5px; font-weight:700; color:var(--white); }
+  #s2 .proof-open span{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--blue-soft); margin-left:auto; flex-shrink:0; }
+  #s2 .cl-subh{ margin:40px 0 18px; }
+  #s2 .cv-prob-row{ margin-top:18px; }
+  #s5 .cl-subh{ margin:38px 0 16px; }
+
+  .cv-callout{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line-deep); font-size:14px; font-weight:500; line-height:1.7; max-width:760px; }
+
+
+  .cv-pillars2{ margin-top:28px; display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--line-deep); border:1px solid var(--line-deep); }
+  .cv-pillar2{ background:var(--bg-deep); padding:16px 12px; }
+  .cv-pillar2 .n{ font-size:10px; color:var(--text-faint); margin-bottom:14px; }
+  .cv-pillar2 b{ display:block; font-size:13px; font-weight:700; line-height:1.4; }
+
+  .cv-proof{ margin-top:24px; padding-top:20px; border-top:1px solid var(--line-deep); display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+  .cv-proof-txt{ font-size:14px; color:rgba(var(--text-base),.6); max-width:560px; line-height:1.65; }
+  .cv-proof-badge{ font-size:11px; color:var(--teal); border:1px solid rgba(23,195,178,.4); padding:6px 14px; border-radius:20px; white-space:nowrap; }
+
+  .cv-val-row{ margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .cv-val{ background:rgba(var(--text-base),.05); border:1px solid rgba(var(--text-base),.14); border-radius:10px; padding:20px 18px; }
+  .cv-val .k{ font-size:13px; color:var(--blue-soft); margin-bottom:12px; }
+  .cv-val .row{ display:flex; justify-content:space-between; font-size:13px; padding:8px 0; border-top:1px solid var(--line-deep); gap:8px; }
+  .cv-val .row:first-of-type{ border-top:none; }
+  .cv-val .row span:first-child{ color:var(--text-faint); flex-shrink:0; }
+  .cv-val .row span:last-child{ color:rgba(var(--text-base),.6); text-align:right; }
+
+  .cv-hitl-row{ margin-top:28px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .cv-hitl{ padding:16px 0; border-top:1px solid var(--line-deep); }
+  .cv-hitl .n{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--blue-soft); margin-bottom:8px; }
+  .cv-hitl b{ display:block; font-size:14.5px; margin-bottom:6px; }
+  .cv-hitl p{ font-size:13px; color:rgba(var(--text-base),.6); line-height:1.6; }
+
+  .cv-cta{ margin-top:32px; padding-top:24px; border-top:1px solid var(--line-deep); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; }
+
+  .ci-grid{ display:grid; grid-template-columns:.75fr 1.25fr; gap:60px; align-items:start; }
+  .ci-side h3{ font-size:clamp(28px,3.4vw,42px); font-weight:900; line-height:1.28; letter-spacing:-.01em; color:var(--blue-soft); margin-top:6px; }
+  .ci-section{ margin-bottom:52px; }
+  .ci-section:last-child{ margin-bottom:0; }
+  .ci-section h4{ font-size:16px; font-weight:800; color:var(--white); margin-bottom:12px; }
+  .ci-section p{ font-size:13.5px; line-height:1.75; color:rgba(var(--text-base),.6); max-width:560px; }
+  .ci-keyhole{ margin-top:22px; border-radius:12px; overflow:hidden; }
+  .ci-keyhole svg{ width:100%; height:auto; display:block; }
+  .ci-color-row{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .ci-color-card{ border-radius:10px; padding:18px 16px; color:#fff; font-weight:800; font-size:13.5px; }
+  .ci-color-info{ margin-top:12px; }
+  .ci-color-info .row{ display:flex; justify-content:space-between; font-size:11.5px; padding:7px 0; border-top:1px solid var(--line-deep); color:var(--text-faint); }
+  .ci-color-info .row:first-child{ border-top:none; }
+  .ci-color-info .row span:last-child{ color:var(--white); font-family:'IBM Plex Mono', monospace; }
+  .ci-logo-row{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .ci-logo-swatch{ border-radius:10px; padding:36px; display:flex; align-items:center; justify-content:center; }
+  .ci-logo-swatch img{ height:30px; width:auto; }
+
+  .ci-subtitle{ font-size:19px; font-weight:800; color:var(--blue-soft); margin-bottom:14px; }
+
+  .ci-icon-stats{
+    margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+    padding:32px; border-radius:14px; background:linear-gradient(135deg,#26344f,#141b2c);
+  }
+  .ci-icon-badge{ position:relative; width:52px; height:52px; margin-bottom:16px; }
+  .ci-icon-badge::before{
+    content:''; position:absolute; left:10px; top:0; width:38px; height:38px;
+    border-radius:50%; background:var(--blue); opacity:.85;
+  }
+  .ci-icon-badge svg{ position:relative; width:100%; height:100%; }
+  .ci-icon-stat .num{ font-family:'IBM Plex Mono', monospace; font-size:26px; font-weight:700; color:#fff; }
+  .ci-icon-stat .label{ margin-top:4px; font-size:13px; color:rgba(255,255,255,.7); }
+
+  .ci-two-col{ margin-top:56px; display:grid; grid-template-columns:.6fr 1.4fr; gap:60px; }
+  .ci-two-col-left .ci-eyebrow{ display:flex; align-items:center; gap:8px; font-size:19px; font-weight:800; color:var(--white); }
+  .ci-two-col-left .ci-eyebrow .dot{ width:8px; height:8px; border-radius:50%; background:var(--blue); flex-shrink:0; }
+  .ci-two-col-left h4{ font-size:clamp(26px,3vw,36px); font-weight:900; color:var(--blue-soft); line-height:1.25; margin-top:8px; }
+  .ci-two-col-left p{ margin-top:16px; font-size:13.5px; line-height:1.7; color:rgba(var(--text-base),.6); }
+  .ci-two-col-left .ci-illust{
+    margin-top:28px; width:120px; height:120px; padding:14px; box-sizing:border-box;
+    background:#eef2f8; border-radius:16px;
+  }
+  .ci-two-col-right p{ font-size:13px; line-height:1.85; color:rgba(var(--text-base),.6); margin-bottom:16px; }
+  .ci-two-col-right p:last-child{ margin-bottom:0; }
+  .ci-two-col-right b{ color:var(--white); }
+  .cv-contact{ font-size:13px; color:var(--text-faint); line-height:1.8; }
+  .cv-contact b{ color:rgba(var(--text-base),.7); }
+
+  /* ================= TEAM (#s5) — OUR TEAM ================= */
+  #s5{ background:var(--bg-deep); color:var(--white); }
+  .close-wrap{ max-width:1000px; margin:0 auto; width:100%; text-align:left; }
+  .close-eyebrow{ font-size:14.5px; color:var(--blue); margin-bottom:20px; }
+  .close-h{ font-size:clamp(29px,4.3vw,53px); font-weight:900; line-height:1.32; letter-spacing:-.01em; }
+  .close-h em{ font-style:normal; color:var(--blue); }
+  .close-sub{ margin-top:26px; font-size:16px; line-height:1.85; color:rgba(var(--text-base),.62); max-width:640px; }
+  .close-cta{ margin-top:40px; display:flex; gap:14px; }
+  .close-cta .btn-primary{ background:var(--blue); }
+  .close-cta .btn-primary:hover{ background:var(--blue-deep); }
+  .close-cta .btn-ghost{ color:var(--white); border-color:rgba(var(--text-base),.25); }
+  .close-cta .btn-ghost:hover{ border-color:var(--white); }
+
+  .team-statement{ margin-top:28px; font-size:16px; line-height:1.85; color:rgba(var(--text-base),.62); max-width:700px; }
+  .team-statement b{ color:var(--blue-soft, var(--blue)); font-weight:800; }
+
+  .foot{
+    margin-top:auto; padding-top:64px; display:flex; justify-content:space-between;
+    align-items:flex-end; border-top:1px solid rgba(var(--text-base),.12); padding-top:24px; margin-top:70px;
+    font-size:14px; color:rgba(var(--text-base),.4); flex-wrap:wrap; gap:14px;
+  }
+
+  /* ================= SECTION 6 — CONTACT US ================= */
+  #s6{ background:var(--bg-deep); color:var(--white); padding-top:120px; padding-bottom:70px; justify-content:flex-start; }
+  .contact-panel{
+    max-width:1000px; margin:0 auto; width:100%;
+  }
+  .contact-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:44px; }
+  .contact-form-col h3{ font-size:clamp(29px,4.3vw,53px); font-weight:900; line-height:1.32; letter-spacing:-.01em; color:var(--white); }
+  .contact-form-col > p{ margin-top:12px; font-size:15px; color:rgba(var(--text-base),.6); line-height:1.7; }
+  .contact-icon{ margin-top:28px; width:90px; height:auto; }
+  .ci-icon-stroke{ stroke:var(--white); }
+
+  .contact-form-col form{ margin-top:0; display:flex; flex-direction:column; gap:14px; }
+  .field label{ display:block; font-size:13.5px; color:rgba(var(--text-base),.55); margin-bottom:7px; }
+  .field label i{ color:var(--blue); font-style:normal; margin-left:2px; }
+  .contact-form-col input, .contact-form-col textarea{
+    width:100%; background:var(--input-bg); border:1px solid rgba(var(--text-base),.12); border-radius:8px; padding:13px 14px;
+    font-size:15px; font-family:'Noto Sans KR', sans-serif; color:var(--white); resize:vertical;
+  }
+  .contact-form-col input::placeholder, .contact-form-col textarea::placeholder{ color:rgba(var(--text-base),.25); }
+  .contact-form-col input:focus, .contact-form-col textarea:focus{ outline:none; border-color:var(--blue); }
+  .contact-form-col button[type="submit"]{
+    margin-top:4px; width:100%; text-align:center; justify-content:center;
+  }
+  .contact-note{ margin-top:8px; font-size:13px; color:rgba(var(--text-base),.4); }
+
+  .contact-visit{ margin-top:48px; padding-top:36px; border-top:1px solid rgba(var(--text-base),.1); }
+  .contact-visit h4{ font-size:26px; font-weight:900; color:var(--white); margin-bottom:20px; }
+  .contact-map{
+    position:relative; display:block; width:100%; aspect-ratio:1280/500; border-radius:10px; overflow:hidden;
+    background:linear-gradient(160deg,#20293c 0%,#141a29 100%);
+  }
+  .contact-map img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .contact-office{
+    margin-top:22px; display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;
+  }
+  .contact-office b{ display:block; font-size:15px; color:var(--white); margin-bottom:8px; }
+  .contact-office p{ font-size:14px; color:rgba(var(--text-base),.6); line-height:1.8; }
+  .contact-office .tf{ display:flex; align-items:center; gap:6px; margin-top:4px; color:var(--white); }
+  .contact-office .tf b.badge{
+    width:18px; height:18px; border-radius:50%; background:var(--blue); color:#fff;
+    font-size:10px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; margin:0;
+  }
+  .contact-office a.maplink{
+    align-self:flex-start; display:inline-flex; align-items:center; gap:6px;
+    font-size:13.5px; font-weight:700; color:var(--white); text-decoration:none;
+    border:1px solid rgba(var(--text-base),.2); border-radius:20px; padding:8px 16px; white-space:nowrap;
+  }
+  .contact-office a.maplink:hover{ border-color:var(--white); }
+  .naver-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:15px; height:15px; border-radius:3px; background:#03C75A; color:#fff;
+    font-size:10px; font-weight:900; font-family:'Noto Sans KR', sans-serif; flex-shrink:0;
+  }
+
+  .site-footer{ margin-top:64px; padding-top:48px; border-top:1px solid var(--line-deep); }
+  .footer-cols{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+  .footer-col h5{ font-size:17px; font-weight:800; color:var(--white); margin-bottom:16px; }
+  .footer-col a{ display:block; font-size:13.5px; color:rgba(var(--text-base),.55); text-decoration:none; padding:6px 0; }
+  .footer-col a:hover{ color:var(--white); }
+  .footer-bottom{
+    margin-top:48px; padding-top:24px; border-top:1px solid var(--line-deep);
+    font-size:12.5px; color:rgba(var(--text-base),.45); line-height:1.8;
+  }
+  .footer-bottom .copy{ margin-top:6px; font-weight:800; color:rgba(var(--text-base),.6); }
+
+  @media (max-width:880px){
+    .contact-panel{ padding:32px 24px; }
+    .contact-grid{ grid-template-columns:1fr; gap:28px; }
+    .contact-office{ flex-direction:column; }
+    .footer-cols{ grid-template-columns:1fr 1fr; gap:32px 24px; }
+  }
+
+  @media (max-width: 880px){
+    section{ padding:100px 24px 60px; justify-content:flex-start; }
+    .proj-grid{ grid-template-columns:1fr 1fr; }
+    .sol-wrap{ grid-template-columns:1fr; }
+    .sol-visual{ width:100%; max-width:460px; margin:28px auto 0; }
+    .cv-stat-row, .cv-prob-row, .cv-val-row, .cv-hitl-row{ grid-template-columns:1fr; }
+    #s2 .cv-prob-row{ grid-template-columns:1fr; }
+    #s2 .proof-open{ flex-wrap:wrap; }
+    #s2 .proof-open span{ margin-left:0; width:100%; }
+    .cv-compare-head, .cv-compare-row{ grid-template-columns:1fr; gap:8px; }
+    .ci-grid{ grid-template-columns:1fr; gap:32px; }
+    .ci-color-info .row{ flex-direction:column; align-items:flex-start; gap:3px; }
+    .ci-color-break{ display:block; }
+    .ci-two-col{ grid-template-columns:1fr; gap:28px; }
+    .ci-icon-stats{ grid-template-columns:1fr; gap:24px; }
+    .cv-pillars2{ grid-template-columns:repeat(2,1fr); }
+    .topmenu{ display:none; }
+    .hamburger{ display:flex; }
+    .header-bar{ padding-top:18px; padding-bottom:18px; }
+  }
+
+  /* ================================================================
+     PERSPECTIVE 배경 — "밤하늘의 잔광"
+     히어로가 별밤이라면, 여기서는 하늘이 물러나며 빛만 남는다.
+     s1c1 → s1c2 → s1c4 로 갈수록 빛이 옅어지고, s1c7 에서
+     별자리(#galaxySvg)로 다시 돌아온다.
+
+     글자 겹침 방지 원칙:
+       · 별먼지는 mask 로 중앙(콘텐츠 열)을 완전히 비우고 가장자리에만 남긴다
+       · 잔광은 모두 콘텐츠 열 바깥 모서리에 앵커
+       · 별먼지 최대 알파 0.34, 깜빡임 없음(정적)
+       · 섹션 자식은 z-index:1 로 항상 배경 위
+     ================================================================ */
+  #s1c1, #s1c2, #s1c4, #s1c7{ position:relative; overflow:hidden; }
+  #s1c1 > *:not(.dust), #s1c2 > *:not(.dust),
+  #s1c4 > *:not(.dust), #s1c7 > *:not(.dust){ position:relative; z-index:1; }
+
+  /* 별먼지 캔버스 — 중앙은 mask 로 비어 있다 */
+  .dust{
+    position:absolute; inset:0; width:100%; height:100%;
+    z-index:0; pointer-events:none; opacity:1;
+    -webkit-mask-image:linear-gradient(180deg, #000 0%, rgba(0,0,0,.88) 42%, rgba(0,0,0,.4) 76%, transparent 100%);
+            mask-image:linear-gradient(180deg, #000 0%, rgba(0,0,0,.88) 42%, rgba(0,0,0,.4) 76%, transparent 100%);
+  }
+
+  /* 섹션별 잔광 — 앵커를 옮겨 같은 화면이 반복되지 않게 한다 */
+  #s1c1{
+    background:
+      radial-gradient(760px 430px at 90% 4%,  rgba(23,195,178,.20), transparent 62%),
+      radial-gradient(700px 400px at 4% 92%,  rgba(26,135,254,.18), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c2{
+    background:
+      radial-gradient(980px 300px at 50% -6%, rgba(26,135,254,.20), transparent 66%),
+      radial-gradient(640px 360px at 97% 94%, rgba(23,195,178,.14), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c4{
+    background:
+      radial-gradient(740px 420px at 3% 8%,   rgba(26,135,254,.18), transparent 62%),
+      radial-gradient(780px 440px at 99% 86%, rgba(23,195,178,.13), transparent 62%),
+      var(--bg-deep);
+  }
+  #s1c7{
+    background:
+      radial-gradient(1150px 520px at 50% 110%, rgba(26,135,254,.18), transparent 62%),
+      radial-gradient(700px 380px at 94% 2%,   rgba(23,195,178,.16), transparent 60%),
+      var(--bg-deep);
+  }
+
+  /* ---------- 챕터 리듬 — 장(章)마다 바닥 톤을 바꿔 같은 화면이 길게 이어지지 않게 한다 ----------
+     기준 톤(--bg-deep) ↔ 한 단계 올린 패널 톤(--panel-deep) 을 교대시키고,
+     성과·사람이 나오는 두 장만 강조 톤으로 눌러 준다. */
+
+  /* SOLUTION 01–04 · ARCHIVE — 한 단계 올린 바닥 */
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:var(--panel-deep); }
+
+  /* 강조 ③ PRODUCTS — 제품이 처음 나오는 장.
+     s3c8 의 다크 밴드를 되풀이하지 않고, 패널 톤 위에 브랜드 틴트만 얹어 장을 연다. */
+  #s3p{
+    background:
+      radial-gradient(1100px 520px at 12% -10%, rgba(26,135,254,.17), transparent 62%),
+      radial-gradient(860px 440px at 92% 104%,  rgba(23,195,178,.12), transparent 60%),
+      var(--panel-deep);
+  }
+
+  /* 강조 ① SOLUTION 05 — 성과가 나오는 장 */
+  #s3c8{
+    background:
+      radial-gradient(1200px 560px at 50% -12%, rgba(26,135,254,.26), transparent 64%),
+      radial-gradient(820px 420px at 6% 104%,   rgba(23,195,178,.17), transparent 62%),
+      #070b14;
+  }
+  /* 강조 ② TEAM — 사람이 나오는 장 */
+  #s5{
+    background:
+      radial-gradient(1000px 520px at 88% -8%, rgba(23,195,178,.20), transparent 62%),
+      radial-gradient(900px 460px at 4% 100%,  rgba(26,135,254,.20), transparent 62%),
+      #070b14;
+  }
+
+  /* 큰 제목만 아주 옅은 그림자 — 가장자리 별먼지 위에서도 또렷하게 */
+  #s1c1 .cv-block h3, #s1c2 .cv-block h3,
+  #s1c4 .cv-block h3, #s1c7 .cv-block h3{ text-shadow:0 2px 16px rgba(5,8,15,.5); }
+
+  @media (max-width:880px){
+    /* 좁은 화면은 콘텐츠가 폭을 다 쓰므로 별먼지를 더 걷어낸다 */
+    .dust{ opacity:.5; }
+  }
+
+  /* ---------- 테마 토글 — 변수만 쓰므로 라이트에서 자동 대응 ---------- */
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; margin-left:18px; padding:0; flex-shrink:0;
+    background:transparent; border:1px solid rgba(var(--text-base),.3);
+    border-radius:10px; color:rgba(var(--text-base),.88); cursor:pointer;
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .theme-toggle:hover{ border-color:var(--blue); color:var(--blue-soft); background:rgba(26,135,254,.08); }
+  .theme-toggle:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+  .theme-toggle svg{ display:block; }
+  /* 바꿀 대상을 보여 준다 — 다크에서는 해, 라이트에서는 달 */
+  .theme-toggle .tt-moon{ display:none; }
+  [data-theme="light"] .theme-toggle .tt-moon{ display:block; }
+  [data-theme="light"] .theme-toggle .tt-sun{ display:none; }
+  @media (max-width:880px){ .theme-toggle{ margin-left:10px; width:36px; height:36px; } }
+
+  /* ================================================================
+     AI 어시스턴트 — 우하단 런처 + 대화 패널
+     답변을 만드는 쪽은 window.TobeChat 어댑터 하나로 모아 뒀다(하단 스크립트 주석).
+     ================================================================ */
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  .chat-fab{
+    position:fixed; right:clamp(16px,2.5vw,28px); bottom:clamp(16px,2.5vw,28px);
+    z-index:52; width:58px; height:58px; padding:0; border:none; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:#ffffff;
+    /* 런처는 브랜드 액센트라 테마와 무관하게 같은 색으로 둔다 — 변수를 쓰면 라이트에서 색이 죽는다 */
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 48%,#17c3b2 100%);
+    box-shadow:0 10px 30px rgba(26,135,254,.35), 0 2px 8px rgba(0,0,0,.28);
+    transition:transform .22s ease, box-shadow .22s ease, opacity .2s ease;
+  }
+  .chat-fab:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 14px 38px rgba(124,92,252,.45); }
+  .chat-fab:focus-visible{ outline:2px solid var(--blue-soft); outline-offset:3px; }
+  .chat-fab svg{ display:block; position:relative; z-index:1; }
+  .chat-fab .cf-close{ display:none; }
+  .chat-fab.open .cf-open{ display:none; }
+  .chat-fab.open .cf-close{ display:block; }
+  /* 오로라 링 — 버튼 뒤에서 계속 돈다. 가만히 있는 화면에서 여기만 움직인다 */
+  .chat-fab::after{
+    content:""; position:absolute; inset:-3px; border-radius:50%; z-index:0; pointer-events:none;
+    background:conic-gradient(from 0deg,#4fa4ff,#7c5cfc,#22D3A5,#4fa4ff);
+    filter:blur(5px); opacity:.8;
+    animation:chatAurora 4.5s linear infinite;
+  }
+  @keyframes chatAurora{ to{ transform:rotate(360deg); } }
+
+  .chat-panel{
+    position:fixed; z-index:53;
+    right:clamp(16px,2.5vw,28px); bottom:calc(clamp(16px,2.5vw,28px) + 72px);
+    width:min(392px, calc(100vw - 32px));
+    height:min(608px, calc(100vh - 150px));   /* 추천 질문 5개가 들어가도 대화 영역이 좁아지지 않게 */
+    display:flex; flex-direction:column; overflow:hidden;
+    background:var(--panel-deep); border:1px solid rgba(var(--text-base),.12);
+    border-radius:18px; box-shadow:0 30px 70px rgba(0,0,0,.5);
+    opacity:0; transform:translateY(12px) scale(.98); pointer-events:none;
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .chat-panel.open{ opacity:1; transform:none; pointer-events:auto; }
+
+  .chat-head{
+    display:flex; align-items:center; gap:12px; flex-shrink:0;
+    padding:15px 13px 15px 17px; border-bottom:1px solid rgba(var(--text-base),.10);
+  }
+  .chat-avatar{
+    width:38px; height:38px; flex-shrink:0; border-radius:12px;
+    display:flex; align-items:center; justify-content:center; color:#ffffff;
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 48%,#17c3b2 100%);
+  }
+  .chat-id{ flex:1; min-width:0; }
+  .chat-id b{ display:block; font-size:15px; font-weight:800; color:var(--white); letter-spacing:.01em; }
+  .chat-status{ display:flex; align-items:center; gap:6px; margin-top:2px; font-size:12px; color:rgba(var(--text-base),.5); }
+  .chat-status i{ width:6px; height:6px; border-radius:50%; background:var(--sv-mint,#22D3A5); flex-shrink:0; }
+  .chat-close{
+    width:34px; height:34px; flex-shrink:0; padding:0; border:none; border-radius:9px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:transparent; color:rgba(var(--text-base),.55);
+    transition:background .2s ease, color .2s ease;
+  }
+  .chat-close:hover{ background:rgba(var(--text-base),.08); color:var(--white); }
+  .chat-close:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+  .chat-log{
+    flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain;
+    padding:18px; display:flex; flex-direction:column; gap:11px;
+  }
+  .chat-log::-webkit-scrollbar{ width:6px; }
+  .chat-log::-webkit-scrollbar-thumb{ background:rgba(var(--text-base),.16); border-radius:3px; }
+
+  .chat-msg{
+    max-width:86%; padding:12px 14px; border-radius:14px;
+    font-size:14px; line-height:1.72; white-space:pre-wrap; word-break:break-word;
+  }
+  .chat-msg.bot{
+    align-self:flex-start; border-bottom-left-radius:5px;
+    background:rgba(var(--text-base),.06); border:1px solid rgba(var(--text-base),.09);
+    color:rgba(var(--text-base),.9);
+  }
+  .chat-msg.bot b{ font-weight:800; color:var(--white); }
+  .chat-msg.user{ align-self:flex-end; border-bottom-right-radius:5px; background:var(--blue); color:#ffffff; }
+  .chat-msg.err{ background:rgba(220,80,80,.10); border-color:rgba(220,80,80,.32); }
+
+  /* RAG 근거 — 응답에 sources 가 실려 오면 답변 밑에 붙는다 */
+  .chat-src{ align-self:flex-start; max-width:86%; display:flex; flex-wrap:wrap; gap:6px; margin-top:-3px; }
+  .chat-src a{
+    font-size:11.5px; font-weight:600; text-decoration:none; padding:5px 10px; border-radius:999px;
+    border:1px solid rgba(var(--text-base),.16); color:rgba(var(--text-base),.6);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .chat-src a:hover{ border-color:var(--blue); color:var(--blue-soft); }
+
+  .chat-typing{
+    align-self:flex-start; display:flex; align-items:center; gap:4px;
+    padding:14px 15px; border-radius:14px; border-bottom-left-radius:5px;
+    background:rgba(var(--text-base),.06); border:1px solid rgba(var(--text-base),.09);
+  }
+  .chat-typing span{ width:6px; height:6px; border-radius:50%; background:rgba(var(--text-base),.45); animation:chatDot 1.2s infinite ease-in-out; }
+  .chat-typing span:nth-child(2){ animation-delay:.16s; }
+  .chat-typing span:nth-child(3){ animation-delay:.32s; }
+  @keyframes chatDot{ 0%,60%,100%{ transform:translateY(0); opacity:.4; } 30%{ transform:translateY(-4px); opacity:1; } }
+
+  .chat-chips{ flex-shrink:0; display:flex; flex-wrap:wrap; gap:6px; padding:0 18px 12px; }
+  .chat-chips button{
+    font-family:inherit; font-size:12px; font-weight:600; padding:6px 11px; border-radius:999px;
+    cursor:pointer; background:transparent; border:1px solid rgba(var(--text-base),.18);
+    color:rgba(var(--text-base),.66);
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .chat-chips button:hover{ border-color:var(--blue); color:var(--blue-soft); background:rgba(26,135,254,.08); }
+  .chat-chips button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+  .chat-form{
+    flex-shrink:0; display:flex; align-items:flex-end; gap:10px;
+    padding:12px 14px 10px 16px; border-top:1px solid rgba(var(--text-base),.10);
+    background:rgba(var(--text-base),.02);
+  }
+  .chat-form textarea{
+    flex:1; min-width:0; resize:none; max-height:112px; font-family:inherit;
+    font-size:14px; line-height:1.6; padding:11px 12px; border-radius:12px;
+    background:var(--input-bg); border:1px solid rgba(var(--text-base),.14); color:var(--white);
+  }
+  .chat-form textarea:focus{ outline:none; border-color:var(--blue); }
+  .chat-send{
+    width:42px; height:42px; flex-shrink:0; padding:0; border:none; border-radius:12px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; color:#ffffff;
+    background:linear-gradient(135deg,#1a87fe 0%,#7c5cfc 55%,#17c3b2 100%);
+    transition:opacity .2s ease, transform .15s ease;
+  }
+  .chat-send:hover:not(:disabled){ transform:translateY(-1px); }
+  .chat-send:disabled{ opacity:.35; cursor:not-allowed; }
+  .chat-send:focus-visible{ outline:2px solid var(--blue-soft); outline-offset:2px; }
+
+  .chat-note{ flex-shrink:0; padding:0 16px 12px; font-size:11px; line-height:1.6; color:rgba(var(--text-base),.34); }
+  .chat-note a{ color:rgba(var(--text-base),.55); }
+
+  @media (max-width:640px){
+    .chat-fab{ width:52px; height:52px; }
+    .chat-fab.open{ opacity:0; pointer-events:none; }   /* 패널이 화면을 덮으니 런처는 비운다 */
+    .chat-panel{ right:10px; left:10px; bottom:10px; width:auto; height:min(80vh, calc(100vh - 88px)); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .chat-fab::after{ animation:none; }
+    .chat-fab, .chat-panel, .chat-send{ transition:none; }
+    .chat-typing span{ animation:none; }
+  }
+</style>
+
+<!-- 라이트 테마 — media 로 켜고 끈다. 기본은 꺼짐(다크). 내용은 기존 화이트 빌드와 동일 -->
+<style id="themeLight" media="not all">
+  /* ================================================================
+     WHITE VERSION (2안) — 라이트 팔레트 · 풀버전
+     다크 원본의 반전이 아니라, 밝은 화면의 명도 위계로 다시 잡음.
+       · 바탕은 순백이 아닌 한랭 오프화이트(브랜드 블루 쪽 미세 편향)
+       · 카드는 순백 + 헤어라인 — 밝은 배경에서 '떠오름'은 대비로 표현
+       · 액센트는 흰 배경 대비 4.5:1을 넘도록 재보정
+     ================================================================ */
+  :root{
+    --ink:#0E1420;
+    --ink-soft:#5A6675;
+    --bg:#F5F8FC;
+    --bg-deep:#F5F8FC;
+    --blue:#0F5FD6;
+    --blue-deep:#0A47A3;
+    --blue-soft:#1A6FD8;
+    --teal:#0B7A6D;
+    --white:#0E1420;
+    --input-bg:#FFFFFF;
+    --line:rgba(14,20,32,.10);
+    --text-base:14,20,32;
+    --pillar-overlay:rgba(255,255,255,.92);
+    --cl-mint:#0B7A6D;
+    --cl-amber:#8A5A00;
+    --cl-card:#FFFFFF;
+    --cl-card2:#F0F5FB;
+    --cl-line:#D9E2ED;
+    --cl-line2:#E7EEF6;
+    color-scheme:light;
+  }
+
+  /* 다크 고정 블록 무력화 — id 특정도가 같아야 이기므로 뒤에서 재선언 */
+  #s1, #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{
+    --bg-deep:#F5F8FC;
+    --text-base:14,20,32;
+    --white:#0E1420;
+    --input-bg:#FFFFFF;
+    --line:rgba(14,20,32,.10);
+    color-scheme:light;
+  }
+
+  /* ---------- 히어로 ---------- */
+  #s1{
+    background:
+      radial-gradient(1100px 640px at 12% -8%, rgba(15,95,214,.13), transparent 62%),
+      radial-gradient(900px 560px at 96% 92%, rgba(11,122,109,.09), transparent 58%),
+      linear-gradient(165deg,#FFFFFF 0%,#EEF4FD 55%,#FFFFFF 100%);
+  }
+  #s1 .hero-bg line{ stroke:#0F5FD6; stroke-opacity:.14; }
+  #s1 .hero-bg circle[fill="#0F5FD6"]{ fill:#0F5FD6; }
+  #s1 .hero-bg circle[fill="#0B7A6D"]{ fill:#0B7A6D; }
+
+  /* ---------- 헤더 ---------- */
+  /* 헤더 바탕이 본문(--bg #F5F8FC)·히어로 상단(#FFFFFF)과 거의 같아 바가 사라져 보였다.
+     한 단계 짙은 한랭 톤으로 내리고 경계선·그림자를 세워 어느 섹션 위에서도 바로 읽히게 한다. */
+  .header-bar{
+    background:rgba(226,234,246,.92); backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(14,20,32,.10);
+    box-shadow:0 1px 0 rgba(14,20,32,.03), 0 6px 20px rgba(14,20,32,.05);
+  }
+  .brandmark{ --lg-t:#1A87FE; --lg-ink:#2B2B2B; --lg-ax:#1A87FE; --lg-tag:rgba(43,43,43,.72); }
+  .topmenu a{ color:var(--ink-soft); }
+  .topmenu a:hover{ color:var(--ink); }
+  .hamburger span{ background:var(--ink); }
+  .mobile-menu{ background:rgba(245,248,252,.98); }
+  .mobile-menu a{ color:var(--ink); }
+
+  /* ---------- 카드 계열 — 오프화이트 위 순백 + 헤어라인 + 옅은 그림자 ---------- */
+  .pillars div, .pillars a,
+  .trend-track-card,
+  .trend-split,
+  .cv-prob,
+  .cv-val,
+  .cv-stat,
+  .cl-wf .c,
+  .okf-node,
+  .okf-answer,
+  .okf-slot,
+  .model-card,
+  .model-scroll-btn,
+  .ba-mini,
+  .answer-card,
+  .pa-entry{
+    background:#FFFFFF;
+    border-color:rgba(14,20,32,.10);
+    box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04);
+  }
+  .trend-track-card .tt-flow{ border-top-color:rgba(14,20,32,.10); border-bottom-color:rgba(14,20,32,.10); }
+  .okf-box{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 1px 2px rgba(15,95,214,.06), 0 10px 30px rgba(15,95,214,.07); }
+  .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  .okf-output-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .okf-final-tag span{ background:#FFFFFF; }
+  #s2 .proof-open{ background:#FFFFFF; border-color:var(--blue); box-shadow:0 8px 24px rgba(15,95,214,.06); }
+  .tag-pill{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .prd-card{ background:#FFFFFF; border-color:rgba(14,20,32,.10); box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04); }
+  .badge-pill{ background:#FFFFFF; }
+  .galaxy-detail{ background:#FFFFFF; box-shadow:0 8px 24px rgba(15,95,214,.06); }
+  .cl-wf .c.last{ background:#FFF8EC; border-color:#E3C489; }
+
+  /* 프로젝트 아카이브 필터 — 활성 버튼은 짙게 */
+  .pa-filters button{ background:#FFFFFF; border-color:rgba(14,20,32,.14); }
+  .pa-filters button.active{ background:var(--ink); border-color:var(--ink); color:#FFFFFF; }
+
+  /* 문의 폼 */
+  input, textarea, select{ background:#FFFFFF; border-color:rgba(14,20,32,.16); color:var(--ink); }
+  ::placeholder{ color:rgba(14,20,32,.38); }
+
+  /* ---------- 은하 별자리 (#s1c7) — 발광을 밝은 배경용으로 재보정 ---------- */
+  #glowPeak stop:nth-child(1){ stop-color:#0F5FD6; stop-opacity:.30; }
+  #glowPeak stop:nth-child(2){ stop-color:#0F5FD6; stop-opacity:.15; }
+  #glowPeak stop:nth-child(3){ stop-color:#0F5FD6; stop-opacity:0; }
+  #glowNew  stop:nth-child(1){ stop-color:#0B7A6D; stop-opacity:.26; }
+  #glowNew  stop:nth-child(2){ stop-color:#0B7A6D; stop-opacity:.13; }
+  #glowNew  stop:nth-child(3){ stop-color:#0B7A6D; stop-opacity:0; }
+  #glowDim  stop:nth-child(1){ stop-color:#8894A6; stop-opacity:.22; }
+  #glowDim  stop:nth-child(2){ stop-color:#8894A6; stop-opacity:.11; }
+  #glowDim  stop:nth-child(3){ stop-color:#8894A6; stop-opacity:0; }
+  #band stop:nth-child(1){ stop-color:#8894A6; stop-opacity:.10; }
+  #band stop:nth-child(2){ stop-color:#0F5FD6; stop-opacity:.13; }
+  #band stop:nth-child(3){ stop-color:#0B7A6D; stop-opacity:.10; }
+  #galaxySvg line{ stroke:rgba(14,20,32,.16); }
+
+  /* ---------- 밝은 배경에서 흐려지는 보조 텍스트 보정 ---------- */
+  .cl-desc, .close-sub, .cv-lead, .okf-caption, .cl-wf .d,
+  .trend-track-card p, .pa-lead, .sec-desc, .team-statement{ color:rgba(14,20,32,.62); }
+  .cl-brand-en, .cl-meta, .mc-date, .pa-entry-date{ color:rgba(14,20,32,.45); }
+
+  /* 카드가 아닌 것들 — 배경 없이 색만 */
+  .pa-stat span{ color:rgba(14,20,32,.5); }
+  .cv-hitl{ border-top-color:rgba(14,20,32,.12); }
+  .pa-stat-row{ border-bottom-color:rgba(14,20,32,.12); }
+
+  /* ---------- CSS에 하드코딩된 다크 배경 — 라이트 대응 ----------
+     토큰을 안 타고 hex로 박혀 있어 팔레트 교체로는 안 바뀌던 것들.
+     SOLUTION 02(#s3d2)에서 글자가 묻히던 원인. */
+  .cl-panel.gen{ background:#EAF7F3; border:1px solid #A9DBD0; }
+  .cl-panel.human{ background:#FDF4E6; border:1px solid #E6C48D; }
+  .cl-step.hl{ background:#EAF1FC; border-color:var(--blue); }
+  .cl-bar .b80{ background:#0B7A6D; border-color:#0B7A6D; color:#FFFFFF; }
+  .cl-bar .b20{ background:#8A5A00; border-color:#8A5A00; color:#FFFFFF; }
+  .cl-mini-n.src{ color:#FFFFFF; background:var(--blue); border-color:var(--blue); }
+  .cl-mini-n.out{ color:#FFFFFF; background:var(--teal); border-color:var(--teal); }
+  .cl-addflow .a.done{ background:#EAF7F3; border-color:#A9DBD0; }
+  .cl-contact{ background:#EAF1FC; }
+  .cl-cinfo a.tel{ color:var(--ink); }
+  .mobile-menu-close{ background:rgba(14,20,32,.06); color:var(--ink); }
+
+  /* ================================================================
+     CI 정합 (Pantone 2727C #1A87FE / Pantone 419C #2B2B2B)
+       · #1A87FE 는 '브랜드 색'이지 '본문 글자색'이 아니다 — 흰 배경 3.6:1.
+         채움 · 보더 · 큰 활자 · 그래픽에는 CI 원색 그대로 쓰고,
+         작은 글자에만 명도를 낮춘 --blue-ink 를 쓴다.
+       · Secondary #2B2B2B 를 중립 다크(잉크)로 채택.
+     ================================================================ */
+  :root{
+    --blue:#1A87FE;        /* CI Primary — 원색 그대로 */
+    --blue-ink:#0F5FD6;    /* 작은 글자 전용 (흰 배경 5.8:1) */
+    --ink:#2B2B2B;         /* CI Secondary */
+    --text-base:43,43,43;
+  }
+  #s1, #s2, #s4, #s5, #s6,
+  #s1c1, #s1c2, #s1c4, #s1c7,
+  #s3d1, #s3d2, #s3c4, #s3c5, #s3c8, #s3p{
+    --text-base:43,43,43;
+    --white:#2B2B2B;
+    --line:rgba(43,43,43,.10);
+  }
+
+  /* 작은 글자는 딥 톤으로 — 가독성 확보 */
+  .sec-eyebrow, .close-eyebrow, .sol-tag, .cv-sub, .cl-brand,
+  .pa-entry-client, .cl-step .n, .cv-prob .n,
+  .galaxy-detail .gd-tag, .okf-final-tag span, #s2 .proof-open span,
+  .cl-mini-a, .cl-addflow .n, .cl-contact .k, .pillars b,
+  .okf-std-col.is-okf .okf-std-label, .okf-file .fpath, .okf-file .fkey,
+  .okf-std-arrow, .okf-std-note b,
+  a.okf-answer .oa-eyebrow::after{ color:var(--blue-ink); }
+
+  /* ---------- 임팩트 ① 브랜드 블루에 큰 자리를 준다 ---------- */
+  .hero-stats b{ color:var(--blue); font-weight:700; }
+  .pa-stat b{ color:var(--blue); }
+  .btn-primary{ background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 8px 22px rgba(26,135,254,.28); }
+  .btn-primary:hover{ background:#0F5FD6; border-color:#0F5FD6; }
+  .okf-slot.active{ background:var(--blue); border-color:var(--blue); color:#fff; }
+  h1.hero-h em{ color:var(--blue); }
+
+  /* ---------- 임팩트 ② 결론 장을 다크 밴드로 — 흰 페이지의 앵커 ----------
+     CI 가이드가 '배경색에 따른 활용안'으로 다크 배경 로고를 규정하므로
+     Secondary(#2B2B2B) 위 화이트 로고/텍스트는 브랜드 규정 안이다. */
+  #s3c8{
+    --bg-deep:#2B2B2B;
+    --text-base:255,255,255;
+    --white:#FFFFFF;
+    --line:rgba(255,255,255,.12);
+    background:#2B2B2B;
+    color:#FFFFFF;
+  }
+  #s3c8 .cv-sub{ color:#6FB4FF; }
+  #s3c8 .cv-lead{ color:rgba(255,255,255,.68); }
+  #s3c8 .btn-primary{ box-shadow:0 10px 28px rgba(26,135,254,.4); }
+
+  /* 레이아웃 래퍼에는 배경을 주지 않는다 — .contact-panel 은 max-width 컨테이너일 뿐 */
+  .contact-map{ background:linear-gradient(160deg,#EEF3FA 0%,#E3EAF4 100%); }
+  .field label{ color:rgba(43,43,43,.72); }
+  .contact-note{ color:rgba(43,43,43,.5); }
+  /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
+  #s3c8 .cv-val{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
+  #s3c8 .cv-val .k{ color:#6FB4FF; }
+  #s3c8 .cv-val .row{ border-top-color:rgba(255,255,255,.12); }
+  #s3c8 .cv-val .row span:first-child{ color:rgba(255,255,255,.45); }
+  #s3c8 .cv-val .row span:last-child{ color:rgba(255,255,255,.82); }
+
+  /* ---------- 임팩트 ③ 챕터 리듬 — 장(章)마다 바닥 톤을 바꾼다 ----------
+     기준 톤(#F5F8FC) ↔ 한 단계 내린 바닥(#EBF1F9) 을 교대시키고,
+     성과(#s3c8)와 사람(#s5) 두 장은 임팩트 ②의 다크 밴드로 눌러 준다. */
+
+  /* SOLUTION 01–04 · ARCHIVE — 한 단계 내린 바닥 (카드가 흰색이므로 바닥을 낮춰야 카드가 산다) */
+  #s3d1, #s3d2, #s3c4, #s3c5, #s4{ background:#EBF1F9; }
+
+  /* 강조 ③ PRODUCTS — 다크 밴드는 s3c8 하나로 남기고, 여기는 밝은 브랜드 틴트로 포인트를 준다.
+     솔루션 다섯 장이 같은 #EBF1F9 로 이어지던 자리라, 장이 열리는 지점이 보이지 않았다. */
+  #s3p{
+    background:
+      radial-gradient(1100px 520px at 12% -10%, rgba(15,95,214,.14), transparent 62%),
+      radial-gradient(860px 440px at 92% 104%,  rgba(11,122,109,.10), transparent 60%),
+      linear-gradient(170deg,#FFFFFF 0%,#E9F1FB 58%,#F3F8FD 100%);
+  }
+
+  /* 강조 ② TEAM — 결론 장과 같은 다크 밴드 (CI 의 다크 배경 활용안 범위) */
+  #s5{
+    --bg-deep:#2B2B2B;
+    --text-base:255,255,255;
+    --white:#FFFFFF;
+    --line:rgba(255,255,255,.12);
+    --cl-card:rgba(255,255,255,.06);
+    --cl-card2:rgba(255,255,255,.04);
+    --cl-line:rgba(255,255,255,.14);
+    background:#2B2B2B;
+    color:#FFFFFF;
+  }
+  #s5 .close-eyebrow{ color:#6FB4FF; }
+  #s5 .close-sub, #s5 .team-statement, #s5 .cl-wf .d{ color:rgba(255,255,255,.68); }
+  #s5 .team-statement b{ color:#6FB4FF; }
+  /* 다크 밴드 내부 — 카드도 어두운 표면으로. 안 그러면 흰 카드에 흰 글자가 된다 */
+  #s5 .cl-wf .c{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
+  #s5 .cl-wf .c.last{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); }
+  #s5 .cl-wf .c.last .t{ color:inherit; }
+  #s5 .cl-wf .c:hover{ background:rgba(245,165,36,.13); border-color:#E3C489; }
+  #s5 .cl-wf .c:hover .t{ color:#F5A524; }
+
+  /* ---------- 은하수 히어로는 다크 전용 — 화이트에서는 걷어낸다 ----------
+     v4.5.0에서 다크 원본에 밤하늘이 들어갔고, 화이트는 그 원본에서 빌드된다.
+     밝은 배경에 흰 별을 뿌리면 노이즈가 되므로 여기서 끈다. */
+  #s1 .milky, #s1 .star-canvas{ display:none !important; }
+  #s1 .hero-bg svg.net{ opacity:1; }
+  #s1 .hero-content h1.hero-h,
+  #s1 .hero-content .hero-sub{ text-shadow:none; }
+
+  /* ---------- Perspective 잔광도 다크 전용 ----------
+     v4.6.0에서 다크 원본의 s1c1/s1c2/s1c4/s1c7 에 밤하늘 잔광이 들어갔다.
+     별먼지는 끄고, 잔광은 밝은 바탕에 맞춰 아주 옅은 브랜드 틴트로 낮춘다. */
+  canvas.dust{ display:none !important; }
+  #s1c1 .cv-block h3, #s1c2 .cv-block h3,
+  #s1c4 .cv-block h3, #s1c7 .cv-block h3{ text-shadow:none; }
+  #s1c1{
+    background:
+      radial-gradient(760px 430px at 90% 4%,  rgba(11,122,109,.055), transparent 62%),
+      radial-gradient(700px 400px at 4% 92%,  rgba(26,135,254,.055), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c2{
+    background:
+      radial-gradient(980px 300px at 50% -6%, rgba(26,135,254,.06), transparent 66%),
+      radial-gradient(640px 360px at 97% 94%, rgba(11,122,109,.045), transparent 60%),
+      var(--bg-deep);
+  }
+  #s1c4{
+    background:
+      radial-gradient(740px 420px at 3% 8%,   rgba(26,135,254,.055), transparent 62%),
+      radial-gradient(780px 440px at 99% 86%, rgba(11,122,109,.04), transparent 62%),
+      var(--bg-deep);
+  }
+  #s1c7{
+    background:
+      radial-gradient(1150px 520px at 50% 110%, rgba(26,135,254,.06), transparent 62%),
+      radial-gradient(700px 380px at 94% 2%,   rgba(11,122,109,.05), transparent 60%),
+      var(--bg-deep);
+  }
+
+
+  /* 인라인 SVG 색 — 라이트 대응 (다크 기본값은 위쪽 :root 참고) */
+  :root{
+    --sv-blue:#0F5FD6;
+    --sv-blue-soft:#1A6FD8;
+    --sv-teal:#0B7A6D;
+    --sv-mint:#0B7A6D;
+    --sv-peak:#1A6FD8;
+    --sv-dim:#8894A6;
+    --sv-gray:#5A6675;
+    --sv-core-blue:#0F5FD6;
+    --sv-core-mint:#0B7A6D;
+    --sv-bg:#2B2B2B;
+    --sv-ink:43,43,43;
+    --sv-ink2:43,43,43;
+    --sv-mint-rgb:11,122,109;
+    --sv-teal-rgb:11,122,109;
+    --sv-gray-rgb:90,102,117;
+    --sv-peak-rgb:15,95,214;
+    /* 밝은 바닥에서는 라벨을 눌러 내린다 — 다크 값(#DCEBFF·#BFF3E4)은 흰 배경에서 사라진다 */
+    --sv-label-fade:#6B7688;
+    --sv-label-peak:#1B5FB8;
+    --sv-label-form:#0A6B60;
+  }
+
+  /* ---------- AI 어시스턴트 — 밝은 배경용 재보정 ---------- */
+  .chat-fab{ box-shadow:0 10px 28px rgba(15,95,214,.28), 0 2px 8px rgba(14,20,32,.10); }
+  .chat-panel{ background:#FFFFFF; border-color:rgba(14,20,32,.10); box-shadow:0 24px 60px rgba(14,20,32,.16); }
+  .chat-head{ border-bottom-color:rgba(14,20,32,.08); }
+  .chat-log::-webkit-scrollbar-thumb{ background:rgba(14,20,32,.14); }
+  .chat-msg.bot{ background:#F3F7FC; border-color:rgba(14,20,32,.08); color:#2A3442; }
+  .chat-msg.user{ background:var(--blue); color:#FFFFFF; }
+  .chat-msg.err{ background:#FDF2F2; border-color:rgba(190,60,60,.28); color:#2A3442; }
+  .chat-typing{ background:#F3F7FC; border-color:rgba(14,20,32,.08); }
+  .chat-typing span{ background:rgba(14,20,32,.35); }
+  .chat-src a{ border-color:rgba(14,20,32,.14); color:#5A6675; }
+  .chat-chips button{ background:#FFFFFF; border-color:rgba(14,20,32,.14); color:#5A6675; }
+  .chat-form{ background:#FAFCFF; border-top-color:rgba(14,20,32,.08); }
+  .chat-form textarea{ background:#FFFFFF; border-color:rgba(14,20,32,.16); color:var(--ink); }
+  .chat-close{ color:#5A6675; }
+  .chat-close:hover{ background:rgba(14,20,32,.06); }
+  .chat-note{ color:rgba(14,20,32,.42); }
+  .chat-note a{ color:#5A6675; }
+</style>
+<script>
+  /* 페인트 전에 저장된 테마를 복원한다 — 깜빡임 방지 */
+  (function(){
+    try{
+      if(localStorage.getItem('tobeax-theme') === 'light'){
+        document.documentElement.setAttribute('data-theme','light');
+        document.getElementById('themeLight').media = 'all';
+      }
+    }catch(e){}
+  })();
+</script>
+<style>
+
+  /* ================= SOLUTIONS2 (solution2.html 전용) =================
+     index.html 의 토큰(--blue, --text-base, --white …)을 그대로 쓰고,
+     섹션 바닥색·카드색만 .s2sec 안에서 다크/라이트로 갈라 정의한다. */
+  .s2sec{
+    --x-bg:#0a0e17; --x-card:rgba(255,255,255,.04); --x-card2:rgba(255,255,255,.075); --x-line:rgba(255,255,255,.12);
+    --x-ink:var(--blue-soft);
+    --bg-deep:#0a0e17; --text-base:255,255,255; --white:#ffffff; --line:rgba(255,255,255,.10); --input-bg:#12182a;
+    background:var(--x-bg); color:var(--white);
+    padding-top:120px; padding-bottom:70px; justify-content:flex-start; color-scheme:dark;
+  }
+  .s2sec.alt{ --x-bg:#101627; }
+  html[data-theme="light"] .s2sec{
+    --x-bg:#F5F8FC; --x-card:#FFFFFF; --x-card2:#EAF1FC; --x-line:rgba(14,20,32,.10);
+    --x-ink:var(--blue-ink, #0F5FD6);
+    --bg-deep:#F5F8FC; --text-base:43,43,43; --white:#2B2B2B; --line:rgba(43,43,43,.10); --input-bg:#FFFFFF;
+    color-scheme:light;
+  }
+  html[data-theme="light"] .s2sec.alt{ --x-bg:#EBF1F9; }
+  .x2-wrap{ max-width:1040px; }
+  /* 한글은 어절 단위로만 줄바꿈한다 ('원/본을' 처럼 낱말 중간에서 끊기지 않게). 긴 영문·경로는 anywhere 로 넘침을 막는다 */
+  .s2sec{ word-break:keep-all; overflow-wrap:anywhere; }
+  .s2sec .cv-lead{ max-width:780px; line-height:1.85; }
+  .s2sec .cv-sub{ color:var(--x-ink); }
+  .s2sec .cl-subh{ word-break:keep-all; }
+  html[data-theme="light"] .s2sec .cl-subh::before{ color:var(--x-ink); }
+
+  /* 상단 메뉴 — 현재 페이지 표시 */
+  .topmenu a.cur{ color:var(--blue-soft); }
+  .mobile-menu a.cur{ color:var(--blue-soft); }
+  html[data-theme="light"] .topmenu a.cur{ color:var(--blue-ink, #0F5FD6); }
+  html[data-theme="light"] .mobile-menu a.cur{ color:var(--blue-ink, #0F5FD6); }
+
+  /* 히어로 */
+  .x2-hero{ padding-top:150px; }
+  .x2-h1{ font-size:clamp(44px,7vw,84px); font-weight:900; letter-spacing:-.02em; line-height:1.05; margin:6px 0 18px; }
+  .x2-claim{ font-size:clamp(17px,2.2vw,24px); font-weight:800; line-height:1.5; word-break:keep-all; color:var(--x-ink); margin-bottom:14px; }
+  .x2-index{ margin-top:40px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .x2-index a{
+    display:flex; align-items:baseline; gap:10px; padding:13px 15px; border-radius:12px; text-decoration:none;
+    border:1px solid var(--x-line); background:var(--x-card); color:var(--white); font-size:13.5px; font-weight:700; line-height:1.4;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .x2-index a span{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--x-ink); font-weight:600; flex:none; }
+  .x2-index a:hover{ border-color:var(--blue); transform:translateY(-2px); }
+
+  /* 카드 */
+  .x2-grid{ display:grid; gap:16px; margin-top:32px; }
+  .x2-grid.c2{ grid-template-columns:repeat(2,1fr); }
+  .x2-grid.c3{ grid-template-columns:repeat(3,1fr); }
+  .x2-grid.c4{ grid-template-columns:repeat(4,1fr); }
+  .x2-grid.c5{ grid-template-columns:repeat(5,1fr); gap:12px; }
+  .x2-card{
+    position:relative; background:var(--x-card); border:1px solid var(--x-line); border-radius:16px; padding:22px 22px 20px;
+    min-width:0;
+  }
+  html[data-theme="light"] .x2-card{ box-shadow:0 1px 2px rgba(14,20,32,.04), 0 8px 24px rgba(14,20,32,.04); }
+  .x2-card.hl{ border-color:var(--blue); background:var(--x-card2); }
+  .x2-card h4{ font-size:18px; font-weight:800; line-height:1.4; margin:6px 0 10px; word-break:keep-all; }
+  .x2-card h4 small{ display:block; margin-top:3px; font-size:12.5px; font-weight:500; color:rgba(var(--text-base),.55); }
+  .x2-card p{ font-size:13.5px; line-height:1.75; color:rgba(var(--text-base),.7); word-break:keep-all; }
+  .x2-card small{ font-size:12px; color:rgba(var(--text-base),.5); }
+  .x2-card ul{ list-style:none; margin-top:12px; }
+  .x2-card li{ position:relative; padding-left:14px; margin-bottom:6px; font-size:12.5px; line-height:1.65; color:rgba(var(--text-base),.62); word-break:keep-all; }
+  .x2-card li::before{ content:"·"; position:absolute; left:2px; color:var(--x-ink); font-weight:900; }
+  .x2-n{
+    display:inline-block; margin-bottom:12px; padding:3px 11px; border-radius:999px; background:var(--blue); color:#fff;
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700;
+  }
+  .x2-k{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.06em; color:var(--x-ink); }
+  .x2-k em{ font-style:normal; margin-left:8px; padding:2px 8px; border-radius:999px; border:1px solid var(--x-ink); font-size:10.5px; }
+  .x2-badge{ display:inline-block; margin-bottom:10px; padding:3px 11px; border-radius:999px; font-size:11.5px; font-weight:800; border:1px solid; }
+  .x2-badge.on{ color:#22D3A5; border-color:rgba(34,211,165,.5); background:rgba(34,211,165,.1); }
+  .x2-badge.dev{ color:#F5A524; border-color:rgba(245,165,36,.5); background:rgba(245,165,36,.1); }
+  html[data-theme="light"] .x2-badge.on{ color:#0B7A6D; border-color:#A9DBD0; background:#EAF7F3; }
+  html[data-theme="light"] .x2-badge.dev{ color:#9A6200; border-color:#E6C48D; background:#FDF4E6; }
+  .x2-plus{ border-style:dashed; background:transparent; box-shadow:none !important; display:flex; flex-direction:column; justify-content:center; }
+  .x2-ex{
+    margin-top:16px; padding:11px 14px; border:1px solid var(--x-line); border-radius:10px; font-size:12.5px; line-height:1.6;
+    background:rgba(var(--text-base),.03); color:rgba(var(--text-base),.8); word-break:keep-all;
+  }
+  .x2-ex b{ margin-right:10px; color:var(--x-ink); }
+  .x2-ex em{ font-style:normal; font-weight:800; color:var(--white); }
+  .x2-ex-wide{ margin-top:20px; font-size:14px; padding:14px 18px; }
+
+  /* 한 줄 결론 */
+  .x2-take{
+    display:flex; align-items:center; gap:22px; margin-top:30px; padding:17px 24px;
+    background:var(--x-card2); border-left:3px solid var(--blue); border-radius:0 14px 14px 0;
+  }
+  .x2-take .k{ flex:none; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--x-ink); max-width:190px; line-height:1.6; }
+  .x2-take .t{ font-size:15.5px; font-weight:800; line-height:1.65; word-break:keep-all; }
+
+  /* 도표 이미지 */
+  .x2-fig{
+    margin-top:30px; padding:14px; background:#FFFFFF; border:1px solid var(--x-line); border-radius:16px; cursor:zoom-in; position:relative;
+  }
+  html[data-theme="light"] .x2-fig{ box-shadow:0 1px 2px rgba(14,20,32,.04), 0 10px 30px rgba(14,20,32,.06); }
+  .x2-fig img{ display:block; width:100%; height:auto; border-radius:8px; }
+  .x2-fig figcaption{ padding:12px 6px 2px; font-size:12px; line-height:1.6; color:#5B6472; }
+  .x2-fig::after{
+    content:"클릭하면 크게 보기"; position:absolute; right:22px; top:22px; padding:4px 10px; border-radius:999px;
+    background:rgba(10,14,23,.72); color:#fff; font-size:11px; font-weight:600; opacity:0; transition:opacity .2s ease; pointer-events:none;
+  }
+  .x2-fig:hover::after{ opacity:1; }
+  .x2-shot{ max-width:760px; margin-left:auto; margin-right:auto; }
+  dialog.x2-lb{
+    width:min(96vw,1500px); max-height:94vh; padding:10px; border:0; border-radius:14px; background:#fff; overflow:auto; cursor:zoom-out;
+  }
+  dialog.x2-lb::backdrop{ background:rgba(5,8,14,.82); }
+  dialog.x2-lb img{ display:block; width:100%; height:auto; }
+  dialog.x2-lb{ overflow:hidden; position:fixed; }
+  .x2-lb-in{ overflow:auto; max-height:calc(94vh - 20px); -webkit-overflow-scrolling:touch; }
+  .x2-lb-x{
+    position:absolute; top:14px; right:14px; z-index:2; width:40px; height:40px; padding:0;
+    border:0; border-radius:999px; background:rgba(10,14,23,.82); color:#fff; font-size:18px; line-height:40px; cursor:pointer;
+  }
+
+  /* 단계 흐름 */
+  .x2-steps{ display:flex; align-items:stretch; gap:8px; }
+  .x2-step{
+    flex:1 1 0; min-width:0; padding:16px 14px; border-radius:14px; border:1px solid var(--x-line); background:var(--x-card);
+  }
+  html[data-theme="light"] .x2-step{ box-shadow:0 1px 2px rgba(14,20,32,.04), 0 6px 18px rgba(14,20,32,.04); }
+  .x2-step .k{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.06em; color:var(--x-ink); margin-bottom:8px; line-height:1.5; }
+  .x2-step b{ display:block; font-size:14px; font-weight:800; line-height:1.45; word-break:keep-all; }
+  .x2-step small{ display:block; margin-top:7px; font-size:11.5px; line-height:1.6; color:rgba(var(--text-base),.58); word-break:keep-all; }
+  .x2-step.hl{ border-color:var(--blue); background:var(--x-card2); }
+  .x2-step.in, .x2-step.out{ background:rgba(var(--text-base),.03); }
+  .x2-step.dark{ background:#0D1F3C; border-color:#1D3A66; color:#fff; flex:1.5 1 0; }
+  .x2-step.dark .k{ color:#6FB4FF; }
+  .x2-step.dark small{ color:rgba(255,255,255,.7); }
+  .x2-arrow{ flex:none; align-self:center; font-size:18px; font-weight:900; color:var(--x-ink); }
+  .x2-chips{ display:flex !important; flex-wrap:wrap; gap:5px; }
+  .x2-chips i{ font-style:normal; padding:4px 8px; border-radius:8px; background:rgba(255,255,255,.1); font-size:11px; font-weight:700; color:#fff; }
+  .x2-chips em{ font-style:normal; margin-left:4px; font-size:9px; padding:1px 5px; border-radius:6px; background:#17C3B2; color:#06241f; }
+  .x2-ma .x2-step b{ font-size:13.5px; }
+  .x2-agent .x2-k{ font-size:11px; }
+  .x2-agent h4{ font-size:16px; }
+  .x2-agent small{ display:block; margin-top:10px; }
+  .x2-pills{ display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+  .x2-pills i{ font-style:normal; padding:3px 8px; border-radius:999px; font-size:10.5px; font-weight:700; background:rgba(var(--text-base),.06); color:var(--x-ink); }
+
+  /* 표 */
+  .x2-tscroll{ margin-top:30px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .x2-table{ width:100%; border-collapse:separate; border-spacing:0; min-width:720px; font-size:13.5px; line-height:1.65; }
+  .x2-table th, .x2-table td{ padding:14px 16px; text-align:left; vertical-align:middle; border-bottom:1px solid var(--x-line); word-break:keep-all; }
+  .x2-table thead th{ font-size:13.5px; font-weight:800; background:var(--x-card); color:rgba(var(--text-base),.8); }
+  .x2-table thead th small{ display:block; margin-top:2px; font-size:11.5px; font-weight:500; color:rgba(var(--text-base),.5); }
+  .x2-table small{ color:rgba(var(--text-base),.5); font-size:12px; }
+  .x2-table tbody td{ color:rgba(var(--text-base),.75); }
+  .x2-table tbody td b{ color:var(--white); }
+  .x2-no{ display:inline-block; min-width:22px; margin-right:6px; font-weight:900; color:var(--x-ink); }
+  .x2-wf tbody td:first-child b{ font-size:14.5px; margin-right:6px; }
+  .x2-wf tbody td:first-child{ width:48%; }
+  .x2-cmp thead th:first-child, .x2-cmp tbody th{ width:17%; }
+  .x2-cmp tbody th{ font-size:14px; font-weight:800; color:var(--white); }
+  .x2-cmp tbody th small{ display:block; margin-top:2px; font-weight:500; }
+  .x2-cmp th.hl{ background:var(--blue); color:#fff; border-radius:12px 12px 0 0; text-align:center; font-size:14.5px; }
+  .x2-cmp td.hl{ background:var(--x-card2); border-left:1px solid var(--blue); border-right:1px solid var(--blue); color:var(--white); }
+  .x2-cmp tbody tr:last-child td.hl{ border-bottom:1px solid var(--blue); border-radius:0 0 12px 12px; }
+  .x2-cmp td.hl b{ color:var(--white); }
+  .x2-cmp td.hl::before{ content:"✓"; color:var(--blue); font-weight:900; margin-right:10px; float:left; font-size:17px; }
+  .x2-cmp td.hl > *{ }
+  .x2-cmp td.bad{ color:#FF6B6B; }
+  html[data-theme="light"] .x2-cmp td.bad{ color:#D12B2B; }
+  .x2-cmp td.bad::before{ content:"✕"; margin-right:8px; font-weight:900; }
+  .x2-cmp td.no-mark::before{ content:"●"; margin-right:9px; font-size:9px; color:rgba(var(--text-base),.28); vertical-align:middle; }
+
+  /* 빌더 세부 */
+  .x2-map{ display:grid; grid-template-columns:auto auto 1fr; gap:6px 12px; align-items:center; margin:10px 0 4px; font-size:13px; }
+  .x2-map i{ font-style:normal; color:var(--x-ink); font-weight:900; }
+  .x2-map code, .x2-stacks code{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; padding:2px 8px; border-radius:6px; background:rgba(var(--text-base),.08); color:var(--white); }
+  .x2-stacks{ display:grid; gap:10px; margin-top:6px; }
+  .x2-stacks > div{ display:grid; grid-template-columns:88px 1fr; gap:10px; align-items:start; font-size:12.5px; line-height:1.6; color:rgba(var(--text-base),.7); }
+  .x2-stacks code{ justify-self:start; }
+
+  /* 증명 블록 */
+  .x2-proof{
+    margin-top:32px; display:grid; grid-template-columns:1.1fr 1fr; gap:26px; align-items:center; position:relative;
+    padding:26px 28px 40px; border-radius:18px; border:1px solid var(--blue); background:var(--x-card2);
+  }
+  .x2-proof .k{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700; letter-spacing:.14em; color:var(--x-ink); }
+  .x2-proof .name{ margin:8px 0 6px; font-size:clamp(34px,5vw,52px); font-weight:900; letter-spacing:-.01em; }
+  .x2-proof .name small{ display:block; margin-top:4px; font-size:14px; font-weight:600; color:rgba(var(--text-base),.6); letter-spacing:0; }
+  .x2-proof p{ font-size:15px; font-weight:800; line-height:1.6; word-break:keep-all; }
+  .x2-proof-list{ display:grid; gap:0; }
+  .x2-proof-list > div{ display:grid; grid-template-columns:86px 1fr; gap:14px; padding:11px 0; border-bottom:1px solid var(--x-line); }
+  .x2-proof-list > div:last-child{ border-bottom:0; }
+  .x2-proof-list dt{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700; letter-spacing:.08em; color:var(--x-ink); padding-top:2px; }
+  .x2-proof-list dd{ font-size:13.5px; line-height:1.6; font-weight:600; word-break:keep-all; }
+  .x2-src{ position:absolute; right:24px; bottom:12px; font-size:11px; color:rgba(var(--text-base),.45); }
+
+  /* HITL 단계 */
+  .x2-stage .x2-mech{ margin-top:12px; padding:11px 13px; border-radius:10px; background:rgba(var(--text-base),.05); font-size:12.5px; line-height:1.65; color:rgba(var(--text-base),.75); word-break:keep-all; }
+  .x2-stage .x2-mech b{ display:block; margin-bottom:3px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.12em; color:var(--x-ink); }
+
+  /* 원본→빌드→실행 */
+  .x2-flow3{ display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:10px; margin-top:32px; align-items:stretch; }
+  .x2-col{ display:flex; flex-direction:column; gap:10px; padding:12px; border-radius:16px; border:1px solid var(--x-line); background:var(--x-card); min-width:0; }
+  .x2-col.build{ border-color:var(--blue); }
+  .x2-colhead{ padding:12px 14px; border-radius:10px; background:#0D1F3C; color:#fff; font-size:15px; font-weight:800; }
+  .x2-colhead span{ margin-right:10px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6FB4FF; }
+  .x2-col.build .x2-colhead{ background:var(--blue); }
+  .x2-col.build .x2-colhead span{ color:#fff; opacity:.85; }
+  .x2-item{ padding:12px 14px; border-radius:10px; border:1px solid var(--x-line); background:var(--x-card); flex:1; }
+  html[data-theme="light"] .x2-item{ background:#fff; }
+  .x2-item b{ display:block; font-size:14px; font-weight:800; line-height:1.45; }
+  .x2-item small{ display:block; margin-top:4px; font-size:12px; line-height:1.55; color:rgba(var(--text-base),.58); word-break:keep-all; }
+  .x2-hop{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:var(--x-ink); font-weight:800; font-size:12px; }
+  .x2-hop i{ font-style:normal; font-size:22px; font-weight:900; }
+  .x2-principles{ margin-top:14px; gap:10px; }
+  .x2-note{ padding:13px 15px; border-radius:12px; background:var(--x-card2); font-size:13px; line-height:1.55; word-break:keep-all; }
+  .x2-note b{ display:block; font-size:13.5px; font-weight:800; }
+  .x2-note small{ display:block; margin-top:3px; font-size:12px; color:rgba(var(--text-base),.58); }
+  .x2-note.dashed{ background:transparent; border:1px dashed var(--x-line); color:rgba(var(--text-base),.75); }
+  .x2-note.dashed b{ display:inline; color:var(--white); }
+
+  /* 푸터 */
+  .s2foot{ min-height:auto; padding-top:56px; padding-bottom:50px; }
+
+  @media (max-width:1000px){
+    .x2-index{ grid-template-columns:repeat(2,1fr); }
+    .x2-grid.c5{ grid-template-columns:repeat(2,1fr); }
+    .x2-grid.c4{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:880px){
+    .s2sec{ padding-top:100px; padding-bottom:56px; }
+    .x2-hero{ padding-top:116px; }
+    .x2-grid.c3, .x2-grid.c2{ grid-template-columns:1fr; }
+    .x2-steps{ flex-direction:column; }
+    .x2-steps .x2-arrow{ transform:rotate(90deg); align-self:center; }
+    .x2-step.dark{ flex:1 1 auto; }
+    .x2-take{ flex-direction:column; align-items:flex-start; gap:8px; }
+    .x2-take .k{ max-width:none; }
+    .x2-proof{ grid-template-columns:1fr; padding-bottom:44px; }
+    .x2-flow3{ grid-template-columns:1fr; }
+    .x2-hop{ flex-direction:row; justify-content:center; }
+    .x2-hop i{ transform:rotate(90deg); }
+    .x2-fig::after{ display:none; }
+  }
+  @media (max-width:640px){
+    /* 표 → 카드. 가로 스크롤에 두면 오른쪽 열(우리 제품 열 포함)이 화면 밖에 숨는다 */
+    .x2-tscroll{ overflow:visible; }
+    .x2-table, .x2-table tbody{ display:block; min-width:0; }
+    .x2-table thead{ display:none; }
+    .x2-table tr{ display:block; margin-bottom:14px; overflow:hidden; border:1px solid var(--x-line); border-radius:14px; background:var(--x-card); }
+    .x2-table th, .x2-table td{ display:block; width:auto !important; padding:11px 16px; border-bottom:0; }
+    .x2-table td[data-label]{ border-top:1px solid var(--x-line); }
+    .x2-table td[data-label]::before{
+      content:attr(data-label); display:block; margin-bottom:3px; font-family:'IBM Plex Mono',monospace;
+      font-size:11px; font-weight:700; letter-spacing:.05em; color:var(--x-ink);
+    }
+    .x2-cmp tbody th{ padding-top:14px; background:var(--x-card2); }
+    .x2-cmp td::before{ float:none !important; margin-right:0 !important; font-size:11px !important; color:var(--x-ink) !important; }
+    .x2-cmp td.bad::before{ content:"✕  " attr(data-label); color:#FF6B6B !important; }
+    .x2-cmp td.hl::before{ content:"✓  " attr(data-label); }
+    .x2-cmp td.no-mark::before{ content:attr(data-label); vertical-align:baseline; }
+    .x2-cmp td.hl{ border:0; border-top:1px solid var(--blue); border-radius:0; background:var(--x-card2); }
+    .x2-cmp tbody tr:last-child td.hl{ border-bottom:0; border-radius:0; }
+    .x2-step .k, .x2-pills i, .x2-stage .x2-mech b, .x2-k em{ font-size:11px; }
+    .x2-chips em{ font-size:10px; }
+    /* 가로로 긴 도표는 2벌 교체 대신 가로 스크롤 — 1000유닛 도표를 375px 에 밀어 넣으면 글자가 읽히지 않는다 */
+    .x2-fig:not(.x2-shot){ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .x2-fig:not(.x2-shot) img{ width:880px; max-width:none; height:auto; }
+    .x2-fig:not(.x2-shot) figcaption{ position:sticky; left:0; width:calc(100vw - 80px); }
+    dialog.x2-lb img{ width:1400px; max-width:none; height:auto; }
+  }
+  @media (max-width:560px){
+    .x2-index{ grid-template-columns:1fr; }
+    .x2-grid.c5, .x2-grid.c4{ grid-template-columns:1fr; }
+    .x2-stacks > div{ grid-template-columns:1fr; gap:4px; }
+  }
+
+</style>
+<style>
+  .x2-cta{ display:flex; align-items:center; justify-content:space-between; gap:28px; padding:28px 32px; border-radius:18px; border:1px solid var(--blue); background:var(--x-card2); }
+  .x2-cta h3{ font-size:clamp(20px,2.4vw,26px); font-weight:900; line-height:1.4; word-break:keep-all; }
+  .x2-cta p{ margin-top:8px; font-size:14px; color:rgba(var(--text-base),.65); }
+  .x2-cta-btn{ flex:none; padding:14px 28px; border-radius:999px; background:var(--blue); color:#fff; font-weight:800; font-size:15px; text-decoration:none; box-shadow:0 8px 22px rgba(26,135,254,.28); }
+  .x2-cta-btn:hover{ background:#0F5FD6; }
+  .s2foot .site-footer{ margin-top:48px; }
+  @media (max-width:880px){ .x2-cta{ flex-direction:column; align-items:flex-start; padding:24px; } }
+</style>
+</head>
+<body>
+
+
+<div class="header-bar">
+  <div class="header-inner">
+<a class="brandmark" id="brandmark" href="index.html" aria-label="TOBE AX 홈으로 이동"><svg class="logo-svg" viewBox="0 0 170 52" role="img" aria-label="TOBE AX — To Be AI Transformation"><defs><mask id="lgKey" maskUnits="userSpaceOnUse" x="20" y="0" width="40" height="40"><circle cx="38.5" cy="17.6" r="14.4" fill="#fff"/><circle cx="38.5" cy="14.72" r="5.35" fill="#000"/><path d="M35.62,14.72 L34.80,34 L42.20,34 L41.38,14.72 Z" fill="#000"/></mask></defs><text x="1" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-t)">T</text><circle cx="38.5" cy="17.6" r="14.4" fill="var(--lg-t)" mask="url(#lgKey)"/><text x="51" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ink)">BE</text><text x="109" y="32" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="40" font-weight="800" letter-spacing="-1.6" fill="var(--lg-ax)">AX</text><text x="1.5" y="47" textLength="160.5" lengthAdjust="spacing" font-family="Pretendard,'Pretendard Variable','Malgun Gothic',system-ui,sans-serif" font-size="8.2" font-weight="600" fill="var(--lg-tag)">TO BE AI TRANSFORMATION</text></svg></a>
+  <div class="header-right">
+<nav class="topmenu" id="topmenu">
+  <a href="index.html#s1c1">Perspective</a>
+  <a href="index.html#s3p">Solutions</a>
+  <a class="cur" href="solution2.html" aria-current="page">Solutions2</a>
+  <a href="index.html#s2">Reference</a>
+  <a href="index.html#s4">Archive</a>
+  <a href="index.html#s5">Team</a>
+  <a href="index.html#s6">Contact</a>
+</nav>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="화이트 모드로 전환" aria-pressed="false" title="다크 / 화이트 전환">
+  <svg class="tt-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <line x1="12" y1="2.6" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.4"/>
+      <line x1="2.6" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.4" y2="12"/>
+      <line x1="5.3" y1="5.3" x2="7" y2="7"/><line x1="17" y1="17" x2="18.7" y2="18.7"/>
+      <line x1="18.7" y1="5.3" x2="17" y2="7"/><line x1="7" y1="17" x2="5.3" y2="18.7"/>
+    </g>
+  </svg>
+  <svg class="tt-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M20.2 14.8A8.6 8.6 0 1 1 9.2 3.8a7 7 0 0 0 11 11Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+  </div>
+  </div>
+</div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="메뉴 닫기">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <a href="index.html#s1c1">Perspective</a>
+  <a href="index.html#s3p">Solutions</a>
+  <a class="cur" href="solution2.html" aria-current="page">Solutions2</a>
+  <a href="index.html#s2">Reference</a>
+  <a href="index.html#s4">Archive</a>
+  <a href="index.html#s5">Team</a>
+  <a href="index.html#s6">Contact</a>
+</nav>
+
+<div class="scroller" id="scroller">
+
+  <!-- ============ HERO · SOLUTIONS2 ============ -->
+  <section id="x00" class="s2sec x2-hero">
+    <div class="cv-wrap x2-wrap">
+      <div class="cv-sub">SOLUTIONS2 · COVERLINK</div>
+      <h1 class="x2-h1">CoverLink</h1>
+      <p class="x2-claim">원본을 보고 → 절차대로 일하고 → 업무가 넓어집니다</p>
+      <p class="cv-lead">보험사의 AX 전환 도구 CoverLink의 솔루션 파트입니다. 일하는 방식과 제품 구성에서 시작해, 가입설계 워크플로우·<wbr>멀티 에이전트·<wbr>안전 통제, 그리고 원본에서 에이전트까지 이어지는 아키텍처를 순서대로 담았습니다.</p>
+      <nav class="x2-index" aria-label="솔루션2 목차">
+        <a href="#x01"><span>01</span>일하는 방식</a>
+        <a href="#x02"><span>02</span>제품 구성</a>
+        <a href="#x03"><span>03</span>WIKI Editor</a>
+        <a href="#x04"><span>04</span>WIKI Agent Builder</a>
+        <a href="#x05"><span>05</span>Plan 워크플로우</a>
+        <a href="#x06"><span>06</span>솔루션 개요</a>
+        <a href="#x07"><span>07</span>Why Specialist</a>
+        <a href="#x08"><span>08</span>6가지 특장점</a>
+        <a href="#x09"><span>09</span>Proven by S-Life</a>
+        <a href="#x10"><span>10</span>Multi-Agent</a>
+        <a href="#x11"><span>11</span>Human-in-the-Loop</a>
+        <a href="#x12"><span>12</span>원본에서 에이전트까지</a>
+        <a href="#x13"><span>13</span>Conceptual Architecture</a>
+        <a href="#x14"><span>14</span>Wiki(OKF) Editor 구조</a>
+        <a href="#x15"><span>15</span>Agent Builder 구조</a>
+        <a href="#x16"><span>16</span>Agent Workflow 구조</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ 01 · 일하는 방식 ============ -->
+  <section id="x01" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 01 · 어떻게 일하나</div>
+      <h3>CoverLink가 일하는 방식 — 원본을 보고, 절차대로 일하고, 업무가 넓어집니다</h3>
+      <p class="cv-lead">기준 지식은 원본으로 관리하고, 에이전트는 정해진 절차로 일하며, 위키가 쌓일수록 업무가 넓어집니다.</p>
+
+      <div class="x2-grid c3 x2-linked">
+        <div class="x2-card">
+          <span class="x2-n">01</span>
+          <div class="x2-k">SOURCE OF TRUTH (SOT)</div>
+          <h4>원본을 봅니다</h4>
+          <p>CoverLink는 위키를 원본(SOT)으로 두고, 에이전트는 그 원본에서 만들어집니다.</p>
+          <ul><li>개발 표준 · 업무 정의는 OKF 위키 한 곳에</li><li>모든 에이전트가 같은 원본을 기준으로 일합니다</li></ul>
+          <div class="x2-ex"><b>예</b>개발 표준 위키 · 에이전트 위키<br><small>에이전트를 만드는 기준</small></div>
+        </div>
+        <div class="x2-card hl">
+          <span class="x2-n">02</span>
+          <div class="x2-k">AGENT PLAYBOOK</div>
+          <h4>절차대로 일합니다</h4>
+          <p>에이전트는 현업 전문가가 정한 플레이북대로 일하고, 판단이 어려운 건은 사람에게 넘깁니다.</p>
+          <ul><li>검증된 업무 워크플로우를 그대로 실행</li><li>단계 · 도구 · 사람 확인 지점(HITL)을 미리 정의</li></ul>
+          <div class="x2-ex"><b>예</b>AI 가입설계 워크플로우<br><small>요청 → 추천 → 설계 → 검증 → 담당자 확인</small></div>
+        </div>
+        <div class="x2-card">
+          <span class="x2-n">03</span>
+          <div class="x2-k">EXPANDING DOMAIN</div>
+          <h4>업무가 넓어집니다</h4>
+          <p>위키를 더할수록 같은 방식으로 새 업무 에이전트가 늘어납니다.</p>
+          <ul><li>바이브 코딩으로 같은 도구 · 같은 품질</li><li>가입설계 → 보험금 지급 → 언더라이팅 → 상담</li></ul>
+          <div class="x2-ex"><b>예</b>가입설계에서 다른 업무로<br><small>보험금 지급 · 언더라이팅 · 상담</small></div>
+        </div>
+      </div>
+      <div class="x2-take"><span class="k">COVERLINK WAY</span><span class="t">원본을 보고 → 절차대로 일하고 → 업무가 넓어집니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 02 · 제품 구성 ============ -->
+  <section id="x02" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 02 · 무엇이 있나</div>
+      <h3>도구로 에이전트를 만들고, 만든 에이전트는 바로 업무에 투입합니다</h3>
+      <p class="cv-lead">Cover-Link 제품 구성 — AX 전환 도구와 업무 에이전트. 보험사의 AX 전환을 지원하는 도구(Cover-Link)의 모음입니다. 에이전트를 만드는 도구(Tools)와 바로 쓰는 업무 에이전트(Agents)를 함께 제공합니다.</p>
+
+      <div class="cl-subh" style="margin-top:34px;">CoverLink Tools — AI 에이전트 개발 도구 · 기술 도메인</div>
+      <div class="x2-grid c2" style="margin-top:0;">
+        <div class="x2-card">
+          <span class="x2-n">01</span>
+          <h4>WIKI Editor</h4>
+          <p>업무 전문가가 자신의 업무를 말로 설명하면, AI가 이를 구조화된 위키(OKF)로 정리해 주는 지식 작성 도구</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-n">02</span>
+          <h4>WIKI Agent Builder</h4>
+          <p>위키에 정의된 업무를 읽어, 사람이 코딩하지 않고 에이전트 소스와 MCP 툴을 자동 생성하는 도구</p>
+        </div>
+      </div>
+
+      <div class="cl-subh" style="margin-top:34px;">보험 업무 에이전트 — 보험 업무 특화 에이전트 · 업무 도메인</div>
+      <div class="x2-grid c3" style="margin-top:0;">
+        <div class="x2-card hl">
+          <span class="x2-badge on">운영 중</span>
+          <h4>CoverLink Plan</h4>
+          <p>가입설계 — 자연어 한 줄로 상품추천·<wbr>설계·<wbr>룰검증·<wbr>선심사</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-badge dev">개발 중</span>
+          <h4>CoverLink Claim</h4>
+          <p>보험금 지급 — 지급기준·<wbr>약관 매핑 · 청구 서류 검토 · 지급액 판정</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-badge dev">개발 중</span>
+          <h4>CoverLink UW</h4>
+          <p>언더라이팅 — 인수기준·<wbr>고지사항 기반 인수 판단 · 심사자 HITL</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-badge dev">개발 중</span>
+          <h4>CoverLink QnA</h4>
+          <p>상담 — 약관·<wbr>판매예규 기반 질의응답 · 설계사/콜센터 지원</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-badge dev">개발 중</span>
+          <h4>CoverLink Analysis</h4>
+          <p>보장분석 — 타사 약관 수집·<wbr>비교 → 보장 갭 분석 → 자사 상품 추천</p>
+        </div>
+        <div class="x2-card x2-plus">
+          <h4>+ 지속 확장</h4>
+          <p>위키만 추가하면 새 업무 에이전트가 파생됩니다</p>
+        </div>
+      </div>
+      <div class="x2-take"><span class="k">TOOLS + AGENTS</span><span class="t">도구로 에이전트를 만들고, 만든 에이전트는 바로 업무에 투입합니다 — Cover-Link 하나로 AX 전환의 시작부터 운영까지</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 03 · WIKI Editor ============ -->
+  <section id="x03" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 03 · 지식을 어떻게 쓰나</div>
+      <h3>업무 설명만으로 명세가 완성됩니다 — WIKI Editor</h3>
+      <p class="cv-lead">대화하듯 업무를 설명하면 내용은 AI가 쓰고, 형식·<wbr>검사·<wbr>반영은 도구가 처리해 위키를 완성합니다.</p>
+
+      <figure class="x2-fig x2-shot" data-zoom>
+        <img src="assets/solution2/wiki-editor-screen.webp" alt="WIKI Editor 화면 — 왼쪽 대화로 설명하면 오른쪽 위키(index.md)가 실시간으로 작성·수정됩니다" loading="lazy" width="998" height="622">
+        <figcaption>WIKI Editor 화면 — 왼쪽 대화로 설명하면 오른쪽 위키(index.md)가 실시간으로 작성·<wbr>수정됩니다</figcaption>
+      </figure>
+
+      <div class="x2-grid c4">
+        <div class="x2-card"><span class="x2-n">01</span><h4>대화하듯 업무 내용을 설명</h4><p>코딩도 문서 양식도 없이, 업무 담당자가 평소 말하듯 입력합니다</p></div>
+        <div class="x2-card"><span class="x2-n">02</span><h4>내용은 AI가 쓰고, 형식은 도구가 표준에 맞춤</h4><p>YAML 헤더 · MD 본문 · 명세 구조를 자동으로 갖춥니다</p></div>
+        <div class="x2-card"><span class="x2-n">03</span><h4>검사에서 발견된 문제는 AI가 자동 수정 후 재검사</h4><p>용어 불일치 · 빠진 규칙 · 예시 오류를 스스로 고칩니다</p></div>
+        <div class="x2-card"><span class="x2-n">04</span><h4>적용 시 위키에 커밋 1건으로 반영</h4><p>변경 이력이 Git에 남고, 에이전트 재생성으로 이어집니다</p></div>
+      </div>
+      <div class="x2-ex x2-ex-wide"><b>예시</b>“응답은 분류 코드 하나만 JSON으로 줘” — 이 한 마디로 <em>입출력 규칙 수정 → 자동 검사 → 위키에 반영</em></div>
+      <div class="x2-take"><span class="k">EXPERT-DRIVEN KNOWLEDGE</span><span class="t">위키의 주인은 개발자가 아니라 업무 전문가입니다 — 설명하면 AI가 쓰고, 형식·<wbr>검사·<wbr>반영은 도구가 처리합니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 04 · WIKI Agent Builder ============ -->
+  <section id="x04" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 04 · 에이전트를 어떻게 빌드하나</div>
+      <h3>누가 빌드해도 같은 구조와 품질입니다 — WIKI Agent Builder</h3>
+      <p class="cv-lead">위키 명세를 읽어 격리 환경에서 사내 표준대로 코드를 생성하고, 품질 게이트를 통과한 코드만 저장소에 반영합니다.</p>
+
+      <div class="x2-steps" style="margin-top:34px;">
+        <div class="x2-step in"><div class="k">INPUT</div><b>위키 명세</b><small>에이전트 위키<br>+ stack 선택<br>+ 개발 표준 위키</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step"><div class="k">① 작업 환경 준비</div><b>격리 컨테이너에서 빌드</b><small>도구와 분리된 전용 빌드 환경 · 진행률·<wbr>로그 실시간 확인</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step"><div class="k">② 표준 골격 생성</div><b>개발 표준 위키 기반</b><small>프로젝트 구조·<wbr>설정·<wbr>계약 테스트는 표준 그대로 생성</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step"><div class="k">③ 업무 코드·<wbr>테스트 작성</div><b>LLM 기반 AI 생성</b><small>위키 명세의 업무 로직과 테스트만 AI가 작성</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step"><div class="k">④ 품질 게이트 검사</div><b>AI 자동 수정</b><small>로컬 실행 후 명세 예시와 비교 검증</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step out"><div class="k">저장소 반영</div><b>담당자 확인 후<br>GitLab 커밋</b><small>위키 커밋과 연결 추적</small></div>
+      </div>
+
+      <div class="x2-grid c2">
+        <div class="x2-card">
+          <span class="x2-n">01</span><h4>표준화된 개발 방법론 — 누가 빌드해도 동일한 구조</h4>
+          <ul>
+            <li>네이밍·<wbr>레이어·<wbr>LLM 호출·<wbr>MCP 계약·<wbr>스택 가이드 등 80여 건의 개발 표준 위키 참조</li>
+            <li>골격(구조·<wbr>설정·<wbr>계약 테스트)은 표준 그대로, AI는 업무 로직과 테스트만 작성</li>
+            <li>표준이 바뀌면 다음 빌드부터 모든 에이전트에 일괄 반영 — 개별 코드 리뷰로 맞출 필요가 없습니다</li>
+          </ul>
+        </div>
+        <div class="x2-card">
+          <span class="x2-n">02</span><h4>메타(표준 용어) 연계 — 항목명을 전사 표준으로 통일</h4>
+          <div class="x2-map">
+            <span>문의</span><i>→</i><code>enq</code>
+            <span>고객명</span><i>→</i><code>custNm</code>
+            <span>주소</span><i>→</i><code>addr</code>
+          </div>
+          <ul>
+            <li>한글 항목명 → 메타시스템(MCP)의 표준 영문명. 영문명은 메타에서 조회해 그대로 적용</li>
+            <li>미등록 용어는 (메타 미등록) 표시 후 승인 목록 등록</li>
+          </ul>
+        </div>
+        <div class="x2-card">
+          <span class="x2-n">03</span><h4>품질 게이트 · 자동 수정 — 통과한 코드만 반영</h4>
+          <div class="x2-k" style="margin-top:6px;">검사 항목</div>
+          <ul>
+            <li>계약 파일 원본 유지 · 프롬프트 출처 확인</li>
+            <li>금지·<wbr>필수 코드 패턴 준수</li>
+            <li>규약 외 테스트 대역(Mock) 차단</li>
+            <li>LLM 판정 규칙 테스트 · 명세 예시 반영</li>
+          </ul>
+          <p style="margin-top:10px;">실패 사유를 사람이 읽는 문장으로 AI에 전달해 자동 수정 — 통과한 코드만 반영</p>
+        </div>
+        <div class="x2-card">
+          <span class="x2-n">04</span><h4>다중 개발 스택 — 하나의 명세로 Python · Java</h4>
+          <div class="x2-stacks">
+            <div><code>python</code><span>Python / venv · pip · ruff · pytest<br><small>컨테이너에서 즉시 실행</small></span></div>
+            <div><code>spring-ai</code><span>Java 21 / Spring AI / spotless · gradle test · bootJar<br><small>JRE 컨테이너에서 jar 실행</small></span></div>
+          </div>
+          <p style="margin-top:10px;">stack 항목으로 선택 — “자바로 만들어 줘”. 새 스택은 위키 문서만 추가하면 됩니다.</p>
+        </div>
+      </div>
+      <div class="x2-take"><span class="k">STANDARD BY DEFAULT</span><span class="t">업무 전문가가 작성하고, 표준이 만들고, 품질 게이트가 검증합니다 — 범위는 검증된 소스의 저장소 반영까지, 운영 배포는 기존 절차를 따릅니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 05 · CoverLink Plan 워크플로우 ============ -->
+  <section id="x05" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 05 · 가입설계는 어떻게 흐르나</div>
+      <h3>요청에서 설계서까지, 검증된 워크플로우를 그대로 제공합니다</h3>
+      <p class="cv-lead">Cover-Link Quotation Workflow. 운영 중인 가입설계 워크플로우를 그대로 제공하고, 보험사 환경에 맞춰 커스터마이징합니다.</p>
+
+      <div class="x2-tscroll">
+        <table class="x2-table x2-wf">
+          <thead>
+            <tr><th>AGENT STEP<small>CoverLink Plan 처리 흐름</small></th><th>KNOWLEDGE<small>WIKI Editor로 구조화한 지식</small></th><th>SYSTEM · MCP<small>표준 프로토콜 · 보험사 연동</small></th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="x2-no">①</span><b>요청 접수</b><br>고객정보·<wbr>요구사항을 자연어 한 줄로 입력 · 복합 의도 분석</td><td data-label="KNOWLEDGE · 지식">영업 채널전략<br><small>고객 유형 기준</small></td><td data-label="SYSTEM · MCP">영업지원 · CRM<br><small>고객·<wbr>계약 이력</small></td></tr>
+            <tr><td><span class="x2-no">②</span><b>상품 추천</b><br>보장분석 + 영업채널 전략 기반 최적 상품 선정</td><td data-label="KNOWLEDGE · 지식">상품 룰<br><small>보장분석 기준</small></td><td data-label="SYSTEM · MCP">보장분석 시스템<br><small>타사 보장 데이터</small></td></tr>
+            <tr><td><span class="x2-no">③</span><b>설계안 생성</b><br>특약·<wbr>가입금액·<wbr>납기 구성 · 보험료 산출</td><td data-label="KNOWLEDGE · 지식">산출방법서<br><small>상품 구성 규칙</small></td><td data-label="SYSTEM · MCP">PF/Rule<br><small>상품·<wbr>보험료 산출</small></td></tr>
+            <tr><td><span class="x2-no">④</span><b>룰 검증</b><br>가입한도·<wbr>관계규칙·<wbr>인수기준 다중 체크 (병렬 처리)</td><td data-label="KNOWLEDGE · 지식">인수기준 · 한도<br><small>관계 규칙</small></td><td data-label="SYSTEM · MCP">Rule Engine<br><small>한도 체크 API</small></td></tr>
+            <tr><td><span class="x2-no">⑤</span><b>선심사 · 고지</b><br>실시간 선심사 연동 · 고지사항 확인 · 설계 조정</td><td data-label="KNOWLEDGE · 지식">심사기준<br><small>고지 항목</small></td><td data-label="SYSTEM · MCP">기간계 UW<br><small>선심사 연동</small></td></tr>
+            <tr><td><span class="x2-no">⑥</span><b>설계서 산출</b><br>가입설계서 + 고객 설명 스크립트 · 설계사 최종 확인(HITL)</td><td data-label="KNOWLEDGE · 지식">판매예규<br><small>설계서 양식</small></td><td data-label="SYSTEM · MCP">영업지원 시스템<br><small>설계서 출력</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="x2-ex x2-ex-wide"><b>설계 수정 루프</b>‘종신 빼고 월 30만 원 이내로’ 같은 자연어 수정 요청 시 ②~⑤를 자동 재실행 · 설계사 최종 승인까지 반복</div>
+      <div class="x2-take"><span class="k">PROVEN FLOW + CUSTOMIZATION</span><span class="t">검증된 워크플로우는 그대로 — 채널 영업전략 · 산출/집계 방식 · HITL 체크포인트 · 설계서 양식은 위키와 설정으로 현장 반영</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 06 · 솔루션 개요 ============ -->
+  <section id="x06" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 06 · 무엇을 하나</div>
+      <h3>설계사가 묻고, AI Agent가 설계합니다</h3>
+      <p class="cv-lead">자연어로 요청하면 멀티 에이전트가 다중 검증을 거쳐 ‘실제 가입 가능한’ 설계안을 자동 산출합니다.</p>
+      <figure class="x2-fig" data-zoom>
+        <img src="assets/solution2/overview.webp" alt="Solution Overview — 설계사 자연어 요청, 멀티 에이전트 처리(오케스트레이터·상품추천·NLU·설계추천/수정·룰 체크·에이전트 관리), 가입설계안 출력. SPEED 즉시 산출 · QUALITY 다중 체크 · COST 인력비용 전환" loading="lazy" width="2250" height="923">
+        <figcaption>Solution Overview — 입력 · 설계사 요청 → 멀티 에이전트 처리(평균 응답 30초 이내) → 출력 · 가입설계안</figcaption>
+      </figure>
+      <div class="x2-grid c3">
+        <div class="x2-card"><div class="x2-k">SPEED</div><h4>즉시 산출</h4><p>매니저 응답 대기 없이 30초 이내 응답. 설계 요청 → 결과 산출 사이 지연 제거</p></div>
+        <div class="x2-card"><div class="x2-k">QUALITY</div><h4>다중 체크</h4><p>‘실제 가입 가능한’ 설계로 제안. 설계사 역량 편차 없이 균일한 품질</p></div>
+        <div class="x2-card hl"><div class="x2-k">COST · 핵심 가치</div><h4>인력비용 전환</h4><p>설계매니저 의존 구조 탈피. 고정 인력비 → AI 운영비로 전환</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============ 07 · Why Specialist ============ -->
+  <section id="x07" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 07 · 왜 Specialist인가</div>
+      <h3>보험에는, 보험을 아는 AI가 필요합니다</h3>
+      <p class="cv-lead">범용 AI를 우리 환경에 맞추는 게 아닙니다. 보험사를 위해 만든 검증된 노하우 도입이 필요합니다.</p>
+
+      <div class="x2-tscroll">
+        <table class="x2-table x2-cmp">
+          <thead><tr><th></th><th>범용 AI 챗봇</th><th>범용 Agent 개발 플랫폼</th><th class="hl">Insurance Specialist Agent</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">도메인 지식<small>Domain Knowledge</small></th><td data-label="범용 AI 챗봇" class="no-mark">일반 지식</td><td data-label="범용 Agent 개발 플랫폼" class="no-mark">직접 학습시켜야</td><td data-label="Insurance Specialist Agent" class="hl"><b>보험 도메인 지식 사전 학습</b><br>상품·<wbr>인수기준·<wbr>한도·<wbr>심사규칙 내장</td></tr>
+            <tr><th scope="row">가입설계 처리<small>Design Capability</small></th><td data-label="범용 AI 챗봇" class="bad">불가능</td><td data-label="범용 Agent 개발 플랫폼" class="bad">워크플로우 설계, Agent 개발 필요<br>데이터 파이프라인 설계</td><td data-label="Insurance Specialist Agent" class="hl"><b>AI 가입설계 Workflow · 파이프라인 완비</b><br>5중 Agent 체크 워크플로우 내장</td></tr>
+            <tr><th scope="row">운영 환경<small>Runtime Environment</small></th><td data-label="범용 AI 챗봇" class="no-mark">외부 API 의존</td><td data-label="범용 Agent 개발 플랫폼" class="no-mark">Python/Cloud 인프라</td><td data-label="Insurance Specialist Agent" class="hl"><b>Java 25 LTS 네이티브</b><br>MCP 표준 시스템 연결</td></tr>
+            <tr><th scope="row">도입 속도<small>Time-to-Value</small></th><td data-label="범용 AI 챗봇" class="no-mark">즉시 (한계 분명)</td><td data-label="범용 Agent 개발 플랫폼" class="no-mark">최소 8개월 + 빌드 필요</td><td data-label="Insurance Specialist Agent" class="hl"><b>6개월 내 도입</b><br>온프레미스형 솔루션 포팅 및 커스터마이징</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="x2-take"><span class="k">SPECIALIST ADVANTAGE</span><span class="t">보험사를 위해 만든 Specialist를 도입하는 것 — 기 검증된 노하우 그대로 업그레이드</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 08 · 6가지 특장점 ============ -->
+  <section id="x08" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 08 · 무엇이 다른가</div>
+      <h3>Specialist를 완성하는 6가지 특장점입니다</h3>
+      <p class="cv-lead">사용자 면(WHAT) 3축 + 기술 면(HOW) 3축이 함께 작동합니다. 범용 AI를 우리 환경에 맞추는 게 아닌, 보험사를 위해 만든 검증된 노하우 도입이 필요합니다.</p>
+
+      <div class="cl-subh" style="margin-top:30px;">PILLAR · WHAT — 사용자 면 · 도메인 · 운영 · UX</div>
+      <div class="x2-grid c3" style="margin-top:0;">
+        <div class="x2-card"><span class="x2-n">01</span><div class="x2-k">Vertical AI</div><h4>보험 가입설계 특화</h4><p>범용 LLM이 아닌, 보험 도메인에 특화된 검증된 워크플로우</p></div>
+        <div class="x2-card"><span class="x2-n">02</span><div class="x2-k">Enterprise-Native</div><h4>Java 기반 운영 친화</h4><p>별도 Python 인력·<wbr>환경 없이 기존 운영팀이 그대로 운영 가능</p></div>
+        <div class="x2-card"><span class="x2-n">03</span><div class="x2-k">Conversational UX</div><h4>자연어 한 줄 인터페이스</h4><p>자연어 한 문장으로 가입가능한 설계안 즉시 산출</p></div>
+      </div>
+      <div class="cl-subh" style="margin-top:30px;">PILLAR · HOW — 기술 면 · 아키텍처 · 안전 · 통합</div>
+      <div class="x2-grid c3" style="margin-top:0;">
+        <div class="x2-card"><span class="x2-n">04</span><div class="x2-k">Harness Architecture</div><h4>계획 중심 자율 에이전트</h4><p>최신 하네스 아키텍처 기반 멀티 에이전트 오케스트레이션 (Plan-Centric Agents)</p></div>
+        <div class="x2-card"><span class="x2-n">05</span><div class="x2-k">Guardrails &amp; HITL</div><h4>안전 통제 + 휴먼 최종승인</h4><p>기본 가드레일 + Custom HITL — 최종 판단은 사람이 (Human-in-the-Loop)</p></div>
+        <div class="x2-card"><span class="x2-n">06</span><div class="x2-k">MCP Integration</div><h4>표준 프로토콜 연결</h4><p>MCP/Tool/Skill 내장 — 보험 시스템과 즉시 연결 (Gateway + 모니터링)</p></div>
+      </div>
+      <div class="x2-take"><span class="k">6 PILLARS</span><span class="t">6개 축이 함께 작동할 때, 범용 AI로는 도달할 수 없는 Specialist 수준의 가입설계 AI가 완성됩니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 09 · Proven by S-Life ============ -->
+  <section id="x09" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 09 · 어디서 검증됐나</div>
+      <h3>S 라이프와 함께 검증한 노하우가 제품에 담겨 있습니다</h3>
+      <p class="cv-lead">업계 최초 자연어 기반 가입설계 AI 구축 경험 전체가, 우리 제품에 담겨 있습니다.</p>
+
+      <div class="x2-proof">
+        <div class="x2-proof-head">
+          <div class="k">INDUSTRY FIRST</div>
+          <div class="name">LICO <small>Life Copilot · S 라이프</small></div>
+          <p>업계 최초 자연어 기반 가입설계 AI 에이전트 시스템</p>
+        </div>
+        <dl class="x2-proof-list">
+          <div><dt>OPEN</dt><dd>26.02 실 서비스 / 26.10 고도화 서비스</dd></div>
+          <div><dt>FORM</dt><dd>자연어 설계수정 + AI 에이전트</dd></div>
+          <div><dt>SCOPE</dt><dd>설계 + 동시 선심사 통합</dd></div>
+          <div><dt>CHANNEL</dt><dd>FC, GA, TM 전 영업지원시스템 연계, 보조 도구</dd></div>
+        </dl>
+        <div class="x2-src">Source. S사 보도자료, 2026.02</div>
+      </div>
+
+      <div class="cl-subh" style="margin-top:34px;">제품에 담긴 4가지 노하우</div>
+      <div class="x2-grid c4" style="margin-top:0;">
+        <div class="x2-card"><span class="x2-n">01</span><h4>도메인 지식 구조화</h4><p>영업채널전략을 지식베이스로, 약관·<wbr>산출방법서·<wbr>판매예규로 확장</p><ul><li>비정형 보험 문서 문맥 학습 노하우</li><li>신상품·<wbr>규제 변경에 빠르게 적응</li></ul></div>
+        <div class="x2-card"><span class="x2-n">02</span><h4>가입설계 워크플로우</h4><p>한도·<wbr>특약·<wbr>심사기준 통합 처리 (워크플로우 실증된 원형)</p><ul><li>‘실제 가입 가능한 설계’만 산출하는 검증된 규칙 엔진 노하우</li></ul></div>
+        <div class="x2-card"><span class="x2-n">03</span><h4>실시간 심사 통합</h4><p>설계 + 선심사 + 고지 One-stop. 가입설계~청약 시간 단축</p><ul><li>레거시 보험 시스템과의 실연동 노하우</li><li>단순 시뮬레이션이 아닌 실 운영</li></ul></div>
+        <div class="x2-card"><span class="x2-n">04</span><h4>추천 스크립트 자동화</h4><p>설계안 + 고객 설명 스크립트 동시 생성</p><ul><li>설계 품질 표준화 + 불완전판매 리스크 완화의 실증 노하우</li></ul></div>
+      </div>
+      <div class="x2-take"><span class="k">BUILD ONCE · DEPLOY MANY</span><span class="t">다른 보험사도 동일 수준의 검증된 가입설계 AI를 즉시 도입할 수 있습니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 10 · Multi-Agent Workflow ============ -->
+  <section id="x10" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 10 · 어떻게 협업하나</div>
+      <h3>복잡한 가입설계를 5명의 Specialist Agent가 분담합니다</h3>
+      <p class="cv-lead">Planner(오케스트레이터)의 자율 계획 → Agent 병렬 검증 → 사람 최종승인의 3단 협업 구조입니다.</p>
+
+      <div class="x2-steps x2-ma" style="margin-top:34px;">
+        <div class="x2-step in"><div class="k">INPUT</div><b>자연어 요청</b><small>설계사 한 줄 입력</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step hl"><div class="k">① PLAN</div><b>Planner (오케스트레이터)</b><small>워크플로우 관리 · 실시간 통신 · 추천 스크립트<br>Plan-Centric Autonomy</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step dark"><div class="k">② EXECUTE · MULTI-AGENT</div><b>5 Specialist Agents</b><small class="x2-chips"><i>① NLU</i><i>② Product</i><i>③ Plan</i><i>④ Rule</i><i>⑤ Mgmt <em>META</em></i></small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step hl"><div class="k">③ REVIEW · HITL</div><b>사람 최종 검수 + 가드레일</b><small>Human-in-the-Loop</small></div>
+        <span class="x2-arrow" aria-hidden="true">→</span>
+        <div class="x2-step out"><div class="k">OUTPUT</div><b>가입 설계안</b><small>다중 검증 통과</small></div>
+      </div>
+
+      <div class="cl-subh" style="margin-top:34px;">5 SPECIALIST AGENTS — 역할 상세</div>
+      <div class="x2-grid c5" style="margin-top:0;">
+        <div class="x2-card x2-agent"><div class="x2-k">① NLU Agent</div><h4>자연어 이해</h4><p>고객정보 · 질병 · 담보 확인, 의도파악</p><small>Intent &amp; Context Recognition</small></div>
+        <div class="x2-card x2-agent"><div class="x2-k">② Product Agent</div><h4>상품 추천</h4><p>고객 요청사항 결합 상품추천</p><small>Personalized Product Selection</small></div>
+        <div class="x2-card x2-agent"><div class="x2-k">③ Plan Agent</div><h4>설계 추천 | 설계 수정</h4><p>고객 요청사항 결합 설계안 구성 및 조정</p><small>Plan Design &amp; Optimization</small></div>
+        <div class="x2-card x2-agent"><div class="x2-k">④ Rule Agent</div><h4>룰 체크</h4><p>다중 룰 동시 검증, Tool 호출 병렬 처리</p><small>Multi-Rule Validation</small><div class="x2-pills"><i>관계 규칙</i><i>가입 한도</i><i>보험료 최적화</i></div></div>
+        <div class="x2-card x2-agent"><div class="x2-k">⑤ Agent Mgmt. Agent</div><h4>에이전트 관리</h4><p>모델·<wbr>에이전트 프롬프트·<wbr>모니터링, Agent 상태 관리 · 운영 통제</p><small>Agent Operations Mgmt</small></div>
+      </div>
+      <div class="x2-take"><span class="k">PLAN-CENTRIC MULTI-AGENT</span><span class="t">각 Agent는 자신의 전문 영역만 깊이 검증, Planner가 통합 지휘 — 사람보다 빠르고 정확한 다중 검증</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 11 · Human-in-the-Loop ============ -->
+  <section id="x11" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 11 · 누가 책임지나</div>
+      <h3>AI는 추천하고, 결정은 사람이 합니다</h3>
+      <p class="cv-lead">Pre · During · Post — 3단 안전 장치로 사람의 통제를 보장합니다. 의사결정 흐름(TIME AXIS)의 모든 단계에서 통제가 가능합니다.</p>
+
+      <div class="x2-grid c3">
+        <div class="x2-card x2-stage">
+          <div class="x2-k">PRE · 사전 단계</div>
+          <h4>Built-in Guardrails<small>사전 위반 차단</small></h4>
+          <div class="x2-mech"><b>MECHANISM</b>사용자 입력(금칙어 · PII · Injection 차단) 가드레일로 강제 적용, AI Secure Gateway 통제</div>
+          <ul><li>사용자 입력 단계 보안 이슈 사전 차단</li><li>컴플라이언스 사전 보장</li></ul>
+        </div>
+        <div class="x2-card x2-stage hl">
+          <div class="x2-k">DURING · 실행 중 <em>CORE 신뢰</em></div>
+          <h4>Custom HITL Checkpoints<small>사람 검수 체크포인트</small></h4>
+          <div class="x2-mech"><b>MECHANISM</b>보험사가 직접 정의하는 검수 지점 — 어느 단계에서 사람이 개입할지 설정</div>
+          <ul><li>고위험행위 HITL 승인 — 최종 승인은 항상 사람이</li><li>인적 통제 유지</li></ul>
+        </div>
+        <div class="x2-card x2-stage">
+          <div class="x2-k">POST · 사후 단계</div>
+          <h4>Audit Trail<small>사후 감사 추적</small></h4>
+          <div class="x2-mech"><b>MECHANISM</b>출력(기밀정보 · Hallucination 제한) 가드레일, 모든 AI 판단의 근거를 단계별로 로깅·<wbr>저장</div>
+          <ul><li>사후 감사·<wbr>규제 대응 시 의사결정 경로 전부 추적 가능</li><li>책임 구조 명확</li></ul>
+        </div>
+      </div>
+      <div class="x2-take"><span class="k">HUMAN ALWAYS IN CHARGE</span><span class="t">AI는 자율 판단하지 않습니다 — 보험 산업의 책임 구조를 그대로 유지하면서, 사람의 의사결정을 더 빠르고 정확하게 보조합니다</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 12 · 원본에서 에이전트까지 ============ -->
+  <section id="x12" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">COVERLINK 12 · 어떻게 이어지나</div>
+      <h3>원본에서 에이전트까지, 위키 → 빌드 → 실행이 한 방향으로 흐릅니다</h3>
+      <p class="cv-lead">개발 참조 지식을 원본(SOT)으로 두고, 위키 → 빌드 → 실행이 한 방향으로 흐릅니다. Concept · Architecture View.</p>
+
+      <div class="x2-flow3">
+        <div class="x2-col">
+          <div class="x2-colhead"><span>SOT</span>원본 위키</div>
+          <div class="x2-item"><b>개발 표준 위키</b><small>네이밍 · 레이어 · LLM 호출 · MCP 계약 등 개발 규칙</small></div>
+          <div class="x2-item"><b>에이전트 위키</b><small>입출력 · 사용 도구 · 판단 규칙 · 실패 처리</small></div>
+          <div class="x2-item"><b>표준 용어 (메타)</b><small>한글 항목명 → 전사 표준 영문명</small></div>
+        </div>
+        <div class="x2-hop"><span>생성</span><i>→</i></div>
+        <div class="x2-col build">
+          <div class="x2-colhead"><span>BUILD</span>바이브 코딩</div>
+          <div class="x2-item"><b>OKF 구조화</b><small>업무 설명 → 구조화된 위키 (WIKI Editor)</small></div>
+          <div class="x2-item"><b>표준 골격 + AI 업무 로직</b><small>구조 · 설정은 표준 그대로, 로직만 AI 작성</small></div>
+          <div class="x2-item"><b>품질 게이트</b><small>통과한 코드만 저장소 반영</small></div>
+        </div>
+        <div class="x2-hop"><span>실행</span><i>→</i></div>
+        <div class="x2-col">
+          <div class="x2-colhead"><span>RUN</span>에이전트 플레이북</div>
+          <div class="x2-item"><b>업무 워크플로우 실행</b><small>입력 검증 → 지식 검색 → MCP 조회 → LLM 판정 → 응답</small></div>
+          <div class="x2-item"><b>사람 확인 지점 (HITL)</b><small>판단이 어려운 건은 사람이 확정</small></div>
+          <div class="x2-item"><b>기존 시스템은 그대로</b><small>보험사 시스템은 MCP로 조회만</small></div>
+        </div>
+      </div>
+
+      <div class="x2-grid c4 x2-principles">
+        <div class="x2-note dashed">같은 방식으로 <b>업무 참조 지식(약관 위키)</b>까지 원본으로 관리</div>
+        <div class="x2-note"><b>위키가 원본</b><small>기준이 흩어지지 않게 한 곳에서 관리</small></div>
+        <div class="x2-note"><b>표준대로 만든다</b><small>누가 만들어도 같은 기준 · 같은 구조</small></div>
+        <div class="x2-note"><b>스택이 달라도 같은 원본</b><small>같은 위키로 Python · Java 에이전트</small></div>
+      </div>
+      <div class="x2-take"><span class="k">SOT BY DESIGN</span><span class="t">기준은 원본에, 만드는 방식은 표준, 실행은 절차대로 — 누가 만들어도 같은 구조와 품질</span></div>
+    </div></div>
+  </section>
+
+  <!-- ============ 13 · Conceptual Architecture ============ -->
+  <section id="x13" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">ARCHITECTURE 13 · 어떤 구조인가</div>
+      <h3>브라우저에서 서비스, 워커까지 — 위키 원본은 GitLab에 보관합니다</h3>
+      <p class="cv-lead">CoverLink Conceptual Architecture. 브라우저 → 서비스(Spring Boot) → 워커가 격리 컨테이너에서 생성·<wbr>검증하고, 위키 원본은 GitLab에 보관합니다.</p>
+      <figure class="x2-fig" data-zoom>
+        <img src="assets/solution2/architecture.webp" alt="CoverLink Conceptual Architecture — 브라우저, Frontend(nginx), Platform(JVM·Spring Boot), PostgreSQL, 위키 생성 엔진, worker, 격리 컨테이너(생성 샌드박스·검증 러너·업무 에이전트), 위키 저장소·소스 저장소(GitLab), LLM 서빙 클러스터, MCP 서버" loading="lazy" width="1980" height="915">
+        <figcaption>실선 = 상시 컨테이너 · 점선 = 일회성 · 겹친 상자 = 동시에 여러 개(× N)</figcaption>
+      </figure>
+    </div></div>
+  </section>
+
+  <!-- ============ 14 · Wiki(OKF) Editor 구조 ============ -->
+  <section id="x14" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">ARCHITECTURE 14 · 위키는 어떻게 만들어지나</div>
+      <h3>대화와 문서를 업무 위키로 만듭니다 — Wiki(OKF) Editor</h3>
+      <p class="cv-lead">A. 대화로 명세 작성 → 승인자 확정 · B. 첨부 문서를 범위 선택 후 3층 지식(설명서·<wbr>개념·<wbr>원문)으로 — 모두 GitLab 위키에 Commit.</p>
+      <figure class="x2-fig" data-zoom>
+        <img src="assets/solution2/wiki-editor.webp" alt="CoverLink Wiki(OKF) Editor — A 대화로 업무 위키 작성(위키 생성 엔진 6단계, agent.md, 승인자), B 첨부 문서를 업무 위키로(범위 선택, 절 조각, 옮기기·대조·재검토, 설명서·개념·원문 3층 지식)" loading="lazy" width="1905" height="937">
+        <figcaption>진남색 = 사람이 확인하는 지점 · A 대화 → 명세 · B 업로드 · 대화로 범위 → 3층 지식 · 모두 GitLab 위키에 Commit</figcaption>
+      </figure>
+    </div></div>
+  </section>
+
+  <!-- ============ 15 · Agent Builder 구조 ============ -->
+  <section id="x15" class="s2sec alt">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">ARCHITECTURE 15 · 소스는 어떻게 검증되나</div>
+      <h3>위키에서 검증된 소스까지 — WIKI Agent Builder</h3>
+      <p class="cv-lead">업무 위키(무엇을)와 개발 위키(어떻게)를 입력으로 생성 Sand Box → 검증 러너 → 통과분만 build/&lt;ID&gt; Branch에 Commit합니다.</p>
+      <figure class="x2-fig" data-zoom>
+        <img src="assets/solution2/agent-builder.webp" alt="WIKI Agent Builder 구조 — 업무 위키·개발 위키 입력, platform(빌드 요청·MCP 검증·작업 큐·소스 커밋), worker(표준 템플릿·생성 샌드박스·검증 러너·파일 묶음), 소스 저장소 build/ID, 예시 대조" loading="lazy" width="2070" height="878">
+        <figcaption>연파랑 띠 = platform · 흰 띠 = worker · 겹친 원 = 여러 개 · 진남색 사람 = 사람이 개입 · 진남색 점선 = 수리 · 워커에 GitLab 키 없음</figcaption>
+      </figure>
+    </div></div>
+  </section>
+
+  <!-- ============ 16 · Agent Workflow 구조 ============ -->
+  <section id="x16" class="s2sec">
+    <div class="cv-wrap x2-wrap"><div class="cv-block">
+      <div class="cv-sub">ARCHITECTURE 16 · 만들어진 에이전트는 어떻게 도나</div>
+      <h3>입력 검증부터 응답까지 — 보험사 시스템은 MCP로 조회만 합니다</h3>
+      <p class="cv-lead">CoverLink Agent Workflow — 생성된 에이전트의 실행 흐름. 입력 검증 → 지식 검색 → MCP 조회 → LLM 판정 → 코드 규칙 → 응답 — 보험사 시스템은 그대로 두고 MCP로 조회만 합니다.</p>
+      <figure class="x2-fig" data-zoom>
+        <img src="assets/solution2/agent-workflow.webp" alt="CoverLink Agent Workflow — 업무 화면·API GW에서 입력 검증, 지식 검색, MCP 조회, LLM 판정, 코드 규칙, 응답까지 6단계. 업무 위키가 정한 것과 개발 위키 표준 템플릿, MCP로 연결되는 보험사 시스템(PF/Rule, 영업지원, 기간계, 감사·모니터링)" loading="lazy" width="2055" height="952">
+        <figcaption>진남색 = 업무 위키에서 생성 · 진남색 사람 = 사람 확정 · 파랑 테두리 = 표준 템플릿 · 보험사 시스템은 그대로 두고 MCP로 조회만</figcaption>
+      </figure>
+    </div></div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <section id="x99" class="s2sec alt s2foot">
+    <div class="cv-wrap x2-wrap">
+      <div class="x2-cta">
+        <div>
+          <div class="cv-sub">CONTACT</div>
+          <h3>우리 업무에도 CoverLink가 맞을지 궁금하신가요?</h3>
+          <p>도입 방식과 일정은 업무 범위를 듣고 함께 정리합니다.</p>
+        </div>
+        <a class="x2-cta-btn" href="index.html#s6">문의하기</a>
+      </div>
+      <div class="site-footer">
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>Company</h5>
+            <a href="index.html#s1c1">Perspective</a>
+            <a href="index.html#s2">Reference</a>
+          </div>
+          <div class="footer-col">
+            <h5>Solutions</h5>
+            <a href="index.html#s3d1">CoverLink</a>
+            <a href="index.html#s3p">Cover 시리즈</a>
+            <a href="index.html#s3c4">가입설계 AI</a>
+            <a href="solution2.html">Solutions2</a>
+          </div>
+          <div class="footer-col">
+            <h5>Archive</h5>
+            <a href="index.html#s4">Archive</a>
+          </div>
+          <div class="footer-col">
+            <h5>Team</h5>
+            <a href="index.html#s5">팀소개</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>회사명 (주)투비AX (구 (주)투비아이에스컨설팅) · 대표 주상언 · 사업자번호 105-87-79763 · 주소 서울특별시 영등포구 선유로 49길 23, 401호</div>
+          <div class="copy">COPYRIGHT © 2026 TOBE AX. ALL RIGHT RESERVED.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<dialog class="x2-lb" id="x2Lb" aria-label="도표 크게 보기"><button type="button" class="x2-lb-x" aria-label="닫기">✕</button><div class="x2-lb-in"><img alt=""></div></dialog>
+<script>
+  /* 앵커 이동 — 스크롤 컨테이너(.scroller) 안에서 처리한다 (index.html 과 같은 방식) */
+  (function(){
+    var scroller = document.getElementById('scroller');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(id, smooth){
+      var t = document.getElementById(id);
+      if(!t || !scroller.contains(t)) return false;
+      var top = scroller.scrollTop + t.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      scroller.scrollTo({ top: top, behavior: (smooth && !reduce) ? 'smooth' : 'auto' });
+      return true;
+    }
+    document.addEventListener('click', function(e){
+      var a = e.target.closest('a[href^="#"]');
+      if(!a) return;
+      var id = a.getAttribute('href').slice(1);
+      if(!id || !go(id, true)) return;
+      e.preventDefault();
+      if(history.replaceState){ history.replaceState(null, '', location.pathname + location.search + '#' + id); }
+    });
+    var h = (location.hash || '').slice(1);
+    if(h){ window.addEventListener('load', function(){ go(h, false); }); }
+  })();
+
+  /* 모바일 햄버거 메뉴 */
+  (function(){
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMenu(){
+      hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+    hamburger.addEventListener('click', function(){
+      var willOpen = !mobileMenu.classList.contains('open');
+      hamburger.classList.toggle('open', willOpen); mobileMenu.classList.toggle('open', willOpen);
+      hamburger.setAttribute('aria-expanded', String(willOpen));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    var c = document.getElementById('mobileMenuClose'); if(c) c.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenu(); });
+  })();
+
+  /* 다크 / 화이트 토글 — head 의 조기 복원 스크립트가 첫 페인트를 이미 맞춰 둔다 */
+  (function(){
+    var btn = document.getElementById('themeToggle');
+    var sheet = document.getElementById('themeLight');
+    var root = document.documentElement;
+    if(!btn || !sheet) return;
+    function paint(light){
+      root.setAttribute('data-theme', light ? 'light' : 'dark');
+      sheet.media = light ? 'all' : 'not all';
+      btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+      btn.setAttribute('aria-label', light ? '다크 모드로 전환' : '화이트 모드로 전환');
+    }
+    paint(root.getAttribute('data-theme') === 'light');
+    btn.addEventListener('click', function(){
+      var light = root.getAttribute('data-theme') !== 'light';
+      paint(light);
+      try{ localStorage.setItem('tobeax-theme', light ? 'light' : 'dark'); }catch(e){}
+    });
+  })();
+
+  /* 도표 확대 보기 */
+  (function(){
+    var dlg = document.getElementById('x2Lb');
+    if(!dlg || !dlg.showModal) return;
+    var img = dlg.querySelector('img');
+    document.querySelectorAll('figure[data-zoom]').forEach(function(f){
+      f.addEventListener('click', function(){
+        var s = f.querySelector('img'); if(!s) return;
+        img.src = s.currentSrc || s.src; img.alt = s.alt;
+        dlg.showModal();
+      });
+    });
+    dlg.addEventListener('click', function(){ dlg.close(); });
+  })();
+</script>
+
+</body>
+</html>
