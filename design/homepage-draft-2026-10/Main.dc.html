@@ -86,7 +86,6 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
         <a href="#intro" aria-label="투비아이에스컨설팅 홈" style="display: flex; align-items: center"><img src="/_blob/e1e44705680242b5b2d38c5dfb1bab77" alt="TOBIS 투비아이에스컨설팅" style="height: 34px; width: auto; display: block"></a>
         <nav aria-label="주요 메뉴" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px clamp(12px, 2.4vw, 32px); font-size: clamp(13px, 1vw, 14px); font-weight: 500; letter-spacing: 0.01em; white-space: nowrap">
           <a href="#have" style="color: #DCE3EE; text-decoration: none">CoverLink</a>
-          <a href="#will" style="color: #DCE3EE; text-decoration: none">AX 로드맵</a>
           <a href="Reference.dc.html" style="color: #DCE3EE; text-decoration: none">레퍼런스</a>
           <a href="#contact" style="color: #8CC6FF; font-weight: 600; text-decoration: none; padding: 10px 0">문의하기</a>
         </nav>
@@ -98,7 +97,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
       <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px clamp(20px, 5vw, 40px) clamp(150px, 26svh, 220px); box-sizing: border-box">
         <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.28em; color: #8CC6FF">AX PARTNER · COVERLINK</p>
         <h1 style="margin: 22px 0 0; font-size: clamp(30px, 3.4vw, 50px); line-height: 1.32; font-weight: 700; letter-spacing: -0.03em"><span style="display: inline-block">보험 업무의 AI 전환,</span><br><span style="display: inline-block">현장을 아는 팀이</span> <span style="display: inline-block">함께합니다</span></h1>
-        <p style="margin: 22px 0 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.75; color: #B9C3D3; max-width: 30em">보험·금융 영업 현장의 경험과 AI 에이전트 툴킷 CoverLink로, 보험사의 AX를 처음부터 운영까지 함께합니다.</p>      </div>
+        <p style="margin: 22px 0 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.75; color: #B9C3D3; max-width: 30em">현장의 업무 지식과 AI 에이전트 툴킷 CoverLink로, 보험사의 AX를 설계하고 실행합니다.</p>      </div>
     </div>
 
     <!-- scroll cue -->
@@ -163,6 +162,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
               </li>
             </sc-for>
           </ul>
+          <p style="margin: 18px 0 0; font-size: 14px; line-height: 1.7; color: #A8B3C7">가입설계에서 시작해, 위키를 더할수록 보험 업무 전반으로 넓혀 갑니다.</p>
         </div>
       </div>
 
@@ -210,34 +210,6 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
         <figcaption style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #ECEEF1; font-size: 14px; font-weight: 700; color: #0A7A4B">✓ 다중 검증 통과 · 실제 가입 가능한 설계</figcaption>
       </figure>
     </div>
-  </section>
-
-  <!-- 03 Will -->
-  <section id="will" style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 128px) clamp(20px, 5vw, 40px)">
-    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.24em; color: #1A87FE">AX ROADMAP</div>
-    <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; font-weight: 800; letter-spacing: -0.03em">한 업무에서 시작해,<br>보험 업무 전반으로 넓혀 갑니다</h2>
-    <p style="margin: 24px 0 0; font-size: 17px; line-height: 1.75; color: #5B6472; max-width: 44em">업무가 바뀌어도 만드는 방식은 같습니다. 위키를 더하면 새 업무 에이전트가 생기고, 검증된 실행 환경과 사람 확인 절차는 그대로 다시 씁니다.</p>
-    <ol aria-label="CoverLink 로드맵" style="list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px">
-      <sc-for list="{{roadmap}}" as="r" hint-placeholder-count="5">
-        <li style="list-style: none">
-          <sc-if value="{{r.now}}" hint-placeholder-val="{{ false }}">
-            <div style="height: 100%; box-sizing: border-box; background: #1A87FE; color: #FFFFFF; border-radius: 14px; padding: 24px">
-              <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em">{{r.phase}}</div>
-              <div style="margin-top: 10px; font-size: 20px; font-weight: 800">{{r.name}}</div>
-              <div style="margin-top: 6px; font-size: 14px; line-height: 1.55">{{r.desc}}</div>
-            </div>
-          </sc-if>
-          <sc-if value="{{r.next}}" hint-placeholder-val="{{ true }}">
-            <div style="height: 100%; box-sizing: border-box; background: #F5F7FA; color: #2B2B2B; border-radius: 14px; padding: 24px">
-              <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: #5B6472">{{r.phase}}</div>
-              <div style="margin-top: 10px; font-size: 20px; font-weight: 800">{{r.name}}</div>
-              <div style="margin-top: 6px; font-size: 14px; line-height: 1.55; color: #5B6472">{{r.desc}}</div>
-            </div>
-          </sc-if>
-        </li>
-      </sc-for>
-    </ol>
-    <p style="margin: 56px 0 0; font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.4"><span style="color: #1A87FE">CoverLink</span>로, 보험 업무 전반의 AX를 함께 만들어 갑니다.</p>
   </section>
 
   <!-- Contact -->
