@@ -20,6 +20,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
 @keyframes tbKen{from{transform:scale(1.02)}to{transform:scale(1.1) translateX(-1.5%)}}
 @keyframes tbDraw{from{stroke-dashoffset:600}to{stroke-dashoffset:0}}
 @keyframes tbBreath{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes tbMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tbRipple{0%{transform:scale(.7);opacity:.75}100%{transform:scale(2.6);opacity:0}}
 .tb-sky{background:#070D1A url("assets/hero/night-sky.jpg") 70% 100%/cover no-repeat}
 @media (prefers-reduced-motion: reduce){*{animation:none!important}}
@@ -82,9 +83,9 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
       <div style="max-width: 1200px; margin: 0 auto; padding: 24px clamp(20px, 5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
         <a href="#intro" aria-label="투비아이에스컨설팅 홈" style="display: flex; align-items: center"><img src="assets/logo/tobis/tobis-logo-white.svg" alt="TOBIS 투비아이에스컨설팅" style="height: 34px; width: auto; display: block"></a>
         <nav aria-label="주요 메뉴" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px clamp(12px, 2.4vw, 32px); font-size: clamp(13px, 1vw, 14px); font-weight: 500; letter-spacing: 0.01em; white-space: nowrap">
-          <a href="#did" style="color: #DCE3EE; text-decoration: none">현장 경험</a>
           <a href="#have" style="color: #DCE3EE; text-decoration: none">CoverLink</a>
           <a href="#will" style="color: #DCE3EE; text-decoration: none">AX 로드맵</a>
+          <a href="reference.html" style="color: #DCE3EE; text-decoration: none">레퍼런스</a>
           <a href="#contact" style="color: #8CC6FF; font-weight: 600; text-decoration: none; padding: 10px 0">문의하기</a>
         </nav>
       </div>
@@ -105,129 +106,88 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
     </div>
   </section>
 
-  <!-- Hero -->
-  <section id="top" style="max-width: 1200px; margin: 0 auto; padding: clamp(64px, 10vw, 140px) clamp(20px, 5vw, 40px) clamp(56px, 7vw, 96px)">
-    <p style="margin: 0 0 24px; font-size: 15px; font-weight: 700; color: #1A87FE; letter-spacing: 0.02em">Since 2012 · 보험·금융 영업 시스템 전문</p>
-    <h2 style="margin: 0; font-size: clamp(30px, 5.4vw, 76px); line-height: 1.22; font-weight: 800; letter-spacing: -0.035em; max-width: 15em"><span style="display: inline-block"><span style="color: #1A87FE">AI 전환</span>은 기술보다</span><br><span style="display: inline-block">업무를 아는 데서</span> <span style="display: inline-block">시작합니다.</span></h2>
-    <p style="margin: 28px 0 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.7; color: #5B6472; max-width: 40em">투비아이에스컨설팅은 2012년부터 보험·금융 영업 현장의 시스템을 만들어 왔습니다. 그 업무 지식을 AI 에이전트 툴킷 CoverLink에 담아, 보험사의 AX를 처음부터 운영까지 함께합니다.</p>
-  </section>
-
-  <!-- 01 Did -->
-  <section id="did" style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 128px) clamp(20px, 5vw, 40px)">
-    <div style="display: flex; flex-wrap: wrap; gap: 48px 64px">
-      <div style="flex: 1 1 380px; min-width: 0">
-        <div style="font-size: 15px; font-weight: 700; color: #1A87FE">01 · 현장 경험</div>
-        <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; font-weight: 800; letter-spacing: -0.03em">보험 영업의 현장을<br>함께 만들어 왔습니다</h2>
-        <p style="margin: 24px 0 0; font-size: 17px; line-height: 1.75; color: #5B6472">보험권 출신 전문가들이 2012년에 세운 회사입니다. 가입설계·청약·영업채널처럼 보험 영업의 가장 복잡한 업무를, 국내 금융기관과 함께 일정과 품질을 지키며 만들어 왔습니다.</p>
-      </div>
-      <ol aria-label="주요 연혁" style="flex: 1 1 420px; min-width: 0; list-style: none; margin: 0; padding: 0; border-top: 2px solid #2B2B2B">
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2012</span>
-            <span style="font-size: 16px; line-height: 1.5">(주)투비아이에스컨설팅 법인 설립</span>
-          </li>
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2016</span>
-            <span style="font-size: 16px; line-height: 1.5">자사 프레임워크 NOTIBS 납품 (동부생명 통합영업지원)</span>
-          </li>
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2020</span>
-            <span style="font-size: 16px; line-height: 1.5">신한라이프 통합 영업채널 구축</span>
-          </li>
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2023</span>
-            <span style="font-size: 16px; line-height: 1.5">신한라이프 대면 영업지원시스템 통합</span>
-          </li>
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2025</span>
-            <span style="font-size: 16px; line-height: 1.5">보험업계 최초 생성형 AI 가입설계 프로젝트 착수</span>
-          </li>
-        
-          <li style="display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid #ECEEF1">
-            <span style="flex: 0 0 72px; font-size: 15px; font-weight: 700; color: #1A87FE">2025</span>
-            <span style="font-size: 16px; line-height: 1.5">기업부설연구소 설립 · 기술혁신형 중소기업(Inno-Biz) 인증</span>
-          </li>
-        
-      </ol>
+  <!-- Trust band: one line of proof + client logos flowing sideways; details live on the Reference page -->
+  <section id="trust" aria-label="함께한 고객사" style="background: #FFFFFF; border-bottom: 1px solid #ECEEF1">
+    <div style="max-width: 1200px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 40px) 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px">
+      <p style="margin: 0; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; font-weight: 700; letter-spacing: -0.02em; color: #2B2B2B">2012년부터, 보험·금융 영업 시스템 <span style="color: #1A87FE">47개 프로젝트</span>를 함께했습니다</p>
+      <a href="reference.html" style="font-size: 14px; font-weight: 600; color: #5B6472; text-decoration: none; white-space: nowrap; padding: 6px 0">레퍼런스 전체 보기 <span aria-hidden="true">→</span></a>
     </div>
-    <div style="margin-top: 72px">
-      <h3 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">함께한 고객사</h3>
-      <p style="margin: 8px 0 0; font-size: 15px; color: #5B6472">국내 주요 보험·금융기관이 투비와 함께 영업 시스템을 만들었습니다.</p>
-      <ul aria-label="고객사" style="list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(96px, 22vw, 180px), 1fr)); gap: clamp(8px, 1.6vw, 12px)">
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/shinhanlife.png" alt="신한라이프" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/tongyang-life.png" alt="동양생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/db-life.png" alt="DB생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/miraeasset-life.png" alt="미래에셋생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/hyundai-marine.png" alt="현대해상" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/sgi.png" alt="SGI서울보증" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/shinhan-ez.png" alt="신한EZ손해보험" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/heungkuk-fire.png" alt="흥국화재" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/abl-life.png" alt="ABL생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/hana-life.png" alt="하나생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/shinhan-life-old.png" alt="신한생명" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/orangelife.png" alt="오렌지라이프" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/kb-capital.png" alt="KB캐피탈" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/daishin-savings.png" alt="대신저축은행" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
-            <img src="assets/clients/koreapost.png" alt="우정사업본부" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
-          </li>
-        
-      </ul>
-      <p style="margin: 20px 0 0; font-size: 14px; line-height: 1.8; color: #5B6472"><b style="color: #2B2B2B">그 외</b> · NH손해보험 · 교보생명 · 흥국생명 · 메리츠화재 · 한화손해보험 · 하나손해보험 · KDB생명 · DGB생명 · ING생명 · MetLife생명 · Allianz생명 · 우리은행 · 신협 · 미래에셋증권 · 현대모비스</p>
+    <div style="overflow: hidden; padding: clamp(28px, 3.4vw, 40px) 0 clamp(40px, 5vw, 64px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)">
+      <div style="display: flex; width: max-content; animation: tbMarquee 48s linear infinite">
+        <ul aria-label="고객사 로고" style="list-style: none; margin: 0; padding: 0 clamp(36px, 5vw, 64px) 0 0; display: flex; align-items: center; gap: clamp(36px, 5vw, 64px)">
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhanlife.png" alt="신한라이프" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/tongyang-life.png" alt="동양생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/db-life.png" alt="DB생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/miraeasset-life.png" alt="미래에셋생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/hyundai-marine.png" alt="현대해상" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/sgi.png" alt="SGI서울보증" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhan-ez.png" alt="신한EZ손해보험" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/heungkuk-fire.png" alt="흥국화재" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/abl-life.png" alt="ABL생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/hana-life.png" alt="하나생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhan-life-old.png" alt="신한생명" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/orangelife.png" alt="오렌지라이프" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/kb-capital.png" alt="KB캐피탈" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/daishin-savings.png" alt="대신저축은행" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/koreapost.png" alt="우정사업본부" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+        </ul>
+        <ul aria-hidden="true" style="list-style: none; margin: 0; padding: 0 clamp(36px, 5vw, 64px) 0 0; display: flex; align-items: center; gap: clamp(36px, 5vw, 64px)">
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhanlife.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/tongyang-life.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/db-life.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/miraeasset-life.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/hyundai-marine.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/sgi.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhan-ez.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/heungkuk-fire.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/abl-life.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/hana-life.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/shinhan-life-old.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/orangelife.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/kb-capital.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/daishin-savings.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+            <li style="flex: 0 0 auto"><img src="assets/clients/koreapost.png" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
+          
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- 02 Have -->
   <section id="have" style="background: #0F1B30; color: #FFFFFF">
     <div style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 128px) clamp(20px, 5vw, 40px)">
-      <div style="font-size: 15px; font-weight: 700; color: #5AAEFF">02 · CoverLink</div>
+      <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.24em; color: #5AAEFF">COVERLINK</div>
       <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; font-weight: 800; letter-spacing: -0.03em; color: #FFFFFF">업무 전문가가 설명하면,<br>AI 에이전트가 만들어집니다</h2>
       <p style="margin: 24px 0 0; font-size: 17px; line-height: 1.75; color: #A8B3C7; max-width: 44em">CoverLink는 보험 업무를 위한 AI 에이전트 툴킷입니다. 에이전트를 만드는 도구(Tools)와 바로 쓰는 업무 에이전트(Agents)를 함께 제공합니다. 업무 전문가가 말로 설명하면 AI가 위키를 쓰고, 그 위키에서 에이전트가 만들어집니다.</p>
 
@@ -353,7 +313,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
 
   <!-- 03 Will -->
   <section id="will" style="max-width: 1200px; margin: 0 auto; padding: clamp(72px, 9vw, 128px) clamp(20px, 5vw, 40px)">
-    <div style="font-size: 15px; font-weight: 700; color: #1A87FE">03 · AX 로드맵</div>
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.24em; color: #1A87FE">AX ROADMAP</div>
     <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; font-weight: 800; letter-spacing: -0.03em">한 업무에서 시작해,<br>보험 업무 전반으로 넓혀 갑니다</h2>
     <p style="margin: 24px 0 0; font-size: 17px; line-height: 1.75; color: #5B6472; max-width: 44em">업무가 바뀌어도 만드는 방식은 같습니다. 위키를 더하면 새 업무 에이전트가 생기고, 검증된 실행 환경과 사람 확인 절차는 그대로 다시 씁니다.</p>
     <ol aria-label="CoverLink 로드맵" style="list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px">

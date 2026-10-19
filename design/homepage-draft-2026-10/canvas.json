@@ -5,15 +5,18 @@
   "launch": {"view": "canvas"},
   "pages": [],
   "boards": {
-    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 6600, "title": "A안 · PC (1440)", "expand": "fill"},
-    "A_Mobile.dc.html": {"x": 1520, "y": 0, "w": 390, "h": 10400, "title": "A안 · 모바일 (390)"},
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 5000, "title": "A안 · 메인 PC (1440)", "expand": "fill"},
+    "A_Mobile.dc.html": {"x": 1520, "y": 0, "w": 390, "h": 7600, "title": "A안 · 메인 모바일 (390)"},
+    "Reference.dc.html": {"x": 0, "y": 8000, "w": 1440, "h": 4600, "title": "A안 · 레퍼런스 PC (1440)", "expand": "fill"},
+    "Ref_Mobile.dc.html": {"x": 1520, "y": 8000, "w": 390, "h": 7600, "title": "A안 · 레퍼런스 모바일 (390)"},
     "B_Home.dc.html": {"x": 2310, "y": 0, "w": 1440, "h": 5000, "title": "B안 · PC (1440)", "expand": "fill"},
     "B_Mobile.dc.html": {"x": 3830, "y": 0, "w": 390, "h": 8400, "title": "B안 · 모바일 (390)"}
   },
-  "order": ["Main.dc.html", "A_Mobile.dc.html", "B_Home.dc.html", "B_Mobile.dc.html"],
+  "order": ["Main.dc.html", "A_Mobile.dc.html", "Reference.dc.html", "Ref_Mobile.dc.html", "B_Home.dc.html", "B_Mobile.dc.html"],
   "notes": {
     "titleA": {"x": 0, "y": -320, "text": "A안 — 화이트 · 에디토리얼", "kind": "title1", "maxW": 1910},
-    "titleB": {"x": 2310, "y": -320, "text": "B안 — 딥 네이비 · 제품 중심", "kind": "title1", "maxW": 1910}
+    "titleRef": {"x": 0, "y": 7680, "text": "A안 — 레퍼런스 페이지", "kind": "title1", "maxW": 1910},
+    "titleB":{"x": 2310, "y": -320, "text": "B안 — 딥 네이비 · 제품 중심", "kind": "title1", "maxW": 1910}
   },
   "designSystems": []
 }
