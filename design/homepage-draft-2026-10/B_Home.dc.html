@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>TOBIS 홈 — B안</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Pretendard";src:url("/_blob/5d2b75cbc78804ef79b7e48ee76ba6f9") format("woff2");font-weight:100 900;font-display:swap}
+body{margin:0}
+html{scroll-behavior:smooth}
+a{color:#5AAEFF}a:hover{color:#8CC6FF}
+</style>
+</helmet>
+<div style="font-family: Pretendard, 'Malgun Gothic', sans-serif; color: #FFFFFF; background: #0B1526; width: 100%; word-break: keep-all; -webkit-font-smoothing: antialiased">
+
+  <!-- Header -->
+  <header style="border-bottom: 1px solid rgba(255,255,255,0.10)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 18px clamp(20px, 5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+      <a href="#top" aria-label="투비아이에스컨설팅 홈" style="display: flex; align-items: center"><img src="/_blob/e1e44705680242b5b2d38c5dfb1bab77" alt="TOBIS 투비아이에스컨설팅" style="height: 36px; width: auto; display: block"></a>
+      <nav aria-label="주요 메뉴" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; font-size: 15px; font-weight: 600">
+        <a href="#journey" style="color: #DCE3EE; text-decoration: none">투비의 여정</a>
+        <a href="#coverlink" style="color: #DCE3EE; text-decoration: none">CoverLink</a>
+        <a href="#contact" style="color: #FFFFFF; background: #1A87FE; text-decoration: none; padding: 11px 18px; border-radius: 8px">문의하기</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" style="max-width: 1240px; margin: 0 auto; padding: clamp(56px, 8vw, 120px) clamp(20px, 5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; gap: 56px 64px">
+    <div style="flex: 1 1 460px; min-width: 0">
+      <p style="margin: 0 0 22px; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; color: #5AAEFF">INSURANCE AI AGENT TOOLKIT</p>
+      <h1 style="margin: 0; font-size: clamp(36px, 4.8vw, 66px); line-height: 1.2; font-weight: 800; letter-spacing: -0.035em">보험 업무를 아는 AI는,<br>현장을 아는 팀이<br>만듭니다.</h1>
+      <p style="margin: 28px 0 0; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.7; color: #A8B3C7; max-width: 32em">2012년부터 보험·금융 영업시스템을 만들어 온 투비아이에스컨설팅이, 그 업무 지식을 CoverLink에 담았습니다.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px">
+        <a href="#coverlink" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 10px; background: #1A87FE; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none">CoverLink 살펴보기</a>
+        <a href="#journey" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.28); color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none">투비가 해온 일</a>
+      </div>
+    </div>
+
+    <!-- Demo card -->
+    <figure aria-label="CoverLink Plan 가입설계 예시" style="flex: 1 1 400px; min-width: 0; margin: 0; background: #121F36; border: 1px solid rgba(255,255,255,0.10); border-radius: 20px; padding: 28px">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <span style="font-size: 14px; font-weight: 700; color: #DCE3EE">CoverLink Plan · 가입설계</span>
+        <span style="font-size: 12px; font-weight: 700; color: #0B1526; background: #5AAEFF; padding: 4px 10px; border-radius: 999px">예시</span>
+      </div>
+      <div style="margin-top: 22px; font-size: 12px; font-weight: 700; color: #7F8BA0">설계사 요청 · 자연어 한 줄</div>
+      <p style="margin: 8px 0 0; background: #0B1526; border-radius: 12px; padding: 16px 18px; font-size: 16px; line-height: 1.6; color: #FFFFFF">“50대 초반 여성, 비흡연, 고혈압 복약 중. 건강보험 위주로 월 30만 원 이내로 설계해줘”</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px">
+        <span style="font-size: 12px; color: #A8B3C7; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 5px 10px">의도 파악</span>
+        <span style="font-size: 12px; color: #A8B3C7; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 5px 10px">상품 추천</span>
+        <span style="font-size: 12px; color: #A8B3C7; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 5px 10px">설계안 생성</span>
+        <span style="font-size: 12px; color: #A8B3C7; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 5px 10px">룰 검증</span>
+      </div>
+      <div style="margin-top: 16px; background: #FFFFFF; color: #2B2B2B; border-radius: 12px; padding: 18px">
+        <div style="display: grid; grid-template-columns: 84px 1fr; gap: 8px 12px; font-size: 14px; line-height: 1.5">
+          <span style="color: #5B6472">상품 구성</span><span style="font-weight: 700">건강보험 + 종신 결합형</span>
+          <span style="color: #5B6472">월 보험료</span><span style="font-weight: 800; color: #1A87FE">28.7만 원</span>
+          <span style="color: #5B6472">주요 특약</span><span>암 · 뇌혈관 · 심혈관 · 입원의료비</span>
+        </div>
+        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #ECEEF1; font-size: 13px; font-weight: 700; color: #0A7A4B">✓ 다중 검증 통과 · 실제 가입 가능한 설계</div>
+      </div>
+      <figcaption style="margin-top: 14px; font-size: 13px; color: #7F8BA0">평균 응답 30초 이내 · 최종 확인은 설계사가</figcaption>
+    </figure>
+  </section>
+
+  <!-- Journey: did / have / will -->
+  <section id="journey" style="border-top: 1px solid rgba(255,255,255,0.10)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(20px, 5vw, 40px)">
+      <h2 style="margin: 0; font-size: clamp(30px, 3.2vw, 44px); line-height: 1.3; font-weight: 800; letter-spacing: -0.03em">해온 일, 가진 것, 할 일</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px 32px; margin-top: 56px">
+        <div style="border-top: 2px solid rgba(255,255,255,0.25); padding-top: 28px">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #7F8BA0">PAST · 2012 –</div>
+          <h3 style="margin: 12px 0 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em">만들어 왔습니다</h3>
+          <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.7; color: #A8B3C7">보험·은행·증권 영업지원시스템(SFA). 국내 대형 금융기관과 47개 프로젝트를 단 한 번의 지연 없이 마쳤습니다.</p>
+          <div style="display: flex; gap: 28px; margin-top: 24px">
+            <div><div style="font-size: 32px; font-weight: 800">47+</div><div style="font-size: 13px; color: #A8B3C7">프로젝트</div></div>
+            <div><div style="font-size: 32px; font-weight: 800">25+</div><div style="font-size: 13px; color: #A8B3C7">금융·기관</div></div>
+            <div><div style="font-size: 32px; font-weight: 800">0%</div><div style="font-size: 13px; color: #A8B3C7">지연</div></div>
+          </div>
+        </div>
+        <div style="border-top: 2px solid #1A87FE; padding-top: 28px">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #5AAEFF">NOW · 2025 –</div>
+          <h3 style="margin: 12px 0 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em">가지고 있습니다</h3>
+          <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.7; color: #A8B3C7">보험 업무 AI 에이전트 툴킷 CoverLink. 보험업계 최초 생성형 AI 가입설계를 실서비스로 운영하고 있습니다.</p>
+          <ul style="list-style: none; margin: 24px 0 0; padding: 0; font-size: 15px; line-height: 2">
+            <li>· CoverLink Tools — 만드는 도구</li>
+            <li>· CoverLink Agents — 바로 쓰는 에이전트</li>
+          </ul>
+        </div>
+        <div style="border-top: 2px solid rgba(255,255,255,0.25); padding-top: 28px">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #7F8BA0">NEXT</div>
+          <h3 style="margin: 12px 0 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em">넓혀 갑니다</h3>
+          <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.7; color: #A8B3C7">가입설계에서 시작해 보험 업무 전체로. 위키를 더하면 같은 방식으로 새 업무 에이전트가 생깁니다.</p>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 24px; font-size: 14px; font-weight: 600">
+            <span style="background: #1A87FE; padding: 6px 10px; border-radius: 6px">가입설계</span><span style="color: #7F8BA0">→</span>
+            <span style="background: #121F36; padding: 6px 10px; border-radius: 6px">활동 관리</span><span style="color: #7F8BA0">→</span>
+            <span style="background: #121F36; padding: 6px 10px; border-radius: 6px">보장분석</span><span style="color: #7F8BA0">→</span>
+            <span style="background: #121F36; padding: 6px 10px; border-radius: 6px">언더라이팅</span><span style="color: #7F8BA0">→</span>
+            <span style="background: #121F36; padding: 6px 10px; border-radius: 6px">보험금 지급</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CoverLink -->
+  <section id="coverlink" style="background: #0F1B30">
+    <div style="max-width: 1240px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) clamp(20px, 5vw, 40px)">
+      <p style="margin: 0; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; color: #5AAEFF">COVERLINK</p>
+      <h2 style="margin: 14px 0 0; font-size: clamp(30px, 3.2vw, 44px); line-height: 1.3; font-weight: 800; letter-spacing: -0.03em">업무 전문가가 설명하면,<br>에이전트가 만들어집니다.</h2>
+
+      <ol aria-label="CoverLink가 일하는 방식" style="list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+        <li style="background: #121F36; border-radius: 16px; padding: 28px">
+          <div style="font-size: 28px; font-weight: 800; color: #5AAEFF">01</div>
+          <div style="margin-top: 12px; font-size: 20px; font-weight: 800">원본을 봅니다</div>
+          <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: #A8B3C7">업무 정의와 개발 표준을 위키 한 곳에 두고, 모든 에이전트가 같은 원본으로 일합니다.</p>
+        </li>
+        <li style="background: #121F36; border-radius: 16px; padding: 28px">
+          <div style="font-size: 28px; font-weight: 800; color: #5AAEFF">02</div>
+          <div style="margin-top: 12px; font-size: 20px; font-weight: 800">절차대로 일합니다</div>
+          <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: #A8B3C7">현업이 정한 플레이북대로 처리하고, 판단이 어려운 건은 사람에게 넘깁니다.</p>
+        </li>
+        <li style="background: #121F36; border-radius: 16px; padding: 28px">
+          <div style="font-size: 28px; font-weight: 800; color: #5AAEFF">03</div>
+          <div style="margin-top: 12px; font-size: 20px; font-weight: 800">업무가 넓어집니다</div>
+          <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: #A8B3C7">위키를 더할수록 같은 도구, 같은 품질로 새 업무 에이전트가 늘어납니다.</p>
+        </li>
+      </ol>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px">
+        <div style="flex: 1 1 320px; min-width: 0; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 28px">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #7F8BA0">TOOLS · 만드는 도구</div>
+          <div style="margin-top: 18px; font-size: 18px; font-weight: 800">Wiki Editor</div>
+          <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: #A8B3C7">말로 설명한 업무를 구조화된 위키로</p>
+          <div style="margin-top: 18px; font-size: 18px; font-weight: 800">Wiki Agent Builder</div>
+          <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: #A8B3C7">위키에서 에이전트 소스를 코딩 없이 생성</p>
+        </div>
+        <div style="flex: 2 1 480px; min-width: 0; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 28px">
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #7F8BA0">AGENTS · 바로 쓰는 에이전트</div>
+          <ul style="list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px">
+            <sc-for list="{{agents}}" as="a" hint-placeholder-count="6">
+              <li style="background: #121F36; border-radius: 12px; padding: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+                  <span style="font-size: 16px; font-weight: 800">{{a.name}}</span>
+                  <sc-if value="{{a.live}}" hint-placeholder-val="{{ true }}"><span style="font-size: 11px; font-weight: 700; color: #0B1526; background: #5AAEFF; padding: 3px 8px; border-radius: 999px">운영 중</span></sc-if>
+                  <sc-if value="{{a.wip}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; font-weight: 700; color: #A8B3C7; border: 1px solid rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 999px">개발 중</span></sc-if>
+                </div>
+                <div style="margin-top: 6px; font-size: 13px; line-height: 1.5; color: #A8B3C7">{{a.desc}}</div>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.12)">
+        <div><div style="font-size: 44px; font-weight: 800; letter-spacing: -0.03em">30초</div><div style="margin-top: 6px; font-size: 14px; line-height: 1.6; color: #A8B3C7">한 줄 요청에서 가입 가능한 설계안까지</div></div>
+        <div><div style="font-size: 44px; font-weight: 800; letter-spacing: -0.03em">약 11분</div><div style="margin-top: 6px; font-size: 14px; line-height: 1.6; color: #A8B3C7">대화 3번으로 에이전트 1개 (2026.09 실증)</div></div>
+        <div><div style="font-size: 44px; font-weight: 800; letter-spacing: -0.03em">MCP</div><div style="margin-top: 6px; font-size: 14px; line-height: 1.6; color: #A8B3C7">기존 보험사 시스템은 그대로, 조회만</div></div>
+        <div><div style="font-size: 44px; font-weight: 800; letter-spacing: -0.03em">HITL</div><div style="margin-top: 6px; font-size: 14px; line-height: 1.6; color: #A8B3C7">최종 판단은 사람이 확정</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section aria-label="함께한 고객사">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 40px)">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #7F8BA0">함께한 금융·기관</div>
+      <p style="margin: 16px 0 0; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.9; font-weight: 600; color: #DCE3EE">신한라이프 · 동양생명 · DB생명 · NH손해보험 · 미래에셋생명 · 교보생명 · 흥국생명 · 현대해상 · 메리츠화재 · 한화손해보험 · 하나손해보험 · KDB생명 · DGB생명 · ING생명 · MetLife생명 · Allianz생명 · 우리은행 · 신협 · 미래에셋증권 · 현대모비스</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" style="background: #1A87FE">
+    <div style="max-width: 1240px; margin: 0 auto; padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px">
+      <h2 style="margin: 0; flex: 1 1 420px; min-width: 0; font-size: clamp(28px, 3vw, 40px); line-height: 1.3; font-weight: 800; letter-spacing: -0.03em; color: #FFFFFF">우리 회사 업무에 맞는<br>첫 에이전트를 함께 정해 보세요.</h2>
+      <div style="flex: 0 1 360px; min-width: 0">
+        <a href="mailto:contact@tobe.ax" style="display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 24px; border-radius: 10px; background: #FFFFFF; color: #0B1526; font-weight: 800; font-size: 16px; text-decoration: none">contact@tobe.ax</a>
+        <p style="margin: 14px 0 0; font-size: 14px; line-height: 1.7; color: #FFFFFF">02-717-2204 · 서울특별시 영등포구 선유로 49길 23 아이에스비즈타워 2차 401호</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: #08101D; color: #8E99AD">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 32px clamp(20px, 5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; font-size: 13px; line-height: 1.7">
+      <img src="/_blob/e1e44705680242b5b2d38c5dfb1bab77" alt="TOBIS" style="height: 26px; width: auto; display: block">
+      <div>(주)투비아이에스컨설팅 · 대표 주상언 · 사업자번호 105-87-79763<br>COPYRIGHT © 2026 TOBIS. ALL RIGHT RESERVED.</div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    function ag(name, desc, live) { return { name: name, desc: desc, live: live, wip: !live }; }
+    return {
+      agents: [
+        ag('Plan', '가입설계 — 추천·설계·룰 검증·선심사', true),
+        ag('QnA', '약관·판매예규 기반 질의응답', true),
+        ag('Activity', '설계사 영업 활동 관리', false),
+        ag('Analysis', '보장분석 · 보장 갭 분석', false),
+        ag('UW', '언더라이팅 · 인수 판단 보조', false),
+        ag('Claim', '보험금 지급 · 청구 검토', false)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
