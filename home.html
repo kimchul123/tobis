@@ -20,6 +20,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
 @keyframes tbKen{from{transform:scale(1.02)}to{transform:scale(1.1) translateX(-1.5%)}}
 @keyframes tbDraw{from{stroke-dashoffset:600}to{stroke-dashoffset:0}}
 @keyframes tbBreath{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes tbRipple{0%{transform:scale(.7);opacity:.75}100%{transform:scale(2.6);opacity:0}}
 .tb-sky{background:#070D1A url("assets/hero/night-sky.jpg") 70% 100%/cover no-repeat}
 @media (prefers-reduced-motion: reduce){*{animation:none!important}}
 </style>
@@ -64,7 +65,12 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
           <radialGradient id="tbKey" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.55" stop-color="#E4F1FF"/><stop offset="1" stop-color="#8CC6FF"/></radialGradient>
           <radialGradient id="tbFloor" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#CFE6FF" stop-opacity="0.55"/><stop offset="1" stop-color="#5AAEFF" stop-opacity="0"/></radialGradient>
         </defs>
-        <rect x="97" y="-600" width="6" height="1000" fill="url(#tbPillar)" style="animation: tbBreath 6s ease-in-out infinite"/>
+        <path d="M100 440 L36 300 Q100 284 164 300 Z" fill="url(#tbPillar)" style="animation: tbBreath 6s ease-in-out infinite"/>
+        <g fill="none" stroke="#8CC6FF" stroke-width="1.2">
+          <ellipse cx="100" cy="440" rx="44" ry="44" style="transform-box: fill-box; transform-origin: center; animation: tbRipple 4.5s ease-out infinite"/>
+          <ellipse cx="100" cy="440" rx="44" ry="44" style="transform-box: fill-box; transform-origin: center; animation: tbRipple 4.5s ease-out infinite 1.5s"/>
+          <ellipse cx="100" cy="440" rx="44" ry="44" style="transform-box: fill-box; transform-origin: center; animation: tbRipple 4.5s ease-out infinite 3s"/>
+        </g>
         <circle cx="100" cy="430" r="150" fill="url(#tbBloom)" style="transform-box: fill-box; transform-origin: center; animation: tbGlow 6s ease-in-out infinite"/>
         <ellipse cx="100" cy="502" rx="150" ry="14" fill="url(#tbFloor)"/>
         <path d="M100 394 a26 26 0 0 1 13 48.5 L120 500 H80 L87 442.5 A26 26 0 0 1 100 394 Z" fill="url(#tbKey)"/>
@@ -104,31 +110,6 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
     <p style="margin: 0 0 24px; font-size: 15px; font-weight: 700; color: #1A87FE; letter-spacing: 0.02em">Since 2012 · 보험·금융 영업 시스템 전문</p>
     <h2 style="margin: 0; font-size: clamp(30px, 5.4vw, 76px); line-height: 1.22; font-weight: 800; letter-spacing: -0.035em; max-width: 15em"><span style="display: inline-block"><span style="color: #1A87FE">AI 전환</span>은 기술보다</span><br><span style="display: inline-block">업무를 아는 데서</span> <span style="display: inline-block">시작합니다.</span></h2>
     <p style="margin: 28px 0 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.7; color: #5B6472; max-width: 40em">투비아이에스컨설팅은 2012년부터 보험·금융 영업 현장의 시스템을 만들어 왔습니다. 그 업무 지식을 AI 에이전트 툴킷 CoverLink에 담아, 보험사의 AX를 처음부터 운영까지 함께합니다.</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px">
-      <a href="#have" style="display: inline-flex; align-items: center; justify-content: center; flex: 1 1 150px; max-width: 220px; min-height: 52px; padding: 0 20px; border-radius: 10px; background: #2B2B2B; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none">CoverLink 살펴보기</a>
-      <a href="#contact" style="display: inline-flex; align-items: center; justify-content: center; flex: 1 1 150px; max-width: 220px; min-height: 52px; padding: 0 20px; border-radius: 10px; border: 1.5px solid #D5D9DF; color: #2B2B2B; font-weight: 700; font-size: 16px; text-decoration: none">AX 상담 문의</a>
-    </div>
-  </section>
-
-  <!-- Did / Have / Will index -->
-  <section aria-label="투비 한눈에 보기" style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 40px) clamp(64px, 8vw, 112px)">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
-      <a href="#did" style="display: block; text-decoration: none; color: #2B2B2B; background: #F5F7FA; border-radius: 16px; padding: 32px">
-        <div style="font-size: 14px; font-weight: 700; color: #1A87FE">01 · 현장 경험</div>
-        <div style="margin-top: 14px; font-size: 22px; font-weight: 800; line-height: 1.4; letter-spacing: -0.02em">보험·금융 영업 시스템<br>47개 프로젝트</div>
-        <div style="margin-top: 12px; font-size: 15px; line-height: 1.6; color: #5B6472">2012년부터, 주요 보험사와 함께</div>
-      </a>
-      <a href="#have" style="display: block; text-decoration: none; color: #FFFFFF; background: #1A87FE; border-radius: 16px; padding: 32px">
-        <div style="font-size: 14px; font-weight: 700; color: #FFFFFF">02 · CoverLink</div>
-        <div style="margin-top: 14px; font-size: 22px; font-weight: 800; line-height: 1.4; letter-spacing: -0.02em">보험 업무를 위한<br>AI 에이전트 툴킷</div>
-        <div style="margin-top: 12px; font-size: 15px; line-height: 1.6; color: #FFFFFF">만드는 도구와 바로 쓰는 에이전트</div>
-      </a>
-      <a href="#will" style="display: block; text-decoration: none; color: #2B2B2B; background: #F5F7FA; border-radius: 16px; padding: 32px">
-        <div style="font-size: 14px; font-weight: 700; color: #1A87FE">03 · AX 로드맵</div>
-        <div style="margin-top: 14px; font-size: 22px; font-weight: 800; line-height: 1.4; letter-spacing: -0.02em">가입설계에서<br>보험 업무 전반으로</div>
-        <div style="margin-top: 12px; font-size: 15px; line-height: 1.6; color: #5B6472">언더라이팅 · 보장분석 · 보험금 지급</div>
-      </a>
-    </div>
   </section>
 
   <!-- CoverLink demo -->
