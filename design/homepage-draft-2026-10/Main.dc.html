@@ -160,10 +160,10 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
     <div style="margin-top: 72px">
       <h3 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">함께한 고객사</h3>
       <p style="margin: 8px 0 0; font-size: 15px; color: #5B6472">국내 주요 보험·금융기관이 투비와 함께 영업 시스템을 만들었습니다.</p>
-      <ul aria-label="고객사" style="list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px">
+      <ul aria-label="고객사" style="list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(96px, 22vw, 180px), 1fr)); gap: clamp(8px, 1.6vw, 12px)">
         <sc-for list="{{clients}}" as="c" hint-placeholder-count="15">
-          <li style="display: flex; align-items: center; justify-content: center; height: 96px; border: 1px solid #ECEEF1; border-radius: 12px; background: #FFFFFF">
-            <img src="{{c.logo}}" alt="{{c.name}}" style="height: 34px; max-width: 150px; width: auto; object-fit: contain; display: block">
+          <li style="display: flex; align-items: center; justify-content: center; height: clamp(60px, 11vw, 96px); padding: 0 8px; border: 1px solid #ECEEF1; border-radius: clamp(8px, 1.4vw, 12px); background: #FFFFFF">
+            <img src="{{c.logo}}" alt="{{c.name}}" style="height: clamp(18px, 4.4vw, 34px); max-width: 100%; width: auto; object-fit: contain; display: block">
           </li>
         </sc-for>
       </ul>
