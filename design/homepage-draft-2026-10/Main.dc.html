@@ -108,21 +108,21 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
   </section>
 
   <!-- Trust band: one line of proof + client logos flowing sideways; details live on the Reference page -->
-  <section id="trust" aria-label="함께한 고객사" style="background: #070D1A; color: #FFFFFF">
+  <section id="trust" aria-label="함께한 고객사" style="background: #FFFFFF; border-bottom: 1px solid #ECEEF1">
     <div style="max-width: 1200px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 40px) 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px">
-      <p style="margin: 0; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; font-weight: 700; letter-spacing: -0.02em; color: #FFFFFF"><span style="display: inline-block">2012년부터, 국내 주요 보험·금융기관과</span> <span style="display: inline-block"><span style="color: #5AAEFF">영업 시스템</span>을 함께 만들어 왔습니다</span></p>
-      <a href="Reference.dc.html" style="font-size: 14px; font-weight: 600; color: #A8B3C7; text-decoration: none; white-space: nowrap; padding: 6px 0">레퍼런스 전체 보기 <span aria-hidden="true">→</span></a>
+      <p style="margin: 0; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; font-weight: 700; letter-spacing: -0.02em; color: #2B2B2B"><span style="display: inline-block">2012년부터, 국내 주요 보험·금융기관과</span> <span style="display: inline-block"><span style="color: #1A87FE">영업 시스템</span>을 함께 만들어 왔습니다</span></p>
+      <a href="Reference.dc.html" style="font-size: 14px; font-weight: 600; color: #5B6472; text-decoration: none; white-space: nowrap; padding: 6px 0">레퍼런스 전체 보기 <span aria-hidden="true">→</span></a>
     </div>
     <div style="overflow: hidden; padding: clamp(28px, 3.4vw, 40px) 0 clamp(40px, 5vw, 64px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)">
       <div style="display: flex; width: max-content; animation: tbMarquee 48s linear infinite">
         <ul aria-label="고객사 로고" style="list-style: none; margin: 0; padding: 0 clamp(36px, 5vw, 64px) 0 0; display: flex; align-items: center; gap: clamp(36px, 5vw, 64px)">
           <sc-for list="{{clients}}" as="c" hint-placeholder-count="15">
-            <li style="flex: 0 0 auto"><img src="{{c.logo}}" alt="{{c.name}}" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.72"></li>
+            <li style="flex: 0 0 auto"><img src="{{c.logo}}" alt="{{c.name}}" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
           </sc-for>
         </ul>
         <ul aria-hidden="true" style="list-style: none; margin: 0; padding: 0 clamp(36px, 5vw, 64px) 0 0; display: flex; align-items: center; gap: clamp(36px, 5vw, 64px)">
           <sc-for list="{{clients}}" as="c" hint-placeholder-count="15">
-            <li style="flex: 0 0 auto"><img src="{{c.logo}}" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.72"></li>
+            <li style="flex: 0 0 auto"><img src="{{c.logo}}" alt="" style="height: clamp(22px, 2.4vw, 30px); width: auto; display: block"></li>
           </sc-for>
         </ul>
       </div>
