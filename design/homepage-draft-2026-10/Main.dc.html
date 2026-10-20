@@ -205,7 +205,7 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
       <h2 style="margin: 16px 0 0; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; font-weight: 800; letter-spacing: -0.03em; color: #FFFFFF">업무 전문가가 설명하면,<br>AI 에이전트가 만들어집니다</h2>
       <p style="margin: 24px 0 0; font-size: 17px; line-height: 1.75; color: #A8B3C7; max-width: 44em">만드는 도구(Tools)와 바로 쓰는 에이전트(Agents)를 함께 제공하는 보험 업무 AI 툴킷입니다.</p>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px">
+      <div style="display: flex; flex-wrap: wrap; gap: clamp(32px, 6vw, 40px) 16px; margin-top: 48px">
         <div style="flex: 1 1 340px; min-width: 0; border: 1px solid rgba(255,255,255,0.14); border-radius: clamp(12px, 3vw, 16px); padding: clamp(20px, 5vw, 32px)">
           <div style="font-size: 15px; font-weight: 800; letter-spacing: 0.02em; color: #8CC6FF">CoverLink Tools <span style="font-weight: 600; color: #A8B3C7">· 만드는 도구</span></div>
           <div style="margin-top: 24px">
@@ -221,15 +221,26 @@ a{color:#1A87FE}a:hover{color:#0A63C9}
           <div style="font-size: 15px; font-weight: 800; letter-spacing: 0.02em; color: #8CC6FF">CoverLink Agents <span style="font-weight: 600; color: #A8B3C7">· 바로 쓰는 에이전트</span></div>
           <ul style="list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 10px">
             <sc-for list="{{agents}}" as="a" hint-placeholder-count="6">
-              <li style="background: #121F36; border-radius: 12px; padding: 16px">
+            <sc-if value="{{a.live}}" hint-placeholder-val="{{ true }}">
+              <li style="background: #14284A; border: 1.5px solid #5AAEFF; border-radius: 12px; padding: 16px; box-shadow: 0 0 0 4px rgba(90,174,255,0.08)">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
                   <span style="font-size: 18px; font-weight: 800">{{a.name}}</span>
-                  <sc-if value="{{a.live}}" hint-placeholder-val="{{ true }}"><span style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #5AAEFF; color: #0B1526">운영 중</span></sc-if>
-                  <sc-if value="{{a.wip}}" hint-placeholder-val="{{ false }}"><span style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2); color: #A8B3C7">개발 중</span></sc-if>
+                  <span style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #5AAEFF; color: #0B1526">운영 중</span>
                 </div>
                 <div style="margin-top: 8px; font-size: 14px; font-weight: 700; color: #8CC6FF">{{a.area}}</div>
                 <div style="margin-top: 2px; font-size: 15px; line-height: 1.5; color: #DCE3EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.desc}}</div>
               </li>
+            </sc-if>
+            <sc-if value="{{a.wip}}" hint-placeholder-val="{{ false }}">
+              <li style="background: #121F36; border: 1.5px solid transparent; border-radius: 12px; padding: 16px">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+                  <span style="font-size: 18px; font-weight: 800">{{a.name}}</span>
+                  <span style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2); color: #A8B3C7">개발 중</span>
+                </div>
+                <div style="margin-top: 8px; font-size: 14px; font-weight: 700; color: #8CC6FF">{{a.area}}</div>
+                <div style="margin-top: 2px; font-size: 15px; line-height: 1.5; color: #DCE3EE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.desc}}</div>
+              </li>
+            </sc-if>
             </sc-for>
             <li style="grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; border: 1.5px dashed rgba(90,174,255,0.6); border-radius: 12px; padding: 16px 18px; background: rgba(26,135,254,0.08)">
               <span aria-hidden="true" style="flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; background: #1A87FE; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; line-height: 1">＋</span>
